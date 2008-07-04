@@ -1,5 +1,6 @@
-#summary Core extensions listed OpenGL versions
+#summary Core extensions required for OpenGL Versions
 #labels Featured
+
 == Introduction ==
 
 Core extensions required for OpenGL Versions

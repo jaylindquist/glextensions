@@ -1,13 +1,6 @@
 #summary List of OpenGL Extensions by manufacturer
 #labels Featured
 
-= hello =
-== hello ==
-=== hello ===
-==== hello ====
-===== hello =====
-====== hello ======
-
 == Contents ==
 
   * [ExtensionsByManufacturer#Architecture_Review_Board Architecture Review Board]

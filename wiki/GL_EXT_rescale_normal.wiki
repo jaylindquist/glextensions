@@ -1,0 +1,50 @@
+#summary GL_EXT_rescale_normal
+
+== Contents ==
+
+  * [GL_EXT_rescale_normal#Dependencies Dependencies]
+  * [GL_EXT_rescale_normal#Overview Overview]
+  * [GL_EXT_rescale_normal#New_Procedures_and_Functions New Procedures and Functions]
+  * [GL_EXT_rescale_normal#New_Tokens New Tokens]
+  * [GL_EXT_rescale_normal#Errors Errors]
+  * [GL_EXT_rescale_normal#New_Implementation_Dependent_State New Implementation Dependent State]
+
+== Dependencies ==
+
+None
+
+
+== Overview ==
+
+When normal rescaling is enabled a new operation is added to the
+transformation of the normal vector into eye coordinates.  The normal vector
+is rescaled after it is multiplied by the inverse modelview matrix and
+before it is normalized.
+
+The rescale factor is chosen so that in many cases normal vectors with unit
+length in object coordinates will not need to be normalized as they
+are transformed into eye coordinates.
+
+
+== New Procedures and Functions ==
+
+None
+
+
+== New Tokens ==
+
+Accepted by the <cap> parameter of Enable, Disable, and IsEnabled,
+and by the <pname> parameter of GetBooleanv, GetIntegerv, GetFloatv,
+and GetDoublev:
+
+||RESCALE_NORMAL_EXT||
+
+
+== Errors ==
+
+None
+
+
+== New Implementation Dependent State ==
+
+None

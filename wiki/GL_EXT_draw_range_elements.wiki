@@ -1,0 +1,66 @@
+#summary GL_EXT_draw_range_elements
+
+== Contents ==
+
+  * [GL_EXT_texture_object#Dependencies Dependencies]
+  * [GL_EXT_texture_object#Overview Overview]
+  * [GL_EXT_texture_object#New_Procedures_and_Functions New Procedures and Functions]
+  * [GL_EXT_texture_object#New_Tokens New Tokens]
+  * [GL_EXT_texture_object#Errors Errors]
+  * [GL_EXT_texture_object#New_Implementation_Dependent_State New Implementation Dependent State]
+
+== Dependencies ==
+
+None
+
+== Overview ==
+
+glDrawRangeElementsEXT is a restricted form of glDrawElements.  All
+vertices referenced by indices must lie between start and end inclusive.
+Not all vertices between start and end must be referenced, however
+unreferenced vertices may be sent through some of the vertex pipeline
+before being discarded, reducing performance from what could be achieved
+by an optimal index set.  Index values which lie outside the range will
+cause implementation-dependent results.
+
+glDrawRangeElementsEXT may also be further constrained to only operate
+at maximum performance for limited amounts of data.  Implementations may
+advertise recommended maximum amounts of vertex and index data using the
+GL_MAX_ELEMENTS_VERTICES_EXT and GL_MAX_ELEMENTS_INDICES_EXT enumerants.
+If a particular call to glDrawRangeElementsEXT has (end-start+1) greater
+than GL_MAX_ELEMENTS_VERTICES_EXT or if count is greater than
+GL_MAX_ELEMENTS_INDICES_EXT then the implementation may be forced to
+process the data less efficiently than it could have with less data.  An
+implementation which has no effective limits can advertise the maximum
+integer value for the two enumerants.  An implementation must always
+process a glDrawRangeElementsEXT call with valid parameters regardless
+of the amount of data passed in the call.
+
+== New Procedures and Functions ==
+{{{
+void glDrawRangeElementsEXT(
+	GLenum mode,
+	GLuint start,
+	GLuint end,
+	GLsizei count,
+	GLenum type,
+	const GLvoid *indices)
+
+}}}
+
+== New Tokens ==
+
+None
+
+== Errors ==
+
+GL_INVALID_VALUE will be returned if end is less than start.  Other
+errors are as for glDrawElements.
+
+== New Implementation Dependent State ==
+
+Add two implementation-dependent limits for describing data size
+recommendations for glDrawRangeElementsEXT:
+
+||GL_MAX_ELEMENTS_VERTICES_EXT||
+||GL_MAX_ELEMENTS_INDICES_EXT||

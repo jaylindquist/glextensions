@@ -2,5 +2,5 @@
 
 NOTE: This extension no longer has its own specification document, since
 it has been included in the OpenGL 1.2.1 Specification (downloadable
-from www.opengl.org). Please refer to the 1.2.1 Specification for
+from [http://www.opengl.org]). Please refer to the 1.2.1 Specification for
 more information.

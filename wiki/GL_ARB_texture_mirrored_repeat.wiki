@@ -1,0 +1,67 @@
+#summary GL_ARB_texture_mirrored_repeat
+
+== Contents ==
+
+  * [GL_ARB_texture_mirrored_repeat#Dependencies Dependencies]
+  * [GL_ARB_texture_mirrored_repeat#Overview Overview]
+  * [GL_ARB_texture_mirrored_repeat#New_Procedures_and_Functions New Procedures and Functions]
+  * [GL_ARB_texture_mirrored_repeat#New_Tokens New Tokens]
+  * [GL_ARB_texture_mirrored_repeat#Errors Errors]
+  * [GL_ARB_texture_mirrored_repeat#New_State New State]
+  * [GL_ARB_texture_mirrored_repeat#New_Implementation_Dependent_State New Implementation Dependent State]
+
+== Dependencies ==
+
+This extension is written against the OpenGL 1.3 Specification.
+
+However, this extension does not require OpenGL 1.3.
+
+
+== Overview ==
+
+[GL_ARB_texture_mirrored_repeat] extends the set of texture wrap modes to
+include a mode (GL_MIRRORED_REPEAT_ARB) that effectively uses a texture
+map twice as large at the original image in which the additional half,
+for each coordinate, of the new image is a mirror image of the original
+image.
+
+This new mode relaxes the need to generate images whose opposite edges
+match by using the original image to generate a matching "mirror image".
+
+
+== New Procedures and Functions ==
+
+None
+
+
+== New Tokens ==
+
+Accepted by the <param> parameter of TexParameteri and TexParameterf,
+and by the <params> parameter of TexParameteriv and TexParameterfv, when
+their <pname> parameter is TEXTURE_WRAP_S, TEXTURE_WRAP_T, or
+TEXTURE_WRAP_R:
+
+|| GL_MIRRORED_REPEAT_ARB    || 0x8370|| 
+
+
+== Errors ==
+
+None
+
+
+== New State ==
+
+Only the type information changes for these parameters:
+
+
+|| *Get Value* || *Get Command* || *Type* || *Initial Value* || *Description* || 
+|| TEXTURE_WRAP_S  || !GetTexParameteriv   || n x Z5 || REPEAT ||  Texture Wrap Mode S|| 
+|| TEXTURE_WRAP_T  || !GetTexParameteriv   || n x Z5||  REPEAT ||  Texture Wrap Mode T|| 
+|| TEXTURE_WRAP_R  || !GetTexParameteriv   || n x Z5||  REPEAT ||  Texture Wrap Mode R|| 
+
+
+== New Implementation Dependent State ==
+
+None
+
+

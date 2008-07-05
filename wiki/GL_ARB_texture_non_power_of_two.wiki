@@ -27,7 +27,7 @@ the definition of this extension.
 
 Conventional OpenGL texturing is limited to images with
 power-of-two dimensions and an optional 1-texel border.
-ARB_texture_non_power_of_two extension relaxes the size restrictions
+[GL_ARB_texture_non_power_of_two] extension relaxes the size restrictions
 for the 1D, 2D, cube map, and 3D texture targets.
 
 There is no additional procedural or enumerant api introduced by this
@@ -81,4 +81,3 @@ None
 == New Implementation Dependent State ==
 
 None
-

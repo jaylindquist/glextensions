@@ -52,3 +52,9 @@ by the <params> parameter of TexParameteriv and TexParameterfv, when their
 
 None.
 
+== New State ==
+
+|| *Get Value* || *Type* || *Get Command* || *Initial Value || *Description* ||
+||TEXTURE_WRAP_S||3+ x Z4||!GetTexParameter||REPEAT||Texture wrap||
+||TEXTURE_WRAP_T||3+ x Z4||!GetTexParameter||REPEAT||Texture wrap ||
+||TEXTURE_WRAP_R||3+ x Z4||!GetTexParameter||REPEAT||Texture wrap||

@@ -7,6 +7,7 @@
   * [GL_EXT_texture#New_Procedures_and_Functions New Procedures and Functions]
   * [GL_EXT_texture#New_Tokens New Tokens]
   * [GL_EXT_texture#Errors Errors]
+  * [GL_EXT_texture#New_State New State]
   * [GL_EXT_texture#New_Implementation_Dependent_State New Implementation Dependent State]
 
 == Dependencies ==
@@ -133,6 +134,21 @@ PROXY_TEXTURE_2D_EXT.
 This change to the error semantics does not require that the major
 revision level be incremented, because the GL Specification allows for
 changes to error semantics (Section 2.5).
+
+== New State ==
+
+|| *Get Value* || *Get Command* || *Type* || *Initial Value* ||
+||TEXTURE_RED_SIZE_EXT ||!GetTexLevelParameteriv||2 x 2 x levels x Z+||0||
+||TEXTURE_GREEN_SIZE_EXT||!GetTexLevelParameteriv||2 x 2 x levels x Z+||0||
+||TEXTURE_BLUE_SIZE_EXT||!GetTexLevelParameteriv||2 x 2 x levels x Z+||0||
+||TEXTURE_ALPHA_SIZE_EXT||!GetTexLevelParameteriv||2 x 2 x levels x Z+||0||
+||TEXTURE_LUMINANCE_SIZE_EXT||!GetTexLevelParameteriv||2 x 2 x levels x Z+||0||
+||TEXTURE_INTENSITY_SIZE_EXT||!GetTexLevelParameteriv||2 x 2 x levels x Z+||0||
+||TEXTURE||!GetTexImage	||2 x 1 x levels x I||null||
+||TEXTURE_WIDTH	||!GetTexLevelParameteriv||2 x 2 x levels x Z+||0||
+||TEXTURE_HEIGHT||!GetTexLevelParameteriv||1 x 2 x levels x Z+||0||
+||TEXTURE_BORDER||!GetTexLevelParameteriv||2 x 2 x levels x Z+||0||
+||TEXTURE_COMPONENTS||!GetTexLevelParameteriv||2 x 2 x levels x Z42||1||
 
 
 == New Implementation Dependent State ==

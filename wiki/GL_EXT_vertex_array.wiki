@@ -1,0 +1,192 @@
+#summary GL_EXT_vertex_array
+
+== Contents ==
+
+  * [GL_EXT_vertex_array#Dependencies Dependencies]
+  * [GL_EXT_vertex_array#Overview Overview]
+  * [GL_EXT_vertex_array#New_Procedures_and_Functions New Procedures and Functions]
+  * [GL_EXT_vertex_array#New_Tokens New Tokens]
+  * [GL_EXT_vertex_array#Errors Errors]
+  * [GL_EXT_vertex_array#New_Implementation_Dependent_State New Implementation Dependent State]
+
+== Dependencies ==
+
+None
+
+
+== Overview ==
+
+This extension adds the ability to specify multiple geometric primitives
+with very few subroutine calls.  Instead of calling an OpenGL procedure
+to pass each individual vertex, normal, or color, separate arrays
+of vertexes, normals, and colors are prespecified, and are used to
+define a sequence of primitives (all of the same type) when a single
+call is made to DrawArraysEXT.  A stride mechanism is provided so that
+an application can choose to keep all vertex data staggered in a
+single array, or sparsely in separate arrays.  Single-array storage
+may optimize performance on some implementations.
+
+This extension also supports the rendering of individual array elements,
+each specified as an index into the enabled arrays.
+
+
+== New Procedures and Functions ==
+{{{
+void ArrayElementEXT(int i);
+
+void DrawArraysEXT(enum mode,
+                   int first,
+                   sizei count);
+
+void VertexPointerEXT(int size,
+                      enum type,
+                      sizei stride,
+                      sizei count,
+                      const void* pointer);
+
+void NormalPointerEXT(enum type,
+                      sizei stride,
+                      sizei count,
+                      const void* pointer);
+
+void ColorPointerEXT(int size,
+                     enum type,
+                     sizei stride,
+                     sizei count,
+                     const void* pointer);
+
+void IndexPointerEXT(enum type,
+                     sizei stride,
+                     sizei count,
+                     const void* pointer);
+
+void TexCoordPointerEXT(int size,
+                        enum type,
+                        sizei stride,
+                        sizei count,
+                        const void* pointer);
+
+void EdgeFlagPointerEXT(sizei stride,
+                        sizei count,
+                        const Boolean* pointer);
+
+void GetPointervEXT(enum pname,
+                    void** params);
+}}}
+
+== New Tokens ==
+
+Accepted by the <cap> parameter of Enable, Disable, and IsEnabled, and
+by the <pname> parameter of GetBooleanv, GetIntegerv, GetFloatv, and
+GetDoublev:
+
+||VERTEX_ARRAY_EXT            ||   0x8074||
+||NORMAL_ARRAY_EXT            ||   0x8075||
+||COLOR_ARRAY_EXT             ||   0x8076||
+||INDEX_ARRAY_EXT             ||   0x8077||
+||TEXTURE_COORD_ARRAY_EXT     ||   0x8078||
+||EDGE_FLAG_ARRAY_EXT         ||   0x8079||
+
+Accepted by the <type> parameter of VertexPointerEXT, NormalPointerEXT,
+ColorPointerEXT, IndexPointerEXT, and TexCoordPointerEXT:
+
+||DOUBLE_EXT                 ||    0x140A||
+
+Accepted by the <pname> parameter of GetBooleanv, GetIntegerv,
+GetFloatv, and GetDoublev:
+
+||VERTEX_ARRAY_SIZE_EXT        ||  0x807A||
+||VERTEX_ARRAY_TYPE_EXT        ||  0x807B||
+||VERTEX_ARRAY_STRIDE_EXT      ||  0x807C||
+||VERTEX_ARRAY_COUNT_EXT       ||  0x807D||
+||NORMAL_ARRAY_TYPE_EXT        ||  0x807E||
+||NORMAL_ARRAY_STRIDE_EXT      ||  0x807F||
+||NORMAL_ARRAY_COUNT_EXT       ||  0x8080||
+||COLOR_ARRAY_SIZE_EXT         ||  0x8081||
+||COLOR_ARRAY_TYPE_EXT         ||  0x8082||
+||COLOR_ARRAY_STRIDE_EXT       ||  0x8083||
+||COLOR_ARRAY_COUNT_EXT        ||  0x8084||
+||INDEX_ARRAY_TYPE_EXT         ||  0x8085||
+||INDEX_ARRAY_STRIDE_EXT       ||  0x8086||
+||INDEX_ARRAY_COUNT_EXT        ||  0x8087||
+||TEXTURE_COORD_ARRAY_SIZE_EXT ||  0x8088||
+||TEXTURE_COORD_ARRAY_TYPE_EXT ||  0x8089||
+||TEXTURE_COORD_ARRAY_STRIDE_EXT || 0x808A||
+||TEXTURE_COORD_ARRAY_COUNT_EXT ||  0x808B||
+||EDGE_FLAG_ARRAY_STRIDE_EXT    || 0x808C||
+||EDGE_FLAG_ARRAY_COUNT_EXT     || 0x808D||
+
+Accepted by the <pname> parameter of GetPointervEXT:
+
+||VERTEX_ARRAY_POINTER_EXT     ||  0x808E||
+||NORMAL_ARRAY_POINTER_EXT     ||  0x808F||
+||COLOR_ARRAY_POINTER_EXT       || 0x8090||
+||INDEX_ARRAY_POINTER_EXT      ||  0x8091||
+||TEXTURE_COORD_ARRAY_POINTER_EXT || 0x8092||
+||EDGE_FLAG_ARRAY_POINTER_EXT   || 0x8093||
+
+
+== Errors ==
+
+INVALID_OPERATION is generated if DrawArraysEXT is called between the
+execution of Begin and the corresponding execution of End.
+
+INVALID_ENUM is generated if DrawArraysEXT parameter <mode> is not
+POINTS, LINE_STRIP, LINE_LOOP, LINES, TRIANGLE_STRIP, TRIANGLE_FAN,
+TRIANGLES, QUAD_STRIP, QUADS, or POLYGON.
+
+INVALID_VALUE is generated if DrawArraysEXT parameter <count> is
+negative.
+
+INVALID_VALUE is generated if VertexPointerEXT parameter <size> is not
+2, 3, or 4.
+
+INVALID_ENUM is generated if VertexPointerEXT parameter <type> is not
+SHORT, INT, FLOAT, or DOUBLE_EXT.
+
+INVALID_VALUE is generated if VertexPointerEXT parameter <stride> or
+<count> is negative.
+
+INVALID_ENUM is generated if NormalPointerEXT parameter <type> is not
+BYTE, SHORT, INT, FLOAT, or DOUBLE_EXT.
+
+INVALID_VALUE is generated if NormalPointerEXT parameter <stride> or
+<count> is negative.
+
+INVALID_VALUE is generated if ColorPointerEXT parameter <size> is not
+3 or 4.
+
+INVALID_ENUM is generated if ColorPointerEXT parameter <type> is not
+BYTE, UNSIGNED_BYTE, SHORT, UNSIGNED_SHORT, INT, UNSIGNED_INT, FLOAT,
+or DOUBLE_EXT.
+
+INVALID_VALUE is generated if ColorPointerEXT parameter <stride> or
+<count> is negative.
+
+INVALID_ENUM is generated if IndexPointerEXT parameter <type> is not
+SHORT, INT, FLOAT, or DOUBLE_EXT.
+
+INVALID_VALUE is generated if IndexPointerEXT parameter <stride> or
+<count> is negative.
+
+INVALID_VALUE is generated if TexCoordPointerEXT parameter <size> is not
+1, 2, 3, or 4.
+
+INVALID_ENUM is generated if TexCoordPointerEXT parameter <type> is not
+SHORT, INT, FLOAT, or DOUBLE_EXT.
+
+INVALID_VALUE is generated if TexCoordPointerEXT parameter <stride> or
+<count> is negative.
+
+INVALID_VALUE is generated if EdgeFlagPointerEXT parameter <stride> or
+<count> is negative.
+
+INVALID_ENUM is generated if GetPointervEXT parameter <pname> is not
+VERTEX_ARRAY_POINTER_EXT, NORMAL_ARRAY_POINTER_EXT,
+COLOR_ARRAY_POINTER_EXT, INDEX_ARRAY_POINTER_EXT,
+TEXTURE_COORD_ARRAY_POINTER_EXT, or EDGE_FLAG_ARRAY_POINTER_EXT.
+
+
+== New Implementation Dependent State ==
+
+None

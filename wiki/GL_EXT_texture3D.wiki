@@ -7,6 +7,7 @@
   * [GL_EXT_texture3D#New_Procedures_and_Functions New Procedures and Functions]
   * [GL_EXT_texture3D#New_Tokens New Tokens]
   * [GL_EXT_texture3D#Errors Errors]
+  * [GL_EXT_texture3D#New_State New State]
   * [GL_EXT_texture3D#New_Implementation_Dependent_State New Implementation Dependent State]
 
 == Dependencies ==
@@ -43,39 +44,39 @@ void TexImage3DEXT(enum target,
 
 == New Tokens ==
 
-Accepted by the <pname> parameter of GetBooleanv, GetIntegerv,
-GetFloatv, and GetDoublev, and by the <pname> parameter of PixelStore:
+Accepted by the <pname> parameter of !GetBooleanv, !GetIntegerv,
+!GetFloatv, and !GetDoublev, and by the <pname> parameter of !PixelStore:
 
 ||PACK_SKIP_IMAGES_EXT             ||0x806B||
 ||PACK_IMAGE_HEIGHT_EXT            ||0x806C||
 ||UNPACK_SKIP_IMAGES_EXT           ||0x806D||
 ||UNPACK_IMAGE_HEIGHT_EXT          ||0x806E||
 
-Accepted by the <cap> parameter of Enable, Disable, and IsEnabled, by
-the <pname> parameter of GetBooleanv, GetIntegerv, GetFloatv, and
-GetDoublev, and by the <target> parameter of TexImage3DEXT, GetTexImage,
-GetTexLevelParameteriv, GetTexLevelParameterfv, GetTexParameteriv, and
-GetTexParameterfv:
+Accepted by the <cap> parameter of Enable, Disable, and !IsEnabled, by
+the <pname> parameter of !GetBooleanv, !GetIntegerv, !GetFloatv, and
+!GetDoublev, and by the <target> parameter of TexImage3DEXT, !GetTexImage,
+!GetTexLevelParameteriv, !GetTexLevelParameterfv, !GetTexParameteriv, and
+!GetTexParameterfv:
 
 ||TEXTURE_3D_EXT                   ||0x806F||
 
 Accepted by the <target> parameter of TexImage3DEXT,
-GetTexLevelParameteriv, and GetTexLevelParameterfv:
+!GetTexLevelParameteriv, and !GetTexLevelParameterfv:
 
 ||PROXY_TEXTURE_3D_EXT             ||0x8070||
 
-Accepted by the <pname> parameter of GetTexLevelParameteriv and
-GetTexLevelParameterfv:
+Accepted by the <pname> parameter of !GetTexLevelParameteriv and
+!GetTexLevelParameterfv:
 
 ||TEXTURE_DEPTH_EXT                ||0x8071||
 
-Accepted by the <pname> parameter of TexParameteriv, TexParameterfv,
-GetTexParameteriv, and GetTexParameterfv:
+Accepted by the <pname> parameter of !TexParameteriv, !TexParameterfv,
+!GetTexParameteriv, and !GetTexParameterfv:
 
 ||TEXTURE_WRAP_R_EXT               ||0x8072||
 
-Accepted by the <pname> parameter of GetBooleanv, GetIntegerv,
-GetFloatv, and GetDoublev:
+Accepted by the <pname> parameter of !GetBooleanv, !GetIntegerv,
+!GetFloatv, and !GetDoublev:
 
 ||MAX_3D_TEXTURE_SIZE_EXT          ||0x8073||
 
@@ -86,7 +87,7 @@ INVALID_ENUM is generated if <target> is not TEXTURE_3D_EXT or
 PROXY_TEXTURE_3D_EXT.
 
 INVALID_ENUM is generated if the <target> parameter to
-GetTexParameteriv, GetTexParameterfv or GetTexImage is
+!GetTexParameteriv, !GetTexParameterfv or !GetTexImage is
 PROXY_TEXTURE_3D_EXT.
 
 INVALID_VALUE is generated if <level> is less than zero
@@ -115,8 +116,39 @@ TEXTURE_TOO_LARGE_EXT is generated if the texture as specified cannot be
 accommodated by the implementation.  This error will not occur if none
 of <width>, <height>, or <depth> is greater than MAX_3D_TEXTURE_SIZE_EXT.
 
+== New State ==
+
+|| *Get Value* || *Get Command* || *Type* || *Initial Value* ||
+||UNPACK_SKIP_IMAGES_EXT||!GetIntegerv||Z+ ||  0||
+||UNPACK_IMAGE_HEIGHT_EXT|| !GetIntegerv ||Z+||  0 ||
+||PACK_SKIP_IMAGES_EXT||!GetIntegerv || Z+ ||  0||
+||PACK_IMAGE_HEIGHT_EXT || !GetIntegerv|| Z+ ||  0 ||
+||TEXTURE_3D_EXT||!IsEnabled ||B           || FALSE||
+||TEXTURE_WRAP_R_EXT|| !GetTexParameteriv || 1 x Z2|| REPEAT||
+||TEXTURE_DEPTH_EXT ||!GetTexLevelParameteriv||1 x 2 x levels x Z+|| 0||
+
+
+|| *Get Value* || *Get Command* || *Type* || *Initial Value* ||
+||TEXTURE  ||!GetTexImage|| 3 x 1 x levels x I ||null||
+||TEXTURE_RED_SIZE_EXT ||!GetTexLevelParameteriv||3 x 2 x levels x Z+ || 0||
+||TEXTURE_GREEN_SIZE_EXT ||!GetTexLevelParameteriv||3 x 2 x levels x Z+||0||
+||TEXTURE_BLUE_SIZE_EXT ||!GetTexLevelParameteriv||3 x 2 x levels x Z+ || 0||
+||TEXTURE_ALPHA_SIZE_EXT ||!GetTexLevelParameteriv ||3 x 2 x levels x Z+ ||0 ||
+||TEXTURE_LUMINANCE_SIZE_EXT ||!GetTexLevelParameteriv||3 x 2 x levels x Z+|| 0 ||
+||TEXTURE_INTENSITY_SIZE_EXT||  !GetTexLevelParameteriv||3 x 2 x levels x Z+ || 0||
+||TEXTURE_WIDTH || !GetTexLevelParameteriv ||3 x 2 x levels x Z+ || 0||
+||TEXTURE_HEIGHT|| !GetTexLevelParameteriv||2 x 2 x levels x Z+ ||0||
+||TEXTURE_BORDER || !GetTexLevelParameteriv||3 x 2 x levels x Z+|| 0||
+||TEXTURE_COMPONENTS (1D and 2D) || !GetTexLevelParameteriv||2 x 2 x levels x Z42|| 1||
+||TEXTURE_COMPONENTS (3D)|| !GetTexLevelParameteriv|| 1 x 2 x levels x Z38|| LUMINANCE||
+||TEXTURE_BORDER_COLOR|| !GetTexParameteriv ||3 x C  || 0, 0, 0, 0||
+||TEXTURE_MIN_FILTER||!GetTexParameteriv||3 x Z6 || NEAREST_MIPMAP_LINEAR||
+||TEXTURE_MAG_FILTER || !GetTexParameteriv || 3 x Z2 ||  LINEAR||
+||TEXTURE_WRAP_S|| !GetTexParameteriv || 3 x Z2 || REPEAT||
+||TEXTURE_WRAP_T|| !GetTexParameteriv|| 2 x Z2  ||  REPEAT||
+
 
 == New Implementation Dependent State ==
 
 || *Get Value*  || *Get Command *     || *Type* || *Minimum Value* ||
-||MAX_3D_TEXTURE_SIZE_EXT     ||GetIntegerv             ||Z+              ||16||
+||MAX_3D_TEXTURE_SIZE_EXT     ||!GetIntegerv             ||Z+              ||16||

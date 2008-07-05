@@ -43,6 +43,10 @@ FUNC_REVERSE_SUBTRACT_EXT, or LOGIC_OP.
 INVALID_OPERATION is generated if BlendEquationEXT is executed between
 the execution of Begin and the corresponding execution to End.
 
+== New State ==
+
+|| *Get Value* || *Get Command* || *Type* || *Initial Value* ||
+||BLEND_EQUATION_EXT||!GetIntegerv||Z6 ||FUNC_ADD_EXT ||
 
 == New Implementation Dependent State ==
 

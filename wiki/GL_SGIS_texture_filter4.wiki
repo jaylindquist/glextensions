@@ -1,0 +1,80 @@
+#summary GL_SGIS_texture_filter4
+
+== Contents ==
+
+  * [GL_SGIS_texture_filter4#Dependencies Dependencies]
+  * [GL_SGIS_texture_filter4#Overview Overview]
+  * [GL_SGIS_texture_filter4#New_Procedures_and_Functions New Procedures and Functions]
+  * [GL_SGIS_texture_filter4#New_Tokens New Tokens]
+  * [GL_SGIS_texture_filter4#Errors Errors]
+  * [GL_SGIS_texture_filter4#New_Implementation_Dependent_State New Implementation Dependent State]
+
+== Dependencies ==
+
+None
+
+
+== Overview ==
+
+This extension allows 1D and 2D textures to be filtered using an
+application-defined, four sample per dimension filter.  (In addition to
+the NEAREST and LINEAR filters defined in the original GL Specification.)
+Such filtering results in higher image quality.  It is defined only
+for non-mipmapped filters.  The filter that is specified must be
+symmetric and separable (in the 2D case).
+
+
+== New Procedures and Functions ==
+{{{
+void TexFilterFuncSGIS(enum target,
+                       enum filter,
+                       sizei n,
+                       const float* weights);
+
+void GetTexFilterFuncSGIS(enum target,
+                          enum filter,
+                          float* weights);
+}}}
+
+== New Tokens ==
+
+Accepted by the <param> parameter of TexParameteri and TexParameterf,
+and by the <params> parameter of TexParameteriv and TexParameterfv, when
+their <pname> parameter is TEXTURE_MIN_FILTER or TEXTURE_MAG_FILTER.
+Also accepted by the <filter> parameters of TexFilterFuncSGIS and
+GetTexFilterFuncSGIS:
+
+||FILTER4_SGIS||
+
+Accepted by the <pname> parameter of GetTexParameteriv and
+GetTexParameterfv, when the <target> parameter is TEXTURE_1D or
+TEXTURE_2D:
+
+||TEXTURE_FILTER4_SIZE_SGIS||
+
+
+== Errors ==
+
+INVALID_ENUM is generated if TexFilterFuncSGIS or
+GetTexFilterFuncSGIS parameter <target> is not TEXTURE_1D or
+TEXTURE_2D.
+
+INVALID_ENUM is generated if TexFilterFuncSGIS or
+GetTexFilterFuncSGIS parameter <filter> is not FILTER4_SGIS.
+
+INVALID_VALUE is generated if TexFilterFuncSGIS parameter <n> does
+not equal 2**m + 1 for some nonnegative integer value of m.
+
+INVALID_ENUM is generated if GetTexParameteriv or GetTexParameterfv
+parameter <pname> is TEXTURE_FILTER4_SIZE_SGIS and parameter
+<target> is not TEXTURE_1D or TEXTURE_2D.
+
+INVALID_OPERATION is generated if TexFilterFuncSGIS or
+GetTexFilterFuncSGIS is executed between execution of Begin and the
+corresponding execution of End.
+
+
+== New Implementation Dependent State ==
+
+|| *Get Value* || *Get Command* || *Type* || *Minimum Value* ||
+||TEXTURE_FILTER4_SIZE_SGIS || GetTexParameterfv || R || 17 ||

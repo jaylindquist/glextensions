@@ -7,6 +7,7 @@
   * [GL_ARB_multisample#New_Procedures_and_Functions New Procedures and Functions]
   * [GL_ARB_multisample#New_Tokens New Tokens]
   * [GL_ARB_multisample#Errors Errors]
+  * [GL_ARB_multisample#New_State New State]
   * [GL_ARB_multisample#New_Implementation_Dependent_State New Implementation Dependent State]
 
 == Dependencies ==
@@ -66,21 +67,21 @@ the <piAttribIList> and <pfAttribIList> of wglChoosePixelFormatEXT:
 ||WGL_SAMPLE_BUFFERS_ARB      ||         0x2041||
 ||WGL_SAMPLES_ARB             ||         0x2042||
 
-Accepted by the <cap> parameter of Enable, Disable, and IsEnabled,
-and by the <pname> parameter of GetBooleanv, GetIntegerv,
-GetFloatv, and GetDoublev:
+Accepted by the <cap> parameter of Enable, Disable, and !IsEnabled,
+and by the <pname> parameter of !GetBooleanv, !GetIntegerv,
+!GetFloatv, and !GetDoublev:
 
 ||MULTISAMPLE_ARB                  ||    0x809D||
 ||SAMPLE_ALPHA_TO_COVERAGE_ARB     ||    0x809E||
 ||SAMPLE_ALPHA_TO_ONE_ARB           ||   0x809F||
 ||SAMPLE_COVERAGE_ARB              ||    0x80A0||
 
-Accepted by the <mask> parameter of PushAttrib:
+Accepted by the <mask> parameter of !PushAttrib:
 
 ||MULTISAMPLE_BIT_ARB       ||           0x20000000||
 
-Accepted by the <pname> parameter of GetBooleanv, GetDoublev,
-GetIntegerv, and GetFloatv:
+Accepted by the <pname> parameter of !GetBooleanv, !GetDoublev,
+!GetIntegerv, and !GetFloatv:
 
 ||SAMPLE_BUFFERS_ARB           ||        0x80A8||
 ||SAMPLES_ARB                  ||        0x80A9||
@@ -94,9 +95,19 @@ INVALID_OPERATION is generated if SampleCoverageARB is called
 between the execution of Begin and the execution of the
 corresponding End.
 
+== New State ==
+
+|| *Get Value* || *Get Command* || *Type* || *Initial Value* ||
+||MULTISAMPLE_ARB||!IsEnabled || B || TRUE ||
+||SAMPLE_ALPHA_TO_COVERAGE_ARB ||!IsEnabled ||B || FALSE ||
+||SAMPLE_ALPHA_TO_ONE_ARB || !IsEnabled||  B||FALSE  ||
+||SAMPLE_COVERAGE_ARB||!IsEnabled ||B ||FALSE ||
+||SAMPLE_COVERAGE_VALUE_ARB||!GetFloatv||R+ || 1||
+||SAMPLE_COVERAGE_INVERT_ARB||!GetBooleanv||B ||FALSE  ||
+
 
 == New Implementation Dependent State ==
 
 || *Get Value* || *Get Command* || *Type* || *Minimum Value* ||
-||SAMPLE_BUFFERS_ARB   ||    GetIntegerv  ||  Z+   ||   0||
-||SAMPLES_ARB           ||   GetIntegerv  ||  Z+    ||  0||
+||SAMPLE_BUFFERS_ARB   ||    !GetIntegerv  ||  Z+   ||   0||
+||SAMPLES_ARB           ||   !GetIntegerv  ||  Z+    ||  0||

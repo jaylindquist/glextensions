@@ -51,7 +51,7 @@ Core extensions required for OpenGL Versions
   * [GL_EXT_fog_coord]
   * [GL_EXT_multi_draw_arrays]
   * [GL_EXT_secondary_color]
-  * [GL_EXT_texture_wrap]
+  * [GL_EXT_stencil_wrap]
   * [GL_EXT_texture_lod_bias]
   * [GL_NV_blend_square]
   * [GL_SGIS_generate_mipmap]

@@ -7,6 +7,7 @@
   * [GL_SGIS_texture_edge_clamp#New_Procedures_and_Functions New Procedures and Functions]
   * [GL_SGIS_texture_edge_clamp#New_Tokens New Tokens]
   * [GL_SGIS_texture_edge_clamp#Errors Errors]
+  * [GL_SGIS_texture_edge_clamp#New_State New State]
   * [GL_SGIS_texture_edge_clamp#New_Implementation_Dependent_State New Implementation Dependent State]
 
 == Dependencies ==
@@ -56,6 +57,13 @@ TEXTURE_WRAP_R_EXT:
 == Errors ==
 
 None
+
+== New State ==
+
+|| *Get Value* || *Get Command* || *Type* || *Initial Value* ||
+||TEXTURE_WRAP_S||!GetTexParameteriv||n x Z3||REPEAT||
+||TEXTURE_WRAP_T||!GetTexParameteriv||n x Z3||REPEAT||
+||TEXTURE_WRAP_R_EXT||!GetTexParameteriv||n x Z3||REPEAT||
 
 
 == New Implementation Dependent State ==

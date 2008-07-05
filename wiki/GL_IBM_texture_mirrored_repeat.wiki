@@ -35,8 +35,8 @@ None
 
 == New Tokens ==
 
-Accepted by the <param> parameter of TexParameteri and TexParameterf,
-and by the <params> parameter of TexParameteriv and TexParameterfv, when
+Accepted by the <param> parameter of !TexParameteri and !TexParameterf,
+and by the <params> parameter of !TexParameteriv and !TexParameterfv, when
 their <pname> parameter is TEXTURE_WRAP_S, TEXTURE_WRAP_T, or
 TEXTURE_WRAP_R_EXT:
 
@@ -53,9 +53,9 @@ None
 Only the type information changes for these parameters:
 
 || *Get Value* || *Get Command* || *Type* || *Initial Value* ||
-TEXTURE_WRAP_S     || GetTexParameteriv || n x Z5 || REPEAT ||
-TEXTURE_WRAP_T     || GetTexParameteriv || n x Z5 || REPEAT||
-TEXTURE_WRAP_R_EXT || GetTexParameteriv || n x Z5 || REPEAT||
+||TEXTURE_WRAP_S     || !GetTexParameteriv || n x Z5 || REPEAT ||
+||TEXTURE_WRAP_T     || !GetTexParameteriv || n x Z5 || REPEAT||
+||TEXTURE_WRAP_R_EXT || !GetTexParameteriv || n x Z5 || REPEAT||
 
 
 == New Implementation Dependent State ==

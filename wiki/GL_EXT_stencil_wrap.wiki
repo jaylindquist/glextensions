@@ -44,7 +44,7 @@ None
 == New Tokens ==
 
 Accepted by the <sfail>, <dpfail>, and <dppass> parameter of
-StencilOp:
+!StencilOp:
 
 ||INCR_WRAP_EXT  ||0x8507||
 ||DECR_WRAP_EXT  ||0x8508||
@@ -63,4 +63,3 @@ or DECR_WRAP_EXT.
 == New Implementation Dependent State ==
 
 None
-

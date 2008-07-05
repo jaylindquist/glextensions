@@ -1,0 +1,62 @@
+#summary GL_IBM_texture_mirrored_repeat
+
+== Contents ==
+
+  * [GL_IBM_texture_mirrored_repeat#Dependencies Dependencies]
+  * [GL_IBM_texture_mirrored_repeat#Overview Overview]
+  * [GL_IBM_texture_mirrored_repeat#New_Procedures_and_Functions New Procedures and Functions]
+  * [GL_IBM_texture_mirrored_repeat#New_Tokens New Tokens]
+  * [GL_IBM_texture_mirrored_repeat#Errors Errors]
+  * [GL_IBM_texture_mirrored_repeat#New_State New State]
+  * [GL_IBM_texture_mirrored_repeat#New_Implementation_Dependent_State New Implementation Dependent State]
+
+== Dependencies ==
+
+[GL_EXT_texture_3D]
+[GL_IBM_texture_edge_clamp]
+
+
+== Overview ==
+
+IBM_texture_mirrored_repeat extends the set of texture wrap modes to
+include a mode (GL_MIRRORED_REPEAT_IBM) that effectively uses a texture
+map twice as large at the original image in which the additional half of
+the new image is a mirror image of the original image.
+
+This new mode relaxes the need to generate images whose opposite edges
+match by using the original image to generate a matching "mirror image".
+
+
+== New Procedures and Functions ==
+
+None
+
+
+== New Tokens ==
+
+Accepted by the <param> parameter of TexParameteri and TexParameterf,
+and by the <params> parameter of TexParameteriv and TexParameterfv, when
+their <pname> parameter is TEXTURE_WRAP_S, TEXTURE_WRAP_T, or
+TEXTURE_WRAP_R_EXT:
+
+||GL_MIRRORED_REPEAT_IBM || 0x8370 ||
+
+
+== Errors ==
+
+None
+
+
+== New State ==
+
+Only the type information changes for these parameters:
+
+|| *Get Value* || *Get Command* || *Type* || *Initial Value* ||
+TEXTURE_WRAP_S     || GetTexParameteriv || n x Z5 || REPEAT ||
+TEXTURE_WRAP_T     || GetTexParameteriv || n x Z5 || REPEAT||
+TEXTURE_WRAP_R_EXT || GetTexParameteriv || n x Z5 || REPEAT||
+
+
+== New Implementation Dependent State ==
+
+None

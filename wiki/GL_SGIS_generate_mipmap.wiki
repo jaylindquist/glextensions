@@ -18,7 +18,7 @@
 
 [GL_EXT_texture_object] affects the definition of this extension
 
-[SGIS_texture_lod] affects the definition of this extension
+[GL_SGIS_texture_lod] affects the definition of this extension
 
 
 == Overview ==

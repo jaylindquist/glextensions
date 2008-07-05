@@ -1,0 +1,3 @@
+#summary GL_KTX_buffer_region
+
+NOTE: [GL_KTX_buffer_region] is not intended for use outside of 3D Studio Max. See [http://www.west.net/~brittain/3dsmax2.htm Don's 3D Studio MAC R2 Page] for details on this extension.

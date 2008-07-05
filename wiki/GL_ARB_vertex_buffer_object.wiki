@@ -1,0 +1,265 @@
+#summary GL_ARB_vertex_buffer_object
+
+== Contents ==
+
+  * [GL_ARB_vertex_buffer_object#Dependencies Dependencies]
+  * [GL_ARB_vertex_buffer_object#Overview Overview]
+  * [GL_ARB_vertex_buffer_object#New_Procedures_and_Functions New Procedures and Functions]
+  * [GL_ARB_vertex_buffer_object#New_Tokens New Tokens]
+  * [GL_ARB_vertex_buffer_object#Errors Errors]
+  * [GL_ARB_vertex_buffer_object#New_State New State]
+  * [GL_ARB_vertex_buffer_object#New_Implementation_Dependent_State New Implementation Dependent State]
+
+== Dependencies ==
+
+Written based on the wording of the OpenGL 1.4 specification.
+
+[GL_ARB_vertex_blend] affects the definition of this extension.
+
+[GL_ARB_vertex_program] affects the definition of this extension.
+
+[GL_EXT_vertex_shader] affects the definition of this extension.
+
+
+== Overview ==
+
+This extension defines an interface that allows various types of data
+(especially vertex array data) to be cached in high-performance
+graphics memory on the server, thereby increasing the rate of data
+transfers.
+
+Chunks of data are encapsulated within "buffer objects", which
+conceptually are nothing more than arrays of bytes, just like any
+chunk of memory.  An API is provided whereby applications can read
+from or write to buffers, either via the GL itself (glBufferData,
+glBufferSubData, glGetBufferSubData) or via a pointer to the memory.
+
+The latter technique is known as "mapping" a buffer.  When an
+application maps a buffer, it is given a pointer to the memory.  When
+the application finishes reading from or writing to the memory, it is
+required to "unmap" the buffer before it is once again permitted to
+use that buffer as a GL data source or sink.  Mapping often allows
+applications to eliminate an extra data copy otherwise required to
+access the buffer, thereby enhancing performance.  In addition,
+requiring that applications unmap the buffer to use it as a data
+source or sink ensures that certain classes of latent synchronization
+bugs cannot occur.
+
+Although this extension only defines hooks for buffer objects to be
+used with OpenGL's vertex array APIs, the API defined in this
+extension permits buffer objects to be used as either data sources or
+sinks for any GL command that takes a pointer as an argument.
+Normally, in the absence of this extension, a pointer passed into the
+GL is simply a pointer to the user's data.  This extension defines
+a mechanism whereby this pointer is used not as a pointer to the data
+itself, but as an offset into a currently bound buffer object.  The
+buffer object ID zero is reserved, and when buffer object zero is
+bound to a given target, the commands affected by that buffer binding
+behave normally.  When a nonzero buffer ID is bound, then the pointer
+represents an offset.
+
+In the case of vertex arrays, this extension defines not merely one
+binding for all attributes, but a separate binding for each
+individual attribute.  As a result, applications can source their
+attributes from multiple buffers.  An application might, for example,
+have a model with constant texture coordinates and variable geometry.
+The texture coordinates might be retrieved from a buffer object with
+the usage mode "STATIC_DRAW", indicating to the GL that the
+application does not expect to update the contents of the buffer
+frequently or even at all, while the vertices might be retrieved from
+a buffer object with the usage mode "STREAM_DRAW", indicating that
+the vertices will be updated on a regular basis.
+
+In addition, a binding is defined by which applications can source
+index data (as used by DrawElements, DrawRangeElements, and
+MultiDrawElements) from a buffer object.  On some platforms, this
+enables very large models to be rendered with no more than a few
+small commands to the graphics device.
+
+It is expected that a future extension will allow sourcing pixel data
+from and writing pixel data to a buffer object.
+
+
+== New Procedures and Functions ==
+{{{
+void BindBufferARB(enum target, uint buffer);
+void DeleteBuffersARB(sizei n, const uint *buffers);
+void GenBuffersARB(sizei n, uint *buffers);
+boolean IsBufferARB(uint buffer);
+
+void BufferDataARB(enum target, sizeiptrARB size, const void *data,
+                   enum usage);
+void BufferSubDataARB(enum target, intptrARB offset, sizeiptrARB size,
+                      const void *data);
+void GetBufferSubDataARB(enum target, intptrARB offset,
+                         sizeiptrARB size, void *data);
+
+void *MapBufferARB(enum target, enum access);
+boolean UnmapBufferARB(enum target);
+
+void GetBufferParameterivARB(enum target, enum pname, int *params);
+void GetBufferPointervARB(enum target, enum pname, void **params);
+}}}
+
+== New Tokens ==
+
+Accepted by the <target> parameters of BindBufferARB, BufferDataARB,
+BufferSubDataARB, MapBufferARB, UnmapBufferARB,
+GetBufferSubDataARB, GetBufferParameterivARB, and
+GetBufferPointervARB:
+
+||ARRAY_BUFFER_ARB                     ||        0x8892||
+||ELEMENT_ARRAY_BUFFER_ARB             ||        0x8893||
+
+Accepted by the <pname> parameter of GetBooleanv, GetIntegerv,
+GetFloatv, and GetDoublev:
+
+||ARRAY_BUFFER_BINDING_ARB                 ||    0x8894||
+||ELEMENT_ARRAY_BUFFER_BINDING_ARB         ||    0x8895||
+||VERTEX_ARRAY_BUFFER_BINDING_ARB          ||    0x8896||
+||NORMAL_ARRAY_BUFFER_BINDING_ARB           ||   0x8897||
+||COLOR_ARRAY_BUFFER_BINDING_ARB            ||   0x8898||
+||INDEX_ARRAY_BUFFER_BINDING_ARB            ||   0x8899||
+||TEXTURE_COORD_ARRAY_BUFFER_BINDING_ARB    ||   0x889A||
+||EDGE_FLAG_ARRAY_BUFFER_BINDING_ARB        ||   0x889B||
+||SECONDARY_COLOR_ARRAY_BUFFER_BINDING_ARB  ||   0x889C||
+||FOG_COORDINATE_ARRAY_BUFFER_BINDING_ARB   ||   0x889D||
+||WEIGHT_ARRAY_BUFFER_BINDING_ARB           ||   0x889E||
+
+Accepted by the <pname> parameter of GetVertexAttribivARB:
+
+||VERTEX_ATTRIB_ARRAY_BUFFER_BINDING_ARB||0x889F||
+
+Accepted by the <usage> parameter of BufferDataARB:
+
+||STREAM_DRAW_ARB  ||0x88E0||
+||STREAM_READ_ARB   ||0x88E1||
+||STREAM_COPY_ARB  ||0x88E2||
+||STATIC_DRAW_ARB  ||0x88E4||
+||STATIC_READ_ARB  ||0x88E5||
+||STATIC_COPY_ARB  ||0x88E6||
+||DYNAMIC_DRAW_ARB  ||0x88E8||
+||DYNAMIC_READ_ARB ||0x88E9||
+||DYNAMIC_COPY_ARB  ||0x88EA||
+
+Accepted by the <access> parameter of MapBufferARB:
+
+||READ_ONLY_ARB     ||0x88B8||
+||WRITE_ONLY_ARB   ||0x88B9||
+||READ_WRITE_ARB   || 0x88BA||
+
+Accepted by the <pname> parameter of GetBufferParameterivARB:
+
+||BUFFER_SIZE_ARB ||0x8764||
+||BUFFER_USAGE_ARB||0x8765||
+||BUFFER_ACCESS_ARB ||0x88BB||
+||BUFFER_MAPPED_ARB ||0x88BC||
+
+Accepted by the <pname> parameter of GetBufferPointervARB:
+
+||BUFFER_MAP_POINTER_ARB   ||0x88BD||
+
+
+
+== Errors ==
+
+INVALID_ENUM is generated if the <target> parameter of BindBufferARB,
+BufferDataARB, BufferSubDataARB, MapBufferARB, UnmapBufferARB,
+GetBufferSubDataARB, GetBufferParameterivARB, or GetBufferPointervARB
+is not ARRAY_BUFFER_ARB or ELEMENT_ARRAY_BUFFER_ARB.
+
+INVALID_VALUE is generated if the <n> parameter of DeleteBuffersARB or
+GenBuffersARB is negative.
+
+INVALID_VALUE is generated if the <size> parameter of BufferDataARB,
+BufferSubDataARB, or GetBufferSubDataARB is negative.
+
+INVALID_OPERATION is generated if BufferDataARB, BufferSubDataARB,
+MapBufferARB, UnmapBufferARB, GetBufferSubDataARB,
+GetBufferParameterivARB, or GetBufferPointervARB is executed while
+zero is bound to the <target> parameter.
+
+OUT_OF_MEMORY may be generated if the data store of a buffer object
+cannot be allocated because the <size> argument of BufferDataARB is
+too large.
+
+OUT_OF_MEMORY may be generated when MapBufferARB is called if the
+data store of the buffer object in question cannot be mapped.  This
+may occur for a variety of system-specific reasons, such as the
+absence of sufficient remaining virtual memory.
+
+INVALID_ENUM is generated if the <usage> parameter of BufferDataARB is
+not STREAM_DRAW_ARB, STREAM_READ_ARB, STREAM_COPY_ARB, STATIC_DRAW_ARB,
+STATIC_READ_ARB, STATIC_COPY_ARB, DYNAMIC_DRAW_ARB, DYNAMIC_READ_ARB,
+or DYNAMIC_COPY_ARB.
+
+INVALID_VALUE is generated if the <offset> parameter to BufferSubDataARB
+or GetBufferSubDataARB is negative.
+
+INVALID_VALUE is generated if the <offset> and <size> parameters of
+BufferSubDataARB or GetBufferSubDataARB define a region of memory that
+extends beyond that allocated by BufferDataARB.
+
+INVALID_OPERATION is generated if MapBufferARB is executed for a
+buffer that is already mapped.
+
+INVALID_OPERATION is generated if UnmapBufferARB is executed for a
+buffer that is not currently mapped.
+
+INVALID_ENUM is generated if the <access> parameter of MapBufferARB
+is not READ_ONLY_ARB, WRITE_ONLY_ARB, or READ_WRITE_ARB.
+
+INVALID_ENUM is generated if the <pname> parameter of
+GetBufferParameterivARB is not BUFFER_SIZE_ARB, BUFFER_USAGE_ARB,
+BUFFER_ACCESS_ARB, or BUFFER_MAPPED_ARB.
+
+INVALID_ENUM is generated if the <pname> parameter of
+GetBufferPointervARB is not BUFFER_MAP_POINTER_ARB.
+
+INVALID_OPERATION may be generated if any of the commands
+defined in this extension is executed between the execution of Begin
+and the corresponding execution of End.
+
+INVALID_OPERATION is generated if a buffer object that is currently
+mapped is used as a source of GL render data, or as a destination of
+GL query data.
+
+INVALID_OPERATION is generated if BufferSubDataARB is used to modify
+the data store contents of a mapped buffer, or if GetBufferSubDataARB
+is used to query to data store contents of a mapped buffer.
+
+
+
+== New State ==
+
+|| *Get Value* || *Type* || *Get Command* || *Initial Value* ||
+||ARRAY_BUFFER_BINDING_ARB ||Z+||!GetIntegerv||0 ||
+||VERTEX_ARRAY_BUFFER_BINDING_ARB||Z+||!GetIntegerv||0||
+||NORMAL_ARRAY_BUFFER_BINDING_ARB   || Z+||!GetIntegerv ||0 ||
+||COLOR_ARRAY_BUFFER_BINDING_ARB  || Z+||!GetIntegerv|| 0 ||
+||INDEX_ARRAY_BUFFER_BINDING_ARB || Z+ ||!GetIntegerv ||0 ||
+||TEXTURE_COORD_ARRAY_BUFFER_BINDING_ARB ||Z+||!GetIntegerv||0 ||
+||EDGE_FLAG_ARRAY_BUFFER_BINDING_ARB || Z+||!GetIntegerv||0 ||
+||SECONDARY_COLOR_ARRAY_BUFFER_BINDING_ARB||Z+||!GetIntegerv ||0 ||
+||FOG_COORDINATE_ARRAY_BUFFER_BINDING_ARB ||Z+||!GetIntegerv||0||
+||WEIGHT_ARRAY_BUFFER_BINDING_ARB ||Z+||!GetIntegerv||0||
+||ELEMENT_ARRAY_BUFFER_BINDING_ARB ||Z+||!GetIntegerv ||0||
+||VERTEX_ATTRIB_ARRAY_BUFFER_BINDING_ARB ||16+ x Z+ ||GetVertexAttribivARB||0||
+
+XXX need to add buffer state for variant arrays
+
+
+|| *Get Value* || *Type* || *Get Command* || *Initial Value* ||
+||(buffer data)||BMU||GetBufferSubDataARB|| ||
+||BUFFER_SIZE_ARB ||Z+||GetBufferParameterivARB ||0 ||
+||BUFFER_USAGE_ARB||Z9||GetBufferParameterivARB||STATIC_DRAW_ARB||
+||BUFFER_ACCESS_ARB ||Z3||GetBufferParameterivARB ||READ_WRITE_ARB||
+||BUFFER_MAPPED_ARB|| B||GetBufferParameterivARB||FALSE||
+||BUFFER_MAP_POINTER_ARB|| Y ||GetBufferPointervARB|| NULL||
+
+
+== New Implementation Dependent State ==
+
+(none)
+
+

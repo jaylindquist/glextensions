@@ -1,0 +1,67 @@
+#summary GL_SGIX_shadow
+
+== Contents ==
+
+  * [GL_SGIX_shadow#Dependencies Dependencies]
+  * [GL_SGIX_shadow#Overview Overview]
+  * [GL_SGIX_shadow#New_Procedures_and_Functions New Procedures and Functions]
+  * [GL_SGIX_shadow#New_Tokens New Tokens]
+  * [GL_SGIX_shadow#Errors Errors]
+  * [GL_SGIX_shadow#New_State New State]
+  * [GL_SGIX_shadow#New_Implementation_Dependent_State New Implementation Dependent State]
+
+== Dependencies ==
+
+None.
+
+
+== Overview ==
+
+This extension defines two new operations to be performed on texture
+values before they are passed on to the filtering subsystem.  These
+operations perform either a <= or >= test on the value from texture
+memory and the iterated R value, and return 1.0 or 0.0 if the test
+passes or fails, respectively.
+
+
+== New Procedures and Functions ==
+
+None
+
+
+== New Tokens ==
+
+Accepted by the <pname> parameter of TexParameterf, TexParameteri,
+TexParameterfv, TexParameteriv, GetTexParameterfv, and
+GetTexParameteriv, with the <pname> parameter of TRUE or FALSE:
+
+||TEXTURE_COMPARE_SGIX||
+
+Accepted by the <pname> parameter of TexParameterf, TexParameteri,
+TexParameterfv, TexParameteriv, GetTexParameterfv, and
+GetTexParameteriv:
+
+||TEXTURE_COMPARE_OPERATOR_SGIX||
+
+Accepted by the <param> parameter of TexParameterf and TexParameteri,
+and by the <params> parameter of TexParameterfv and TexParameteriv,
+when their <pname> parameter is TEXTURE_COMPARE_OPERATOR_SGIX:
+
+||TEXTURE_LEQUAL_R_SGIX||
+||TEXTURE_GEQUAL_R_SGIX||
+
+
+== Errors ==
+
+INVALID_OPERATION is generated if TexParameter[if] parameter <pname>
+is TEXTURE_COMPARE_OPERATOR_SGIX and parameter <param> is not
+TEXTURE_LEQUAL_R_SGIX,or TEXTURE_GEQUAL_R_SGIX.
+
+
+== New State ==
+
+
+== New Implementation Dependent State ==
+
+None
+

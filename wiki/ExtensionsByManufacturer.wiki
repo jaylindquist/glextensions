@@ -83,6 +83,7 @@ List of OpenGL Extensions by manufacturer
   * [GL_EXT_blend_subtract]
   * [GL_EXT_Cg_shader]
   * [GL_EXT_compiled_vertex_array]
+  * [GL_EXT_convolution]
   * [GL_EXT_copy_texture]
   * [GL_EXT_depth_bounds_test]
   * [GL_EXT_draw_buffers2]
@@ -96,6 +97,7 @@ List of OpenGL Extensions by manufacturer
   * [GL_EXT_geometry_shader4]
   * [GL_EXT_gpu_program_parameters]
   * [GL_EXT_gpu_shader4]
+  * [GL_EXT_histogram]
   * [GL_EXT_multi_draw_arrays]
   * [GL_EXT_packed_depth_stencil]
   * [GL_EXT_packed_float]
@@ -208,6 +210,7 @@ List of OpenGL Extensions by manufacturer
 
 == Silicon Graphics ==
 
+  * [GL_SGI_color_table]
   * [GL_SGIS_detail_texture]
   * [GL_SGIS_generate_mipmap]
   * [GL_SGIS_sharpen_texture]

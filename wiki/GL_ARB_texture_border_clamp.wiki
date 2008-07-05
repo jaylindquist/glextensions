@@ -41,8 +41,8 @@ None.
 
 == New Tokens ==
 
-Accepted by the <param> parameter of TexParameteri and TexParameterf, and
-by the <params> parameter of TexParameteriv and TexParameterfv, when their
+Accepted by the <param> parameter of !TexParameteri and !TexParameterf, and
+by the <params> parameter of !TexParameteriv and !TexParameterfv, when their
 <pname> parameter is TEXTURE_WRAP_S, TEXTURE_WRAP_T, or TEXTURE_WRAP_R:
 
 ||CLAMP_TO_BORDER_ARB        ||                     0x812D||

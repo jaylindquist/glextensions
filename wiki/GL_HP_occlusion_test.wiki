@@ -1,0 +1,55 @@
+#summary GL_HP_occlusion_test
+
+== Contents ==
+
+  * [GL_HP_occlusion_test#Overview Overview]
+  * [GL_HP_occlusion_test#New_Procedures_and_Functions New Procedures and Functions]
+  * [GL_HP_occlusion_test#New_Tokens New Tokens]
+  * [GL_HP_occlusion_test#New_State New State]
+
+== Overview ==
+
+This extension defines a mechanism whereby an application can determine the
+non-visibility of some set of geometry based on whether an encompassing set
+of geometry is non-visible. In general this feature does not guarantee that
+the target geometry is visible when the test fails, but is accurate with
+regard to non-visibility.
+
+Occlusion culling allows an application to render some geometry and at the
+completion of the rendering to determine if any of the geometry could or did
+modify the depth buffer, ie. a depth buffer test succeeded. The idea being
+that if the application renders a bounding box of some geometry in this mode
+and the occlusion test failed (ie. the bounding box was depth culled due to
+the current contents of the depth buffer) then the geometry enclosed by the
+bounding box would also be depth culled. Occlusion culling operates
+independently of the current rendering state (ie. when occlusion culling is
+enabled fragments are generated and the depth and/or color buffer may be
+updated). To prevent updating the depth/color buffers the application must
+disable updates to these buffers. As a side effect of reading the occlusion
+result the internal result state is cleared, setting it up for a new
+bounding box test.
+
+
+== New Procedures and Functions ==
+
+none
+
+
+== New Tokens ==
+
+Accepted by the <cap> parameter of Enable, Disable, and !IsEnabled, by
+the <pname> of !GetBooleanv, !GetIntegerv, !GetFloatv, and !GetDoublev :
+
+||OCCLUSION_TEST_HP  || 0x???? ||
+
+Accepted by the <pname> of GetBooleanv, GetIntegerv, GetFloatv, and
+GetDoublev :
+
+|| OCCLUSION_TEST_RESULT_HP || 0x???? ||
+
+
+== New State ==
+
+Boolean result of occlusion test, initial value of FALSE. The result is
+set to FALSE as a side effect of reading it (executing a Get call).
+

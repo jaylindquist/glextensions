@@ -33,35 +33,35 @@ are not a power of 2.
 
 == New Procedures and Functions ==
 
-void TexSubImage1DEXT(enum target,
-int level,
-int xoffset,
-sizei width,
-enum format,
-enum type,
-const void* pixels);
+{{{void TexSubImage1DEXT(enum target,
+                      int level,
+                      int xoffset,
+                      sizei width,
+                      enum format,
+                      enum type,
+                      const void* pixels);
 
 void TexSubImage2DEXT(enum target,
-int level,
-int xoffset,
-int yoffset,
-sizei width,
-sizei height,
-enum format,
-enum type,
-const void* pixels);
+                      int level,
+                      int xoffset,
+                      int yoffset,
+                      sizei width,
+                      sizei height,
+                      enum format,
+                      enum type,
+                      const void* pixels);
 
 void TexSubImage3DEXT(enum target,
-int level,
-int xoffset,
-int yoffset,
-int zoffset,
-sizei width,
-sizei height,
-sizei depth,
-enum format,
-enum type,
-const void* pixels);
+                      int level,
+                      int xoffset,
+                      int yoffset,
+                      int zoffset,
+                      sizei width,
+                      sizei height,
+                      sizei depth,
+                      enum format,
+                      enum type,
+                      const void* pixels);}}}
 
 
 == New Tokens ==

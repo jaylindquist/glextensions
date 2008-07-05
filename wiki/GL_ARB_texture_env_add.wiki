@@ -1,0 +1,60 @@
+#summary GL_ARB_texture_env_add
+
+== Contents ==
+
+  * [GL_ARB_texture_env_add#Dependencies Dependencies]
+  * [GL_ARB_texture_env_add#Overview Overview]
+  * [GL_ARB_texture_env_add#New_Procedures_and_Functions New Procedures and Functions]
+  * [GL_ARB_texture_env_add#New_Tokens New Tokens]
+  * [GL_ARB_texture_env_add#Errors Errors]
+  * [GL_ARB_texture_env_add#New_State New State]
+  * [GL_ARB_texture_env_add#New_Implementation_Dependent_State New Implementation Dependent State]
+
+== Dependencies ==
+
+None
+
+
+== Overview ==
+
+New texture environment function ADD is supported with the following
+equation:
+Cv = Cf + Ct
+
+New function may be specified by calling TexEnv with ADD token.
+
+One possible application is to add a specular highlight texture to
+a Gouraud-shaded primitive to emulate Phong shading, in a single
+pass.
+
+
+
+== New Procedures and Functions ==
+
+None
+
+
+== New Tokens ==
+
+Accepted by the <params> parameter of TexEnvf, TexEnvi, TexEnvfv, and
+TexEnvfi when the <pname> parameter value is GL_TEXTURE_ENV_MODE
+
+ADD
+
+
+== Errors ==
+
+None
+
+
+== New State ==
+
+The Type of TEXTURE_ENV_MODE in Table F.2 should be changed to
+
+1 * xZ5
+
+
+== New Implementation Dependent State ==
+
+None
+

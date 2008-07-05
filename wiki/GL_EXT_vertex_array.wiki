@@ -76,9 +76,9 @@ void GetPointervEXT(enum pname,
 
 == New Tokens ==
 
-Accepted by the <cap> parameter of Enable, Disable, and IsEnabled, and
-by the <pname> parameter of GetBooleanv, GetIntegerv, GetFloatv, and
-GetDoublev:
+Accepted by the <cap> parameter of Enable, Disable, and !IsEnabled, and
+by the <pname> parameter of !GetBooleanv, !GetIntegerv, !GetFloatv, and
+!GetDoublev:
 
 ||VERTEX_ARRAY_EXT            ||   0x8074||
 ||NORMAL_ARRAY_EXT            ||   0x8075||

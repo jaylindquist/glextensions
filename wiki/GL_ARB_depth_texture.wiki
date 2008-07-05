@@ -40,25 +40,25 @@ None
 Accepted by the <internalFormat> parameter of TexImage1D, TexImage2D,
 CopyTexImage1D and CopyTexImage2D:
 
-DEPTH_COMPONENT
-DEPTH_COMPONENT16_ARB       0x81A5  (same as DEPTH_COMPONENT16_SGIX)
-DEPTH_COMPONENT24_ARB       0x81A6  (same as DEPTH_COMPONENT24_SGIX)
-DEPTH_COMPONENT32_ARB       0x81A7  (same as DEPTH_COMPONENT32_SGIX)
+||DEPTH_COMPONENT || ||
+||DEPTH_COMPONENT16_ARB     ||  0x81A5  (same as DEPTH_COMPONENT16_SGIX)||
+||DEPTH_COMPONENT24_ARB     ||  0x81A6  (same as DEPTH_COMPONENT24_SGIX)||
+||DEPTH_COMPONENT32_ARB     ||  0x81A7  (same as DEPTH_COMPONENT32_SGIX)||
 
 Accepted by the <format> parameter of GetTexImage, TexImage1D,
 TexImage2D, TexSubImage1D, and TexSubImage2D:
 
-DEPTH_COMPONENT
+||DEPTH_COMPONENT||
 
 Accepted by the <pname> parameter of GetTexLevelParameterfv and
 GetTexLevelParameteriv:
 
-TEXTURE_DEPTH_SIZE_ARB      0x884A
+||TEXTURE_DEPTH_SIZE_ARB     || 0x884A||
 
 Accepted by the <pname> parameter of TexParameterf, TexParameteri,
 TexParameterfv, TexParameteriv, GetTexParameterfv, and GetTexParameteriv:
 
-DEPTH_TEXTURE_MODE_ARB      0x884B
+||DEPTH_TEXTURE_MODE_ARB   ||   0x884B||
 
 
 == Errors ==
@@ -127,4 +127,3 @@ and GetMinmax).
 == New Implementation Dependent State ==
 
 None
-

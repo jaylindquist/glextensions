@@ -1,0 +1,201 @@
+#summary GL_ARB_pixel_buffer_object
+
+== Contents ==
+
+  * [GL_ARB_pixel_buffer_object#Dependencies Dependencies]
+  * [GL_ARB_pixel_buffer_object#Overview Overview]
+  * [GL_ARB_pixel_buffer_object#New_Procedures_and_Functions New Procedures and Functions]
+  * [GL_ARB_pixel_buffer_object#New_Tokens New Tokens]
+  * [GL_ARB_pixel_buffer_object#Errors Errors]
+  * [GL_ARB_pixel_buffer_object#New_State New State]
+  * [GL_ARB_pixel_buffer_object#New_Implementation_Dependent_State New Implementation Dependent State]
+
+== Dependencies ==
+
+Written based on the wording of the OpenGL 2.0 specification.
+
+Assumes support for (at least) OpenGL 1.5 or the
+[GL_ARB_vertex_buffer_object] extension.
+
+[GL_NV_pixel_data_range] affects the definition of this extension.
+
+[GL_EXT_pixel_buffer_object] interacts with this extension.
+
+
+== Overview ==
+
+This extension expands on the interface provided by the
+ARB_vertex_buffer_object extension (and later integrated into OpenGL
+1.5) in order to permit buffer objects to be used not only with vertex
+array data, but also with pixel data.  The intent is to provide more
+acceleration opportunities for OpenGL pixel commands.
+
+While a single buffer object can be bound for both vertex arrays and
+pixel commands, we use the designations vertex buffer object (VBO)
+and pixel buffer object (PBO) to indicate their particular usage in
+a given situation.
+
+Recall that buffer objects conceptually are nothing more than arrays
+of bytes, just like any chunk of memory.  ARB_vertex_buffer_object
+allows GL commands to source data from a buffer object by binding the
+buffer object to a given target and then overloading a certain set of
+GL commands' pointer arguments to refer to offsets inside the buffer,
+rather than pointers to user memory.  An offset is encoded in a
+pointer by adding the offset to a null pointer.
+
+This extension does not add any new functionality to buffer objects
+themselves.  It simply adds two new targets to which buffer objects
+can be bound: GL_PIXEL_PACK_BUFFER and GL_PIXEL_UNPACK_BUFFER.  When a
+buffer object is bound to the GL_PIXEL_PACK_BUFFER target, commands
+such as glReadPixels pack (write) their data into a buffer object.
+When a buffer object is bound to the GL_PIXEL_UNPACK_BUFFER target,
+commands such as glDrawPixels and glTexImage2D unpack (read) their
+data from a buffer object.
+
+There are a several approaches to improve graphics performance
+with PBOs.  Some of the most interesting approaches are:
+
+- Streaming texture updates:  If the application uses
+glMapBuffer/glUnmapBuffer to write its data for glTexSubImage into
+a buffer object, at least one of the data copies usually required
+to download a texture can be eliminated, significantly increasing
+texture download performance.
+
+- Streaming draw pixels: When glDrawPixels sources client memory,
+OpenGL says the client memory can be modified immediately after the
+glDrawPixels command returns without disturbing the drawn image.
+This typically necessitates unpacking and copying the image prior
+to glDrawPixels returning.  However, when using glDrawPixels with
+a pixel pack buffer object, glDrawPixels may return prior to image
+unpacking because future modification of the buffer data requires
+explicit commands (glMapBuffer, glBufferData, or glBufferSubData).
+
+- Asynchronous glReadPixels:  If an application needs to read back a
+number of images and process them with the CPU, the existing GL
+interface makes it nearly impossible to pipeline this operation.
+The driver will typically send the hardware a readback command
+when glReadPixels is called, and then wait for all of the data to
+be available before returning control to the application.  Then,
+the application can either process the data immediately or call
+glReadPixels again; in neither case will the readback overlap with
+the processing.  If the application issues several readbacks
+into several buffer objects, however, and then maps each one to
+process its data, then the readbacks can proceed in parallel with
+the data processing.
+
+- Render to vertex array:  The application can use a fragment
+program to render some image into one of its buffers, then read
+this image out into a buffer object via glReadPixels.  Then, it can
+use this buffer object as a source of vertex data.
+
+
+== New Procedures and Functions ==
+
+None.
+
+
+
+== New Tokens ==
+
+Accepted by the <target> parameters of !BindBuffer, !BufferData,
+!BufferSubData, !MapBuffer, !UnmapBuffer,!GetBufferSubData,
+!GetBufferParameteriv, and !GetBufferPointerv:
+
+||PIXEL_PACK_BUFFER_ARB           ||0x88EB||
+||PIXEL_UNPACK_BUFFER_ARB         || 0x88EC||
+
+Accepted by the <pname> parameter of !GetBooleanv, !GetIntegerv,
+!GetFloatv, and !GetDoublev:
+
+||PIXEL_PACK_BUFFER_BINDING_ARB     ||  0x88ED||
+||PIXEL_UNPACK_BUFFER_BINDING_ARB  ||    0x88EF||
+
+
+
+== Errors ==
+
+INVALID_ENUM is generated if the <target> parameter of
+!BindBuffer, !BufferData, !BufferSubData, !MapBuffer, !UnmapBuffer,
+!GetBufferSubData, !GetBufferParameteriv, or !GetBufferPointerv is not
+one of ARRAY_BUFFER, ELEMENT_ARRAY_BUFFER, PIXEL_PACK_BUFFER_ARB,
+or PIXEL_UNPACK_BUFFER_ARB.
+
+INVALID_OPERATION is generated if Bitmap, !ColorSubTable, !ColorTable,
+CompressedTexImage1D, CompressedTexImage2D, CompressedTexImage3D,
+CompressedTexSubImage1D, CompressedTexSubImage2D,
+CompressedTexSubImage3D, ConvolutionFilter1D, ConvolutionFilter2D,
+!DrawPixels, !PixelMapfv, !PixelMapuiv, !PixelMapusv, !PolygonStipple,
+SeparableFilter2D, TexImage1D, TexImage2D, TexImage3D, TexSubImage1D,
+TexSubImage2D, or TexSubImage3D would unpack (read) data from the
+currently bound PIXEL_UNPACK_BUFFER_ARB buffer object such that
+the memory reads required for the command would exceed the memory
+(data store) size of the buffer object.
+
+INVALID_OPERATION is generated if !GetColorTable,
+!GetCompressedTexImage, !GetConvolutionFilter, !GetHistogram, !GetMinmax,
+!GetPixelMapfv, !GetPixelMapuiv, !GetPixelMapusv, !GetPolygonStipple,
+!GetSeparableFilter, !GetTexImage, or !ReadPixels would pack (write) data
+to the currently bound PIXEL_PACK_BUFFER_ARB buffer object such that
+the memory writes required for the command would exceed the memory
+(data store) size of the buffer object.
+
+INVALID_OPERATION is generated by !GetColorTable, !GetConvolutionFilter,
+!GetHistogram, !GetMinmax, !GetSeparableFilter, !GetTexImage and !ReadPixels
+if the current PIXEL_PACK_BUFFER_BINDING_ARB value is non-zero and the
+table/image/values/span/img/data parameter is not evenly divisible
+into the number of basic machine units needed to store in memory a
+datum indicated by the type parameter.
+
+INVALID_OPERATION is generated by !ColorTable, !ColorSubTable,
+ConvolutionFilter2D, ConvolutionFilter1D, SeparableFilter2D,
+TexImage1D, TexImage2D, TexImage3D, TexSubImage1D,
+TexSubImage2D, TexSubImage3D, and !DrawPixels if the current
+PIXEL_UNPACK_BUFFER_BINDING_ARB value is non-zero and the data
+parameter is not evenly divisible into the number of basic machine
+units needed to store in memory a datum indicated by the type
+parameter.
+
+INVALID_OPERATION is generated by !GetPixelMapfv if the current
+PIXEL_PACK_BUFFER_BINDING_ARB value is non-zero and the data parameter
+is not evenly divisible into the number of basic machine units needed
+to store in memory a float datum.
+
+INVALID_OPERATION is generated by !GetPixelMapuiv if the current
+PIXEL_PACK_BUFFER_BINDING_ARB value is non-zero and the data parameter
+is not evenly divisible into the number of basic machine units needed
+to store in memory a uint datum.
+
+INVALID_OPERATION is generated by !GetPixelMapusv if the current
+PIXEL_PACK_BUFFER_BINDING_ARB value is non-zero and the data parameter
+is not evenly divisible into the number of basic machine units needed
+to store in memory a ushort datum.
+
+INVALID_OPERATION is generated by !PixelMapfv if the current
+PIXEL_UNPACK_BUFFER_BINDING_ARB value is non-zero and the data
+parameter is not evenly divisible into the number of basic machine
+units needed to store in memory a float datum.
+
+INVALID_OPERATION is generated by !PixelMapuiv if the current
+PIXEL_UNPACK_BUFFER_BINDING_ARB value is non-zero and the data
+parameter is not evenly divisible into the number of basic machine
+units needed to store in memory a uint datum.
+
+INVALID_OPERATION is generated by !PixelMapusv if the current
+PIXEL_UNPACK_BUFFER_BINDING_ARB value is non-zero and the data
+parameter is not evenly divisible into the number of basic machine
+units needed to store in memory a ushort datum.
+
+
+
+== New State ==
+       
+|| *Get Value* || *Type* || *Get Command* || *Initial Value* ||
+||PIXEL_PACK_BUFFER_BINDING_ARB ||Z+ ||!GetIntegerv ||0||
+||PIXEL_UNPACK_BUFFER_BINDING_ARB||Z+||!GetIntegerv ||0||
+
+
+== New Implementation Dependent State ==
+
+(none)
+
+

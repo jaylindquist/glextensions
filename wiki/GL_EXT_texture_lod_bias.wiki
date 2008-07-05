@@ -1,0 +1,70 @@
+#summary GL_EXT_texture_lod_bias
+
+== Contents ==
+
+  * [GL_EXT_texture_lod_bias#Dependencies Dependencies]
+  * [GL_EXT_texture_lod_bias#Overview Overview]
+  * [GL_EXT_texture_lod_bias#New_Procedures_and_Functions New Procedures and Functions]
+  * [GL_EXT_texture_lod_bias#New_Tokens New Tokens]
+  * [GL_EXT_texture_lod_bias#Errors Errors]
+  * [GL_EXT_texture_lod_bias#New_State New State]
+
+== Dependencies ==
+
+Written based on the wording of the OpenGL 1.2 specification.
+
+Affects [GL_ARB_multitexture].
+
+
+== Overview ==
+
+OpenGL computes a texture level-of-detail parameter, called lambda
+in the GL specification, that determines which mipmap levels and
+their relative mipmap weights for use in mipmapped texture filtering.
+
+This extension provides a means to bias the lambda computation
+by a constant (signed) value.  This bias can provide a way to blur
+or pseudo-sharpen OpenGL's standard texture filtering.
+
+This blurring or pseudo-sharpening may be useful for special effects
+(such as depth-of-field effects) or image processing techniques
+(where the mipmap levels act as pre-downsampled image versions).
+On some implementations, increasing the texture lod bias may improve
+texture filtering performance (at the cost of texture bluriness).
+
+The extension mimics functionality found in Direct3D.
+
+
+== New Procedures and Functions ==
+
+None
+
+
+== New Tokens ==
+
+Accepted by the <target> parameters of !GetTexEnvfv, !GetTexEnviv,
+!TexEnvi, !TexEnvf, !TexEnviv, and !TexEnvfv:
+
+||TEXTURE_FILTER_CONTROL_EXT     ||     0x8500||
+
+When the <target> parameter of !GetTexEnvfv, !GetTexEnviv, !TexEnvi,
+!TexEnvf, !TexEnviv, and !TexEnvfv is TEXTURE_FILTER_CONTROL_EXT, then
+the value of <pname> may be:
+
+||TEXTURE_LOD_BIAS_EXT   || 0x8501||
+
+Accepted by the <pname> parameters of !GetBooleanv, !GetIntegerv,
+!GetFloatv, and !GetDoublev:
+
+||MAX_TEXTURE_LOD_BIAS_EXT || 0x84FD||
+
+
+== Errors ==
+
+INVALID_ENUM is generated when TexEnv is called with a <pname> of
+TEXTURE_FILTER_CONTROL_EXT and the value of <param> or what is pointed to
+by <params> is not TEXTURE_LOD_BIAS_EXT.
+
+
+== New State ==
+

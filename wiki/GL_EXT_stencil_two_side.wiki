@@ -1,0 +1,76 @@
+#summary GL_EXT_stencil_two_side
+
+== Contents ==
+
+  * [GL_EXT_stencil_two_side#Dependencies Dependencies]
+  * [GL_EXT_stencil_two_side#Overview Overview]
+  * [GL_EXT_stencil_two_side#New_Procedures_and_Functions New Procedures and Functions]
+  * [GL_EXT_stencil_two_side#New_Tokens New Tokens]
+  * [GL_EXT_stencil_two_side#Errors Errors]
+  * [GL_EXT_stencil_two_side#New_State New State]
+
+== Dependencies ==
+
+Written based on the OpenGL 1.3 specification.
+
+[GL_NV_packed_depth_stencil] affects the definition of this extension.
+
+OpenGL 2.0 affects the definition of this extension.
+
+
+== Overview ==
+
+This extension provides two-sided stencil testing where the
+stencil-related state (stencil operations, reference value, compare
+mask, and write mask) may be different for front- and back-facing
+polygons.  Two-sided stencil testing may improve the performance
+of stenciled shadow volume and Constructive Solid Geometry (CSG)
+rendering algorithms.
+
+
+== New Procedures and Functions ==
+{{{
+void ActiveStencilFaceEXT(enum face);
+}}}
+
+== New Tokens ==
+
+Accepted by the <cap> parameter of Enable, Disable, and !IsEnabled,
+and by the <pname> parameter of !GetBooleanv, !GetIntegerv,
+!GetFloatv, and !GetDoublev:
+
+||STENCIL_TEST_TWO_SIDE_EXT|| 0x8910||
+
+Accepted by the <face> parameter of ActiveStencilFaceEXT:
+
+||FRONT||
+||BACK||
+
+Accepted by the <pname> parameters of !GetBooleanv, !GetIntegerv,
+!GetFloatv, and !GetDoublev:
+
+||ACTIVE_STENCIL_FACE_EXT || 0x8911||
+
+
+== Errors ==
+
+None
+
+
+== New State ==
+
+|| *Get Value* || *Type* || *Get Command* || *Initial Value* || *Description* ||
+||STENCIL_FUNC||2xZ8||!GetIntegerv||ALWAYS|| Stencil function||
+||STENCIL_VALUE_MASK|| 2xZ+||!GetIntegerv ||1's|| Stencil mask||
+||STENCIL_REF||2xZ+ ||!GetIntegerv|| 0 ||Stencil reference value||
+||STENCIL_FAIL||2xZ6||!GetIntegerv||KEEP ||Stencil fail action ||
+||STENCIL_PASS_DEPTH_FAIL||2xZ6||!GetIntegerv||KEEP|| Stencil depth buffer fail action||
+||STENCIL_PASS_DEPTH_PASS||2xZ6||!GetIntegerv||KEEP ||Stencil depth buffer pass action||
+
+|| *Get Value* || *Type* || *Get Command* || *Initial Value* || *Description* ||
+||STENCIL_TEST_TWO_SIDE_EXT|| B||!IsEnabled ||False||Two-sided stencil test enable ||
+||ACTIVE_STENCIL_FACE_EXT||Z2||!GetIntegerv||FRONT||Active stencil face selector||
+
+
+|| *Get Value* || *Type* || *Get Command* || *Initial Value* || *Description* ||
+||STENCIL_WRITE_MASK||2xZ+||!GetIntegerv||1's||Stencil buffer writemask||

@@ -1,0 +1,71 @@
+#summary GL_EXT_blend_func_separate
+
+== Contents ==
+
+  * [GL_EXT_blend_func_separate#Dependencies Dependencies]
+  * [GL_EXT_blend_func_separate#Overview Overview]
+  * [GL_EXT_blend_func_separate#New_Procedures_and_Functions New Procedures and Functions]
+  * [GL_EXT_blend_func_separate#New_Tokens New Tokens]
+  * [GL_EXT_blend_func_separate#Errors Errors]
+  * [GL_EXT_blend_func_separate#New_State New State]
+  * [GL_EXT_blend_func_separate#New_Implementation_Dependent_State New Implementation Dependent State]
+
+== Dependencies ==
+
+None
+
+
+== Overview ==
+
+Blending capability is extended by defining a function that allows
+independent setting of the RGB and alpha blend factors for blend
+operations that require source and destination blend factors.  It
+is not always desired that the blending used for RGB is also applied
+to alpha.
+
+
+== New Procedures and Functions ==
+{{{
+void BlendFuncSeparateEXT(enum sfactorRGB,
+                          enum dfactorRGB,
+                          enum sfactorAlpha,
+                          enum dfactorAlpha);
+}}}
+
+== New Tokens ==
+
+Accepted by the <pname> parameter of !GetBooleanv, !GetIntegerv,
+!GetFloatv, and !GetDoublev:
+
+||BLEND_DST_RGB_EXT   ||  0x80C8||
+||BLEND_SRC_RGB_EXT   ||0x80C9||
+||BLEND_DST_ALPHA_EXT ||0x80CA||
+||BLEND_SRC_ALPHA_EXT ||0x80CB||
+
+
+
+== Errors ==
+
+GL_INVALID_ENUM is generated if either sfactorRGB, dfactorRGB,
+sfactorAlpha, or dfactorAlpha is not an accepted value.
+
+GL_INVALID_OPERATION is generated if glBlendFunc is executed between
+the execution of glBegin and the corresponding execution of glEnd.
+
+
+== New State ==
+
+The get values BLEND_SRC and BLEND_DST return the RGB source and
+destination factor, respectively.
+
+
+|| *Get Value* || *Get Command* || *Type* || *Initial Value* ||
+||BLEND_SRC_RGB_EXT    || !GetFloatv  ||   Z ||    ONE ||
+||BLEND_DST_RGB_EXT    || !GetFloatv  ||   Z ||    ZERO||
+||BLEND_SRC_ALPHA_EXT  || !GetFloatv  ||   Z ||    ONE ||
+||BLEND_DST_ALPHA_EXT   || !GetFloatv ||   Z ||    ZERO||
+
+
+== New Implementation Dependent State ==
+
+None

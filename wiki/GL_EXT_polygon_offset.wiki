@@ -7,6 +7,7 @@
   * [GL_EXT_polygon_offset#New_Procedures_and_Functions New Procedures and Functions]
   * [GL_EXT_polygon_offset#New_Tokens New Tokens]
   * [GL_EXT_polygon_offset#Errors Errors]
+  * [GL_EXT_polygon_offset#New_State New State]
   * [GL_EXT_polygon_offset#New_Implementation_Dependent_State New Implementation Dependent State]
 
 == Dependencies ==

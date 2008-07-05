@@ -46,18 +46,18 @@ boolean IsTextureEXT(uint texture);
 
 == New Tokens ==
 
-Accepted by the <pname> parameters of TexParameteri, TexParameterf,
-TexParameteriv, TexParameterfv, GetTexParameteriv, and GetTexParameterfv:
+Accepted by the <pname> parameters of !TexParameteri, !TexParameterf,
+!TexParameteriv, !TexParameterfv, !GetTexParameteriv, and !GetTexParameterfv:
 
 ||TEXTURE_PRIORITY_EXT            ||0x8066||
 
-Accepted by the <pname> parameters of GetTexParameteriv and
-GetTexParameterfv:
+Accepted by the <pname> parameters of !GetTexParameteriv and
+!GetTexParameterfv:
 
 ||TEXTURE_RESIDENT_EXT            ||0x8067||
 
-Accepted by the <pname> parameters of GetBooleanv, GetIntegerv,
-GetFloatv, and GetDoublev:
+Accepted by the <pname> parameters of !GetBooleanv, !GetIntegerv,
+!GetFloatv, and !GetDoublev:
 
 ||TEXTURE_1D_BINDING_EXT          ||0x8068||
 ||TEXTURE_2D_BINDING_EXT          ||0x8069||

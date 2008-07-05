@@ -1,0 +1,59 @@
+#summary GL_IBM_rasterpos_clip
+
+== Contents ==
+
+  * [GL_IBM_rasterpos_clip#Dependencies Dependencies]
+  * [GL_IBM_rasterpos_clip#Overview Overview]
+  * [GL_IBM_rasterpos_clip#New_Procedures_and_Functions New Procedures and Functions]
+  * [GL_IBM_rasterpos_clip#New_Tokens New Tokens]
+  * [GL_IBM_rasterpos_clip#Errors Errors]
+  * [GL_IBM_rasterpos_clip#New_State New State]
+  * [GL_IBM_rasterpos_clip#New_Implementation_Dependent_State New Implementation Dependent State]
+
+== Dependencies ==
+
+None
+
+
+== Overview ==
+
+IBM_rasterpos_clip extends the semantics of the RasterPos functions.  It
+provides an enable that allows a raster position that would normally be
+clipped to be treated as a valid (albeit out-of-viewport) position.
+
+This extension allows applications to specify geometry-aligned pixel
+primitives that may be partially off-screen.  These primitives are
+tested on a pixel-by-pixel basis without being rejected completely
+because of an invalid raster position.
+
+
+== New Procedures and Functions ==
+
+None
+
+
+== New Tokens ==
+
+Accepted by the <target> parameter of Enable and Disable and the <value>
+parameter of IsEnabled, GetBooleanv, GetIntegerv, GetFloatv, GetDoublev:
+
+||RASTER_POSITION_UNCLIPPED_IBM || 103010 ||
+
+The enum is subject to change if this proposal attracts interest from
+other vendors and becomes an EXT extension.
+
+
+== Errors ==
+
+None
+
+
+== New State ==
+
+|| *Get Value* || *Type* || *Get Command* || *Value* ||
+||RASTER_POSITION_UNCLIPPED_IBM || B ||IsEnabled||False||
+
+
+== New Implementation Dependent State ==
+
+None

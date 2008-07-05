@@ -68,7 +68,7 @@ alpha(Pe) = Alpha * factor(Pe)
 where 'Alpha' comes with the point color (possibly modified by
 lighting).
 
-'Threshold_Area' above is in area units. Thus, it is proportional to
+'!Threshold_Area' above is in area units. Thus, it is proportional to
 the square of the threshold provided by the programmer through this
 extension.
 

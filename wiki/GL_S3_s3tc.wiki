@@ -1,0 +1,51 @@
+#summary GL_S3_s3tc
+
+== Contents ==
+
+  * [GL_S3_s3tc#Dependencies Dependencies]
+  * [GL_S3_s3tc#Overview Overview]
+  * [GL_S3_s3tc#New_Procedures_and_Functions New Procedures and Functions]
+  * [GL_S3_s3tc#New_Tokens New Tokens]
+  * [GL_S3_s3tc#Errors Errors]
+  * [GL_S3_s3tc#New_State New State]
+
+== Dependencies ==
+
+OpenGL 1.1 is required.
+
+The extension is not specified; only the new tokens are known.
+
+
+== Overview ==
+
+This extension allows specifying texture data in compressed S3TC
+format.
+
+
+== New Procedures and Functions ==
+
+None.
+
+
+== New Tokens ==
+
+Accepted by the ??? parameter of ??? (presumably by the <format>
+argument of TexImage2D?):
+
+||RGB_S3TC		||0x83A0||
+||RGB4_S3TC		||0x83A1||
+||RGBA_S3TC		||0x83A2||
+||RGBA4_S3TC		||0x83A3||
+||RGBA_DXT5_S3TC	||0x83A4||
+||RGBA4_DXT5_S3TC	||0x83A5||
+
+
+== Errors ==
+
+Unknown.
+
+
+== New State ==
+
+Unknown.
+

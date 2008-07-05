@@ -1,0 +1,71 @@
+#summary GL_EXT_fog_coord
+
+== Contents ==
+
+  * [GL_EXT_fog_coord#Dependencies Dependencies]
+  * [GL_EXT_fog_coord#Overview Overview]
+  * [GL_EXT_fog_coord#New_Procedures_and_Functions New Procedures and Functions]
+  * [GL_EXT_fog_coord#New_Tokens New Tokens]
+  * [GL_EXT_fog_coord#Errors Errors]
+  * [GL_EXT_fog_coord#New_State New State]
+
+== Dependencies ==
+
+OpenGL 1.1 is required.
+
+The extension is written against the OpenGL 1.2 Specification.
+
+
+== Overview ==
+
+This extension allows specifying an explicit per-vertex fog
+coordinate to be used in fog computations, rather than using a
+fragment depth-based fog equation.
+
+
+== New Procedures and Functions ==
+{{{
+void FogCoord[fd]EXT(T coord)
+void FogCoord[fd]vEXT(T coord)
+void FogCoordPointerEXT(enum type, sizei stride, void *pointer)
+}}}
+
+== New Tokens ==
+
+Accepted by the <pname> parameter of Fogi and Fogf:
+
+||FOG_COORDINATE_SOURCE_EXT ||0x8450||
+
+Accepted by the <param> parameter of Fogi and Fogf:
+
+||FOG_COORDINATE_EXT    || 0x8451||
+||FRAGMENT_DEPTH_EXT    ||  0x8452||
+
+Accepted by the <pname> parameter of !GetBooleanv, !GetIntegerv,
+!GetFloatv, and !GetDoublev:
+
+||CURRENT_FOG_COORDINATE_EXT        ||  0x8453||
+||FOG_COORDINATE_ARRAY_TYPE_EXT     ||  0x8454||
+||FOG_COORDINATE_ARRAY_STRIDE_EXT   ||  0x8455||
+
+Accepted by the <pname> parameter of !GetPointerv:
+
+||FOG_COORDINATE_ARRAY_POINTER_EXT ||  0x8456||
+
+Accepted by the <array> parameter of !EnableClientState and
+!DisableClientState:
+
+||FOG_COORDINATE_ARRAY_EXT  || 0x8457||
+
+
+== Errors ==
+
+INVALID_ENUM is generated if FogCoordPointerEXT parameter <type> is
+not FLOAT or DOUBLE.
+
+INVALID_VALUE is generated if FogCoordPointerEXT parameter <stride>
+is negative.
+
+
+== New State ==
+

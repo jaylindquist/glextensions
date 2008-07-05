@@ -67,9 +67,9 @@ CopyTexImage2D, and CompressedTexImage2DARB and the <format> parameter
 of CompressedTexSubImage2DARB:
 
 ||COMPRESSED_SRGB_S3TC_DXT1_EXT            ||      0x8C4C||
-||COMPRESSED_SRGB_ALPHA_S3TC_DXT1_EXT      ||      0x8C4D
-||COMPRESSED_SRGB_ALPHA_S3TC_DXT3_EXT      ||      0x8C4E
-||COMPRESSED_SRGB_ALPHA_S3TC_DXT5_EXT      ||      0x8C4F
+||COMPRESSED_SRGB_ALPHA_S3TC_DXT1_EXT      ||      0x8C4D||
+||COMPRESSED_SRGB_ALPHA_S3TC_DXT3_EXT      ||      0x8C4E||
+||COMPRESSED_SRGB_ALPHA_S3TC_DXT5_EXT      ||      0x8C4F||
 
 
 == Errors ==
@@ -163,4 +163,3 @@ None
 == New Implementation Dependent State ==
 
 None
-

@@ -48,7 +48,7 @@ Accepted by the <pname> parameter of !GetBooleanv, !GetIntegerv,
 
 == Errors ==
 
-INVALID_OPERATION is generated if !BlendColorEXT is called between
+INVALID_OPERATION is generated if BlendColorEXT is called between
 execution of Begin and the corresponding call to End.
 
 

@@ -157,8 +157,8 @@ ALPHA_SCALE is not one of 1.0, 2.0, or 4.0.
 ||OPERAND0_ALPHA_ARB || GetTexEnviv  ||  n x Z4  || SRC_ALPHA||
 ||OPERAND1_ALPHA_ARB || GetTexEnviv  ||  n x Z4 ||  SRC_ALPHA||
 ||OPERAND2_ALPHA_ARB || GetTexEnviv  ||  n x Z1 ||  SRC_ALPHA ||
-||RGB_SCALE_ARB      || GetTexEnvfv ||   n x R3  || 1.0||
-||ALPHA_SCALE        || GetTexEnvfv  ||  n x R3  || 1.0||
+||RGB_SCALE_ARB      || GetTexEnvfv ||   n x `R3`  || 1.0||
+||ALPHA_SCALE        || GetTexEnvfv  ||  n x `R3`  || 1.0||
 
 
 == New Implementation Dependent State ==

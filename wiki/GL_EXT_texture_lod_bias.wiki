@@ -61,10 +61,9 @@ Accepted by the <pname> parameters of !GetBooleanv, !GetIntegerv,
 
 == Errors ==
 
-INVALID_ENUM is generated when TexEnv is called with a <pname> of
+INVALID_ENUM is generated when !TexEnv is called with a <pname> of
 TEXTURE_FILTER_CONTROL_EXT and the value of <param> or what is pointed to
 by <params> is not TEXTURE_LOD_BIAS_EXT.
 
 
 == New State ==
-

@@ -92,8 +92,8 @@ ColorPointerEXT, IndexPointerEXT, and TexCoordPointerEXT:
 
 ||DOUBLE_EXT                 ||    0x140A||
 
-Accepted by the <pname> parameter of GetBooleanv, GetIntegerv,
-GetFloatv, and GetDoublev:
+Accepted by the <pname> parameter of !GetBooleanv, !GetIntegerv,
+!GetFloatv, and !GetDoublev:
 
 ||VERTEX_ARRAY_SIZE_EXT        ||  0x807A||
 ||VERTEX_ARRAY_TYPE_EXT        ||  0x807B||

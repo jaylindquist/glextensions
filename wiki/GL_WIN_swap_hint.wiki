@@ -1,0 +1,15 @@
+#summary GL_WIN_swap_hint
+
+== Contents ==
+
+  * [#New_Tokens New Tokens]
+  * [#New_Procedures_And_Functions New Procedures And Functions]
+
+== New Tokens ==
+
+None
+
+== New Procedures And Functions ==
+{{{
+void glAddSwapHintRectWIN (int, int, sizei, sizei);
+}}}

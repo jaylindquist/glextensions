@@ -1,0 +1,122 @@
+#summary GL_EXT_texture3D
+
+== Contents ==
+
+  * [GL_EXT_texture3D#Dependencies Dependencies]
+  * [GL_EXT_texture3D#Overview Overview]
+  * [GL_EXT_texture3D#New_Procedures_and_Functions New Procedures and Functions]
+  * [GL_EXT_texture3D#New_Tokens New Tokens]
+  * [GL_EXT_texture3D#Errors Errors]
+  * [GL_EXT_texture3D#New_Implementation_Dependent_State New Implementation Dependent State]
+
+== Dependencies ==
+
+[GL_EXT_abgr] affects the definition of this extension
+
+[GL_EXT_texture] is required
+
+
+== Overview ==
+
+This extension defines 3-dimensional texture mapping.  In order to
+define a 3D texture image conveniently, this extension also defines the
+in-memory formats for 3D images, and adds pixel storage modes to support
+them.
+
+One important application of 3D textures is rendering volumes of image
+data.
+
+
+== New Procedures and Functions ==
+{{{
+void TexImage3DEXT(enum target,
+                   int level,
+                   enum internalformat,
+                   sizei width,
+                   sizei height,
+                   sizei depth,
+                   int border,
+                   enum format,
+                   enum type,
+                   const void* pixels);
+}}}
+
+== New Tokens ==
+
+Accepted by the <pname> parameter of GetBooleanv, GetIntegerv,
+GetFloatv, and GetDoublev, and by the <pname> parameter of PixelStore:
+
+||PACK_SKIP_IMAGES_EXT             ||0x806B||
+||PACK_IMAGE_HEIGHT_EXT            ||0x806C||
+||UNPACK_SKIP_IMAGES_EXT           ||0x806D||
+||UNPACK_IMAGE_HEIGHT_EXT          ||0x806E||
+
+Accepted by the <cap> parameter of Enable, Disable, and IsEnabled, by
+the <pname> parameter of GetBooleanv, GetIntegerv, GetFloatv, and
+GetDoublev, and by the <target> parameter of TexImage3DEXT, GetTexImage,
+GetTexLevelParameteriv, GetTexLevelParameterfv, GetTexParameteriv, and
+GetTexParameterfv:
+
+||TEXTURE_3D_EXT                   ||0x806F||
+
+Accepted by the <target> parameter of TexImage3DEXT,
+GetTexLevelParameteriv, and GetTexLevelParameterfv:
+
+||PROXY_TEXTURE_3D_EXT             ||0x8070||
+
+Accepted by the <pname> parameter of GetTexLevelParameteriv and
+GetTexLevelParameterfv:
+
+||TEXTURE_DEPTH_EXT                ||0x8071||
+
+Accepted by the <pname> parameter of TexParameteriv, TexParameterfv,
+GetTexParameteriv, and GetTexParameterfv:
+
+||TEXTURE_WRAP_R_EXT               ||0x8072||
+
+Accepted by the <pname> parameter of GetBooleanv, GetIntegerv,
+GetFloatv, and GetDoublev:
+
+||MAX_3D_TEXTURE_SIZE_EXT          ||0x8073||
+
+
+== Errors ==
+
+INVALID_ENUM is generated if <target> is not TEXTURE_3D_EXT or
+PROXY_TEXTURE_3D_EXT.
+
+INVALID_ENUM is generated if the <target> parameter to
+GetTexParameteriv, GetTexParameterfv or GetTexImage is
+PROXY_TEXTURE_3D_EXT.
+
+INVALID_VALUE is generated if <level> is less than zero
+
+INVALID_ENUM is generated if <internalformat> is not ALPHA, RGB, RGBA,
+LUMINANCE, LUMINANCE_ALPHA, or one of the tokens defined by the
+EXT_texture extension.  (Values 1, 2, 3, and 4 are not accepted as
+internal formats by TexImage3DEXT).
+
+INVALID_VALUE is generated if <width>, <height>, or <depth> is less than
+zero, or cannot be represented as 2**k + 2*border for some integer k.
+
+INVALID_VALUE is generated if <border> is not 0 or 1.
+
+INVALID_ENUM is generated if <format> is not COLOR_INDEX, RED, GREEN,
+BLUE, ALPHA, RGB, RGBA, LUMINANCE, or LUMINANCE_ALPHA (or ABGR_EXT if
+EXT_abgr is supported).
+
+INVALID_ENUM is generated if <type> is not UNSIGNED_BYTE, BYTE,
+UNSIGNED_SHORT, SHORT, UNSIGNED_INT, INT, or FLOAT.
+
+INVALID_OPERATION is generated if TexImage3DEXT is called between
+execution of Begin and the corresponding execution of End.
+
+TEXTURE_TOO_LARGE_EXT is generated if the texture as specified cannot be
+accommodated by the implementation.  This error will not occur if none
+of <width>, <height>, or <depth> is greater than MAX_3D_TEXTURE_SIZE_EXT.
+
+
+== New Implementation Dependent State ==
+
+||*Get Value*        ||*Get Command *            ||*Type  *          ||*Minimum Value*||
+||MAX_3D_TEXTURE_SIZE_EXT     ||GetIntegerv             ||Z+              ||16||

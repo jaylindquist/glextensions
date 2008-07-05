@@ -36,26 +36,26 @@ void SecondaryColorPointerEXT(int size, enum type, sizei stride,
 
 == New Tokens ==
 
-Accepted by the <cap> parameter of Enable, Disable, and IsEnabled,
-and by the <pname> parameter of GetBooleanv, GetIntegerv, GetFloatv,
-and GetDoublev:
+Accepted by the <cap> parameter of Enable, Disable, and !IsEnabled,
+and by the <pname> parameter of !GetBooleanv, !GetIntegerv, !GetFloatv,
+and !GetDoublev:
 
 ||COLOR_SUM_EXT       ||                0x8458||
 
-Accepted by the <pname> parameter of GetBooleanv, GetIntegerv,
-GetFloatv, and GetDoublev:
+Accepted by the <pname> parameter of !GetBooleanv, !GetIntegerv,
+!GetFloatv, and !GetDoublev:
 
 ||CURRENT_SECONDARY_COLOR_EXT    ||     0x8459||
 ||SECONDARY_COLOR_ARRAY_SIZE_EXT ||     0x845A||
 ||SECONDARY_COLOR_ARRAY_TYPE_EXT  ||    0x845B||
 ||SECONDARY_COLOR_ARRAY_STRIDE_EXT  ||  0x845C||
 
-Accepted by the <pname> parameter of GetPointerv:
+Accepted by the <pname> parameter of !GetPointerv:
 
 ||SECONDARY_COLOR_ARRAY_POINTER_EXT  || 0x845D||
 
-Accepted by the <array> parameter of EnableClientState and
-DisableClientState:
+Accepted by the <array> parameter of !EnableClientState and
+!DisableClientState:
 
 ||SECONDARY_COLOR_ARRAY_EXT    ||       0x845E||
 
@@ -74,4 +74,3 @@ INVALID_VALUE is generated if SecondaryColorPointerEXT parameter
 
 
 == New State ==
-

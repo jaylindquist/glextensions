@@ -1,0 +1,77 @@
+#summary GL_EXT_blend_equation_separate
+
+== Contents ==
+
+  * [GL_EXT_blend_equation_separate#Dependencies Dependencies]
+  * [GL_EXT_blend_equation_separate#Overview Overview]
+  * [GL_EXT_blend_equation_separate#New_Procedures_and_Functions New Procedures and Functions]
+  * [GL_EXT_blend_equation_separate#New_Tokens New Tokens]
+  * [GL_EXT_blend_equation_separate#Errors Errors]
+  * [GL_EXT_blend_equation_separate#New_State New State]
+  * [GL_EXT_blend_equation_separate#New_Implementation_Dependent_State New Implementation Dependent State]
+
+== Dependencies ==
+
+Written based on the wording of the OpenGL 1.5 specification.
+
+OpenGL 1.4 (or [GL_ARB_imaging], or [GL_EXT_blend_minmax] and/or
+[GL_EXT_blend_subtract]) is required for blend equation support.
+
+[GL_EXT_blend_func_separate] is presumed but not required.
+
+[GL_EXT_blend_logic_op] interacts with this extension.
+
+
+== Overview ==
+
+[GL_EXT_blend_func_separate] introduced separate RGB and alpha blend
+factors.  [GL_EXT_blend_minmax] introduced a distinct blend equation for
+combining source and destination blend terms.  ([GL_EXT_blend_subtract] &
+[GL_EXT_blend_logic_op] added other blend equation modes.)  OpenGL 1.4
+integrated both functionalities into the core standard.
+
+While there are separate blend functions for the RGB and alpha blend
+factors, OpenGL 1.4 provides a single blend equation that applies
+to both RGB and alpha portions of blending.
+
+This extension provides a separate blend equation for RGB and alpha
+to match the generality available for blend factors.
+
+
+== New Procedures and Functions ==
+{{{
+void BlendEquationSeparateEXT(enum modeRGB,
+                              enum modeAlpha);
+}}}
+
+== New Tokens ==
+
+Accepted by the <pname> parameter of !GetBooleanv, !GetIntegerv,
+!GetFloatv, and !GetDoublev:
+
+||BLEND_EQUATION_RGB_EXT       ||      0x8009 (same as BLEND_EQUATION)||
+||BLEND_EQUATION_ALPHA_EXT      ||     0x883D||
+
+
+== Errors ==
+
+INVALID_ENUM is generated if either the modeRGB or modeAlpha
+parameter of BlendEquationSeparateEXT is not one of FUNC_ADD,
+FUNC_SUBTRACT, FUNC_REVERSE_SUBTRACT, MAX, or MIN.
+
+INVALID_OPERATION is generated if BlendEquationSeparateEXT
+is executed between the execution of Begin and the corresponding
+execution of End.
+
+
+== New State ==
+
+|| *Get Value* || *Get Command* || *Type* || *Initial Value* ||
+||BLEND_EQUATION_RGB_EXT||!GetIntegerv||Z||FUNC_ADD||
+||BLEND_EQUATION_ALPHA_EXT||!GetIntegerv||Z ||FUNC_ADD||
+
+
+== New Implementation Dependent State ==
+
+None
+

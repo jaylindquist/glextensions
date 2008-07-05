@@ -16,7 +16,7 @@ OpenGL 1.0 is required.
 
 The extension is written against the OpenGL 1.3 Specification
 
-[GL_EXT_fog_coordinate] effects the definition of this extension.
+[GL_EXT_fog_coord] effects the definition of this extension.
 
 [GL_EXT_secondary_color] effects the definition of this extension.
 
@@ -84,4 +84,3 @@ None.
 == New Implementation Dependent State ==
 
 None.
-

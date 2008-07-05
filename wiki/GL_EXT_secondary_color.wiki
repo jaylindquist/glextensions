@@ -1,0 +1,77 @@
+#summary GL_EXT_secondary_color
+
+== Contents ==
+
+  * [GL_EXT_secondary_color#Dependencies Dependencies]
+  * [GL_EXT_secondary_color#Overview Overview]
+  * [GL_EXT_secondary_color#New_Procedures_and_Functions New Procedures and Functions]
+  * [GL_EXT_secondary_color#New_Tokens New Tokens]
+  * [GL_EXT_secondary_color#Errors Errors]
+  * [GL_EXT_secondary_color#New_State New State]
+
+== Dependencies ==
+
+Either [GL_EXT_separate_specular_color] or OpenGL 1.2 is required, to specify
+the "Color Sum" stage and other handling of the secondary color. This is
+written against the 1.2 specification (available from www.opengl.org).
+
+
+== Overview ==
+
+This extension allows specifying the RGB components of the secondary
+color used in the Color Sum stage, instead of using the default
+(0,0,0,0) color. It applies only in RGBA mode and when LIGHTING is
+disabled.
+
+
+== New Procedures and Functions ==
+{{{
+void SecondaryColor3[bsifd ubusui]EXT(T components)
+
+void SecondaryColor3[bsifd ubusui]vEXT(T components)
+
+void SecondaryColorPointerEXT(int size, enum type, sizei stride,
+                              void *pointer)
+}}}
+
+== New Tokens ==
+
+Accepted by the <cap> parameter of Enable, Disable, and IsEnabled,
+and by the <pname> parameter of GetBooleanv, GetIntegerv, GetFloatv,
+and GetDoublev:
+
+||COLOR_SUM_EXT       ||                0x8458||
+
+Accepted by the <pname> parameter of GetBooleanv, GetIntegerv,
+GetFloatv, and GetDoublev:
+
+||CURRENT_SECONDARY_COLOR_EXT    ||     0x8459||
+||SECONDARY_COLOR_ARRAY_SIZE_EXT ||     0x845A||
+||SECONDARY_COLOR_ARRAY_TYPE_EXT  ||    0x845B||
+||SECONDARY_COLOR_ARRAY_STRIDE_EXT  ||  0x845C||
+
+Accepted by the <pname> parameter of GetPointerv:
+
+||SECONDARY_COLOR_ARRAY_POINTER_EXT  || 0x845D||
+
+Accepted by the <array> parameter of EnableClientState and
+DisableClientState:
+
+||SECONDARY_COLOR_ARRAY_EXT    ||       0x845E||
+
+
+== Errors ==
+
+INVALID_VALUE is generated if SecondaryColorPointerEXT parameter <size>
+is not 3.
+
+INVALID_ENUM is generated if SecondaryColorPointerEXT parameter <type>
+is not BYTE, UNSIGNED_BYTE, SHORT, UNSIGNED_SHORT, INT, UNSIGNED_INT,
+FLOAT, or DOUBLE.
+
+INVALID_VALUE is generated if SecondaryColorPointerEXT parameter
+<stride> is negative.
+
+
+== New State ==
+

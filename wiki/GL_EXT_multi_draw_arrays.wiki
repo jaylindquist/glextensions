@@ -1,5 +1,84 @@
-thisIsALink
+#summary GL_EXT_multi_draw_arrays
 
-ThisIsALink
+== Contents ==
 
-ThisIsNotALinK
+  * [GL_EXT_multi_draw_arrays#Dependencies Dependencies]
+  * [GL_EXT_multi_draw_arrays#Overview Overview]
+  * [GL_EXT_multi_draw_arrays#New_Procedures_and_Functions New Procedures and Functions]
+  * [GL_EXT_multi_draw_arrays#New_Tokens New Tokens]
+  * [GL_EXT_multi_draw_arrays#Errors Errors]
+  * [GL_EXT_multi_draw_arrays#New_State New State]
+
+== Dependencies ==
+
+OpenGL 1.1 is required. The language is written against the OpenGL 1.2
+specification.
+
+
+== Overview ==
+
+These functions behave identically to the standard OpenGL 1.1 functions
+glDrawArrays() and glDrawElements() except they handle multiple lists of
+vertices in one call. Their main purpose is to allow one function call
+to render more than one primitive such as triangle strip, triangle fan,
+etc.
+
+
+== New Procedures and Functions ==
+
+void glMultiDrawArraysEXT( GLenum mode,
+GLint *first,
+GLsizei *count,
+GLsizei primcount)
+Parameters
+----------
+mode		Specifies what kind of primitives to
+render. Symbolic constants GL_POINTS,
+GL_LINE_STRIP, GL_LINE_LOOP, GL_LINES,
+GL_TRIANGLE_STRIP, GL_TRIANGLE_FAN,
+GL_TRIANGLES, GL_QUAD_STRIP, GL_QUADS,
+and GL_POLYGON are accepted.
+
+first		Points to an array of starting indices in
+the enabled arrays.
+
+count		Points to an array of the number of indices
+to be rendered.
+
+primcount	Specifies the size of first and count
+
+{{{
+void glMultiDrawElementsEXT(GLenum mode,
+                            GLsizei *count,
+                            GLenum type,
+                            const GLvoid **indices,
+                            GLsizei primcount)
+}}}
+|| *Parameters* || ||
+|| mode ||Specifies what kind of primitives to render. Symbolic constants GL_POINTS, GL_LINE_STRIP, GL_LINE_LOOP, GL_LINES, GL_TRIANGLE_STRIP,  GL_TRIANGLE_FAN, GL_TRIANGLES, GL_QUAD_STRIP, GL_QUADS, and GL_POLYGON are accepted.|| 
+|| count|| Points to and array of the element counts|| 
+|| type	|| Specifies the type of the values in indices. Must be  one  of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT.|| 
+|| indices|| Specifies a  pointer to the location where the indices are stored.|| 
+|| primcount|| Specifies the size of the count array|| 
+
+
+== New Tokens ==
+
+None
+
+
+== Errors ==
+
+GL_INVALID_ENUM is generated if <mode> is not an accepted value.
+
+GL_VALUE is generated if <primcount> is negative.
+
+GL_INVALID_OPERATION is generated if glMultiDrawArraysEXT or
+glMultiDrawElementsEXT is executed between the execution of glBegin
+and the corresponding glEnd.
+
+
+== New State ==
+
+None
+

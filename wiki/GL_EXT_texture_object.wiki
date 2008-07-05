@@ -7,6 +7,7 @@
   * [GL_EXT_texture_object#New_Procedures_and_Functions New Procedures and Functions]
   * [GL_EXT_texture_object#New_Tokens New Tokens]
   * [GL_EXT_texture_object#Errors Errors]
+  * [GL_EXT_texture_object#New_State New State]
   * [GL_EXT_texture_object#New_Implementation_Dependent_State New Implementation Dependent State]
 
 == Dependencies ==
@@ -99,6 +100,38 @@ INVALID_OPERATION is generated if any of the commands defined in this
 extension is executed between the execution of Begin and the
 corresponding execution of End.
 
+== New State ==
+
+|| *Get Value* || *Get Command* || *Type* || *Initial Value* ||
+TEXTURE_1D     ||!IsEnabled     ||B ||FALSE||
+TEXTURE_2D     ||!IsEnabled     ||B  || FALSE||
+TEXTURE_3D_EXT ||!IsEnabled      ||B  ||  FALSE||
+TEXTURE_1D_BINDING_EXT||!GetIntegerv||Z+  || 0||
+TEXTURE_2D_BINDING_EXT||!GetIntegerv  || Z+          ||  0||
+TEXTURE_3D_BINDING_EXT||!GetIntegerv ||   Z+  ||  0||
+TEXTURE_PRIORITY_EXT||!GetTexParameterfv || n x Z+ ||1||
+TEXTURE_RESIDENT_EXT||AreTexturesResidentEXT||n x B||  unknown||
+TEXTURE         ||!GetTexImage ||n x levels x I|| null||
+TEXTURE_RED_SIZE_EXT||!GetTexLevelParameteriv ||n x levels x Z+|| 0||
+TEXTURE_GREEN_SIZE_EXT||!GetTexLevelParameteriv || n x levels x Z+    ||     0||
+TEXTURE_BLUE_SIZE_EXT||!GetTexLevelParameteriv || n x levels x Z+    ||     0||
+TEXTURE_ALPHA_SIZE_EXT||!GetTexLevelParameteriv || n x levels x Z+    ||     0||
+TEXTURE_LUMINANCE_SIZE_EXT||!GetTexLevelParameteriv || n x levels x Z+ ||        0||
+TEXTURE_INTENSITY_SIZE_EXT||!GetTexLevelParameteriv || n x levels x Z+   || 0||
+TEXTURE_WIDTH||!GetTexLevelParameteriv || n x levels x Z+||0||
+TEXTURE_HEIGHT||!GetTexLevelParameteriv || n x levels x Z+ ||0||
+TEXTURE_DEPTH_EXT||!GetTexLevelParameteriv || n x levels x Z+ || 0||
+TEXTURE_4DSIZE_SGIS||!GetTexLevelParameteriv  ||n x levels x Z+ ||0||
+TEXTURE_BORDER ||!GetTexLevelParameteriv || n x levels x Z+||  0 ||
+TEXTURE_COMPONENTS (1D and 2D)||!GetTexLevelParameteriv || n x levels x Z42|| 1||
+TEXTURE_COMPONENTS (3D and 4D)||!GetTexLevelParameteriv||  n x levels x Z38||LUMINANCE||
+TEXTURE_BORDER_COLOR ||!GetTexParameteriv ||n x C   || 0, 0, 0, 0||
+TEXTURE_MIN_FILTER||!GetTexParameteriv   ||n x Z7  ||   NEAREST_MIPMAP_LINEAR||
+TEXTURE_MAG_FILTER||!GetTexParameteriv  ||n x Z3||  LINEAR||
+TEXTURE_WRAP_S||!GetTexParameteriv   ||n x Z2 || REPEAT||
+TEXTURE_WRAP_T||!GetTexParameteriv  ||n x Z2   ||  REPEAT||
+TEXTURE_WRAP_R_EXT||!GetTexParameteriv   || n x Z2    ||  REPEAT||
+TEXTURE_WRAP_Q_SGIS||!GetTexParameteriv  ||n x Z2    ||    REPEAT||
 
 == New Implementation Dependent State ==
 

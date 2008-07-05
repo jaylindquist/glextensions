@@ -13,6 +13,7 @@
 == Dependencies ==
 
 This extension is written against the OpenGL 1.2.1 Specification.
+
 OpenGL 1.1, [GL_ARB_multitexture] and [GL_ARB_texture_env_combine] are required
 for this extension.
 
@@ -58,4 +59,3 @@ None
 == New Implementation Dependent State ==
 
 None
-

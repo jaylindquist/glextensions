@@ -7,6 +7,7 @@
   * [GL_SGIS_texture_lod#New_Procedures_and_Functions New Procedures and Functions]
   * [GL_SGIS_texture_lod#New_Tokens New Tokens]
   * [GL_SGIS_texture_lod#Errors Errors]
+  * [GL_SGIS_texture_lod#New_State New State]
   * [GL_SGIS_texture_lod#New_Implementation_Dependent_State New Implementation Dependent State]
 
 == Dependencies ==
@@ -69,6 +70,13 @@ TexParameteriv, TexParameterfv, GetTexParameteriv, and GetTexParameterfv:
 INVALID_VALUE is generated if an attempt is made to set
 TEXTURE_BASE_LEVEL_SGIS or TEXTURE_MAX_LEVEL_SGIS to a negative value.
 
+== New State ==
+
+|| *Get Value*          || *Get Command*     || *Type* || *Initial Value* ||
+||TEXTURE_MIN_LOD_SGIS    || !GetTexParameterfv|| n x R  ||   -1000||
+||TEXTURE_MAX_LOD_SGIS    ||  !GetTexParameterfv|| n x R  ||   1000||
+||TEXTURE_BASE_LEVEL_SGIS ||  !GetTexParameteriv||n x R  ||      0 ||
+||TEXTURE_MAX_LEVEL_SGIS  ||  !GetTexParameteriv|| n x R  ||    1000||
 
 == New Implementation Dependent State ==
 

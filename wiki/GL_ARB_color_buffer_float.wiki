@@ -14,7 +14,7 @@
 This extension is written against the OpenGL 2.0 Specification
 but will work with the OpenGL 1.5 Specification.
 
-[GL_WGL_ARB_pixel_format] is required.
+[WGL_ARB_pixel_format] is required.
 
 This extension interacts with [GL_ARB_fragment_program].
 

@@ -38,14 +38,14 @@ void PolygonOffsetEXT(float factor,
 
 == New Tokens ==
 
-Accepted by the <cap> parameter of Enable, Disable, and IsEnabled, and
-by the <pname> parameter of GetBooleanv, GetIntegerv, GetFloatv, and
-GetDoublev:
+Accepted by the <cap> parameter of Enable, Disable, and !IsEnabled, and
+by the <pname> parameter of !GetBooleanv, !GetIntegerv, !GetFloatv, and
+!GetDoublev:
 
 ||POLYGON_OFFSET_EXT            ||   0x8037||
 
-Accepted by the <pname> parameter of GetBooleanv, GetIntegerv,
-GetFloatv, and GetDoublev:
+Accepted by the <pname> parameter of !GetBooleanv, !GetIntegerv,
+!GetFloatv, and !GetDoublev:
 
 ||POLYGON_OFFSET_FACTOR_EXT     ||   0x8038||
 ||POLYGON_OFFSET_BIAS_EXT        ||  0x8039||

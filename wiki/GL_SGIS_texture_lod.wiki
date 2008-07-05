@@ -56,8 +56,8 @@ None
 
 == New Tokens ==
 
-Accepted by the <pname> parameter of TexParameteri, TexParameterf,
-TexParameteriv, TexParameterfv, GetTexParameteriv, and GetTexParameterfv:
+Accepted by the <pname> parameter of !TexParameteri, !TexParameterf,
+!TexParameteriv, !TexParameterfv, !GetTexParameteriv, and !GetTexParameterfv:
 
 ||TEXTURE_MIN_LOD_SGIS          ||  0x813A||
 ||TEXTURE_MAX_LOD_SGIS          ||  0x813B||

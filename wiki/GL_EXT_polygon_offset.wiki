@@ -55,6 +55,13 @@ GetFloatv, and GetDoublev:
 INVALID_OPERATION is generated if PolygonOffsetEXT is called between
 execution of Begin and the corresponding execution of End.
 
+== New State ==
+
+|| *Get Value* || *Get Command* || *Type* || *Initial Value* ||
+||POLYGON_OFFSET_EXT ||!IsEnabled || B  ||False||
+||POLYGON_OFFSET_FACTOR_EXT||!GetFloatv ||R  || 0||
+||POLYGON_OFFSET_BIAS_EXT ||!GetFloatv || R || 0 ||
+
 
 == New Implementation Dependent State ==
 

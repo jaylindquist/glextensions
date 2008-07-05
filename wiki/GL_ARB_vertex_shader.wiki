@@ -1,0 +1,268 @@
+#summary GL_ARB_vertex_shader
+
+== Contents ==
+
+  * [GL_ARB_vertex_shader#Dependencies Dependencies]
+  * [GL_ARB_vertex_shader#Overview Overview]
+  * [GL_ARB_vertex_shader#New_Procedures_and_Functions New Procedures and Functions]
+  * [GL_ARB_vertex_shader#New_Tokens New Tokens]
+  * [GL_ARB_vertex_shader#Errors Errors]
+  * [GL_ARB_vertex_shader#New_State New State]
+  * [GL_ARB_vertex_shader#New_Implementation_Dependent_State New Implementation Dependent State]
+
+== Dependencies ==
+
+OpenGL 1.0 is required.
+
+This extension is written against version 1.10 of the OpenGL Shading
+Language Specification.
+
+The extension is written against the OpenGL 1.4 Specification.
+
+The [GL_ARB_shader_objects] extension is required.
+
+
+== Overview ==
+
+This extension adds programmable vertex level processing to OpenGL. The
+application can write vertex shaders in a high level language as defined
+in the OpenGL Shading Language specification. The language itself is not
+discussed here. A vertex shader replaces the transformation, texture
+coordinate generation and lighting parts of OpenGL, and it also adds
+texture access at the vertex level. Furthermore, management of vertex
+shader objects and loading generic attributes are discussed. A vertex
+shader object, attached to a program object, can be compiled and linked
+to produce an executable that runs on the vertex processor in OpenGL.
+This extension also defines how such an executable interacts with the
+fixed functionality vertex processing of OpenGL 1.4.
+
+
+== New Procedures and Functions ==
+{{{
+void VertexAttrib1fARB(uint index, float v0)
+void VertexAttrib1sARB(uint index, short v0)
+void VertexAttrib1dARB(uint index, double v0)
+void VertexAttrib2fARB(uint index, float v0, float v1)
+void VertexAttrib2sARB(uint index, short v0, short v1)
+void VertexAttrib2dARB(uint index, double v0, double v1)
+void VertexAttrib3fARB(uint index, float v0, float v1, float v2)
+void VertexAttrib3sARB(uint index, short v0, short v1, short v2)
+void VertexAttrib3dARB(uint index, double v0, double v1, double v2)
+void VertexAttrib4fARB(uint index, float v0, float v1, float v2, float v3)
+void VertexAttrib4sARB(uint index, short v0, short v1, short v2, short v3)
+void VertexAttrib4dARB(uint index, double v0, double v1, double v2, double v3)
+void VertexAttrib4NubARB(uint index, ubyte x, ubyte y, ubyte z, ubyte w)
+
+void VertexAttrib1fvARB(uint index, const float *v)
+void VertexAttrib1svARB(uint index, const short *v)
+void VertexAttrib1dvARB(uint index, const double *v)
+void VertexAttrib2fvARB(uint index, const float *v)
+void VertexAttrib2svARB(uint index, const short *v)
+void VertexAttrib2dvARB(uint index, const double *v)
+void VertexAttrib3fvARB(uint index, const float *v)
+void VertexAttrib3svARB(uint index, const short *v)
+void VertexAttrib3dvARB(uint index, const double *v)
+void VertexAttrib4fvARB(uint index, const float *v)
+void VertexAttrib4svARB(uint index, const short *v)
+void VertexAttrib4dvARB(uint index, const double *v)
+void VertexAttrib4ivARB(uint index, const int *v)
+void VertexAttrib4bvARB(uint index, const byte *v)
+
+void VertexAttrib4ubvARB(uint index, const ubyte *v)
+void VertexAttrib4usvARB(uint index, const ushort *v)
+void VertexAttrib4uivARB(uint index, const uint *v)
+
+void VertexAttrib4NbvARB(uint index, const byte *v)
+void VertexAttrib4NsvARB(uint index, const short *v)
+void VertexAttrib4NivARB(uint index, const int *v)
+void VertexAttrib4NubvARB(uint index, const ubyte *v)
+void VertexAttrib4NusvARB(uint index, const ushort *v)
+void VertexAttrib4NuivARB(uint index, const uint *v)
+
+void VertexAttribPointerARB(uint index, int size, enum type, boolean normalized,
+                            sizei stride, const void *pointer)
+
+void EnableVertexAttribArrayARB(uint index)
+void DisableVertexAttribArrayARB(uint index)
+
+void BindAttribLocationARB(handleARB programObj, uint index, const charARB *name)
+
+void GetActiveAttribARB(handleARB programObj, uint index, sizei maxLength,
+                        sizei *length, int *size, enum *type, charARB *name)
+
+GLint GetAttribLocationARB(handleARB programObj, const charARB *name)
+
+void GetVertexAttribdvARB(uint index, enum pname, double *params)
+void GetVertexAttribfvARB(uint index, enum pname, float *params)
+void GetVertexAttribivARB(uint index, enum pname, int *params)
+void GetVertexAttribPointervARB(uint index, enum pname, void **pointer)
+}}}
+
+== New Tokens ==
+
+Accepted by the <shaderType> argument of CreateShaderObjectARB and
+returned by the <params> parameter of GetObjectParameter{if}vARB:
+
+||VERTEX_SHADER_ARB                ||              0x8B31||
+
+Accepted by the <pname> parameter of GetBooleanv, GetIntegerv,
+GetFloatv, and GetDoublev:
+
+||MAX_VERTEX_UNIFORM_COMPONENTS_ARB        ||       0x8B4A||
+||MAX_VARYING_FLOATS_ARB                   ||       0x8B4B||
+||MAX_VERTEX_ATTRIBS_ARB                   ||       0x8869||
+||MAX_TEXTURE_IMAGE_UNITS_ARB              ||       0x8872||
+||MAX_VERTEX_TEXTURE_IMAGE_UNITS_ARB        ||      0x8B4C||
+||MAX_COMBINED_TEXTURE_IMAGE_UNITS_ARB     ||       0x8B4D||
+||MAX_TEXTURE_COORDS_ARB                   ||       0x8871||
+
+Accepted by the <cap> parameter of Disable, Enable, and IsEnabled, and
+by the <pname> parameter of GetBooleanv, GetIntegerv, GetFloatv, and
+GetDoublev:
+
+||VERTEX_PROGRAM_POINT_SIZE_ARB        ||           0x8642||
+||VERTEX_PROGRAM_TWO_SIDE_ARB          ||           0x8643||
+
+Accepted by the <pname> parameter GetObjectParameter{if}vARB:
+
+||OBJECT_ACTIVE_ATTRIBUTES_ARB               ||     0x8B89||
+||OBJECT_ACTIVE_ATTRIBUTE_MAX_LENGTH_ARB     ||     0x8B8A||
+
+Accepted by the <pname> parameter of GetVertexAttrib{dfi}vARB:
+
+||VERTEX_ATTRIB_ARRAY_ENABLED_ARB           ||      0x8622||
+||VERTEX_ATTRIB_ARRAY_SIZE_ARB              ||      0x8623||
+||VERTEX_ATTRIB_ARRAY_STRIDE_ARB            ||      0x8624||
+||VERTEX_ATTRIB_ARRAY_TYPE_ARB              ||      0x8625||
+||VERTEX_ATTRIB_ARRAY_NORMALIZED_ARB        ||      0x886A||
+||CURRENT_VERTEX_ATTRIB_ARB                 ||      0x8626||
+
+Accepted by the <pname> parameter of GetVertexAttribPointervARB:
+
+||VERTEX_ATTRIB_ARRAY_POINTER_ARB        ||         0x8645||
+
+Returned by the <type> parameter of GetActiveAttribARB:
+
+||FLOAT                                 ||          0x1406||
+||FLOAT_VEC2_ARB                        ||          0x8B50||
+||FLOAT_VEC3_ARB                         ||         0x8B51||
+||FLOAT_VEC4_ARB                        ||          0x8B52||
+||FLOAT_MAT2_ARB                        ||          0x8B5A||
+||FLOAT_MAT3_ARB                        ||          0x8B5B||
+||FLOAT_MAT4_ARB                        ||          0x8B5C||
+
+
+== Errors ==
+
+The error INVALID_VALUE is generated by any command that takes one or
+more handles as input, and one or more handles are not an object handle
+generated by OpenGL.
+
+The error INVALID_VALUE is generated by any of the VertexAttrib*ARB
+commands if <index> is equal or greater than MAX_VERTEX_ATTRIBS_ARB.
+
+The error INVALID_VALUE is generated by VertexAttribPointerARB if
+<index> is equal or greater than MAX_VERTEX_ATTRIBS_ARB.
+
+The error INVALID_VALUE is generated by VertexAttribPointerARB if <size>
+is not one of 1, 2, 3, or 4.
+
+The error INVALID_VALUE is generated by VertexAttribPointerARB if
+<stride> is negative.
+
+The error INVALID_VALUE is generated by EnableVertexAttribArrayARB or
+DisableVertexAttribArrayARB if <index> is greater than or equal to
+MAX_VERTEX_ATTRIBS_ARB.
+
+The error INVALID_OPERATION is generated by any command accessing
+texture coordinate processing state if the texture unit number
+corresponding to the current value of ACTIVE_TEXTURE is greater than or
+equal to the implementation-dependent constant MAX_TEXTURE_COORDS_ARB.
+
+The error INVALID_OPERATION is generated by any command accessing
+texture image processing state if the texture unit number corresponding
+to the current value of ACTIVE_TEXTURE is greater than or equal to the
+implementation-dependent constant MAX_COMBINED_TEXTURE_IMAGE_UNITS_ARB.
+
+The error INVALID_OPERATION is generated by GetActiveAttribARB if
+<programObj> is not of type PROGRAM_OBJECT_ARB.
+
+The error INVALID_VALUE is generated by GetActiveAttribARB if <index> is
+greater than or equal to OBJECT_ACTIVE_ATTRIBUTES_ARB.
+
+The error INVALID_OPERATION is generated by GetAttribLocationARB if
+<programObj> is not of type PROGRAM_OBJECT_ARB or if <programObj> has
+not been linked successfully.
+
+The error INVALID_OPERATION is generated by BindAttribLocationARB if
+<name> starts with the reserved "gl_" prefix.
+
+The error INVALID_VALUE is generated by BindAttribLocationARB if <index>
+is equal or greater than MAX_VERTEX_ATTRIBS_ARB.
+
+The error INVALID_OPERATION is generated by BindAttribLocationARB if
+<programObj> is not of type PROGRAM_OBJECT_ARB.
+
+The error INVALID_OPERATION is generated by GetObjectParameter{if}vARB
+if <pname> is OBJECT_ACTIVE_ATTRIBUTES_ARB or
+OBJECT_ACTIVE_ATTRIBUTE_MAX_LENGTH_ARB and <obj> is not of type
+PROGRAM_OBJECT_ARB.
+
+The error INVALID_OPERATION is generated by GetObjectParameter{if}vARB
+if <pname> is OBJECT_SUBTYPE_ARB and <obj> is not of type
+SHADER_OBJECT_ARB.
+
+The error INVALID_OPERATION is generated by GetVertexAttrib*ARB if
+<index> is zero and <pname> is CURRENT_VERTEX_ATTRIB_ARB.
+
+The error INVALID_VALUE is generated by GetVertexAttrib*ARB if <index>
+is greater than or equal to MAX_VERTEX_ATTRIBS_ARB.
+
+The error INVALID_VALUE is generated by GetVertexAttribPointervARB if
+<index> is equal or greater than MAX_VERTEX_ATTRIBS_ARB.
+
+
+== New State ==
+
+|| *Get Value* || *Type* || *Get Command* || *Initial Value* || *Description* ||  
+||VERTEX_PROGRAM_TWO_SIDE_ARB||B||IsEnabled||False||two-sided color mode||
+||CURRENT_VERTEX_ATTRIB_ARB||16+xR4||GetVertexAttributeARB||(0,0,0,1)||generic vertex attribute||
+||VERTEX_PROGRAM_POINT_SIZE_ARB||B||IsEnabled ||False||point size mode||
+
+
+|| *Get Value* || *Type* || *Get Command* || *Initial Value* || *Description* ||  
+||VERTEX_ATTRIB_ARRAY_ENABLED_ARB||16+xB||GetVertexAttribARB||False||vertex attrib array enable||
+||VERTEX_ATTRIB_ARRAY_SIZE_ARB||16+xZ||GetVertexAttribARB||4||vertex attrib array size||
+||VERTEX_ATTRIB_ARRAY_STRIDE_ARB||16+xZ+||GetVertexAttribARB||0||vertex attrib array stride||
+||VERTEX_ATTRIB_ARRAY_TYPE_ARB||16+xZ4||GetVertexAttribARB||FLOAT||vertex attrib array type||
+||VERTEX_ATTRIB_ARRAY_NORMALIZED_ARB||16+xB||GetVertexAttribARB||False||vertex attrib array normalized||
+||VERTEX_ATTRIB_ARRAY_POINTER_ARB||16+xP|| GetVertexAttribPointerARB||NULL||vertex attrib array pointer||
+
+
+
+|| *Get Value* || *Type* || *Get Command* || *Initial Value* || *Description* ||  
+||OBJECT_TYPE_ARB||Z2||GetObjectParameterivARB||SHADER_OBJECT_ARB||Type of object||
+||OBJECT_SUBTYPE_ARB||Z2||GetObjectParameterivARB||VERTEX_SHADER_ARB ||Sub type of object||
+
+|| *Get Value* || *Type* || *Get Command* || *Initial Value* || *Description* ||  
+||-  ||0+xZ+||GetActiveAttribARB||- ||Size of active attribute||
+||-  ||0+xZ+ ||GetActiveAttribARB||- ||Type of active attribute||
+||- ||0+xcharARB||GetActiveAttribARB||""||Name of active attribute||
+||- ||0+xZ ||GetAttribLocationARB ||- ||Location of active generic attribute||
+||  ||512+xR||GetUniformARB|| 0 ||Uniform value||
+||OBJECT_ACTIVE_ATTRIBUTES_ARB||Z+ ||GetObjectParameterivARB||0 ||Number of active attributes||
+||OBJECT_ACTIVE_ATTRIBUTES_MAX_LENGTH_ARB||Z+||GetObjectParameterivARB||0 ||Max attribute name length||
+
+
+
+== New Implementation Dependent State ==
+
+
+|| *Get Value* || *Type* || *Get Command* || *Minimum Value* || *Description* ||
+||MAX_VERTEX_ATTRIBS_ARB ||Z+||!GetIntegerv ||16 ||Number of active vertex attributes||
+||MAX_VERTEX_UNIFORM_COMPONENTS_ARB||Z+||!GetIntegerv||512||Number of words for vertex shader uniform variables||
+||MAX_VARYING_FLOATS_ARB||Z+||!GetIntegerv||32||Number of floats for interpolated (varying) variables||
+||MAX_COMBINED_TEXTURE_IMAGE_UNITS_ARB||Z+||!GetIntegerv||2||Number of texture image units that can be accessed by a vertex shader and the fragment processing part of OpenGL combined.||
+||MAX_VERTEX_TEXTURE_IMAGE_UNITS_ARB||Z+||!GetIntegerv ||0||Number of separate texture units that can be accessed by a vertex shader.||
+||MAX_TEXTURE_IMAGE_UNITS_ARB||Z+||!GetIntegerv||2||Number of separate texture units that can be accessed by the fragment processing part of OpenGL.||
+||MAX_TEXTURE_COORDS_ARB||Z+||!GetIntegerv||2 ||Number of texture coordinate sets||

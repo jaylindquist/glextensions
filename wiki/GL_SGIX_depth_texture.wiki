@@ -1,0 +1,76 @@
+#summary GL_SGIX_depth_texture
+
+== Contents ==
+
+  * [GL_SGIX_depth_texture#Dependencies Dependencies]
+  * [GL_SGIX_depth_texture#Overview Overview]
+  * [GL_SGIX_depth_texture#New_Procedures_and_Functions New Procedures and Functions]
+  * [GL_SGIX_depth_texture#New_Tokens New Tokens]
+  * [GL_SGIX_depth_texture#Errors Errors]
+  * [GL_SGIX_depth_texture#New_State New State]
+  * [GL_SGIX_depth_texture#New_Implementation_Dependent_State New Implementation Dependent State]
+
+== Dependencies ==
+
+[GL_EXT_texture] is required
+
+[GL_EXT_subtexture] affects the definition of this extension
+
+[GL_EXT_copy_texture] affects the definition of this extension
+
+
+== Overview ==
+
+This extension defines a new depth texture format.  An important
+application of depth texture images is shadow casting, but separating
+this from the shadow extension allows for the potential use of depth
+textures in other applications such as image-based rendering or
+displacement mapping.  This extension does not define new depth-texture
+environment functions, such as filtering or applying the depth values
+computed from a texture, but leaves this to other extensions, such as
+the shadow extension.
+
+
+== New Procedures and Functions ==
+
+None
+
+
+== New Tokens ==
+
+Accepted by the <components> parameters of TexImage1D and TexImage2D,
+and by the <internalformat> parameters of TexImage3DEXT,
+CopyTexImage1DEXT, and CopyTexImage2DEXT:
+
+||DEPTH_COMPONENT16_SGIX ||0x81A5||
+||DEPTH_COMPONENT24_SGIX || 0x81A6||
+||DEPTH_COMPONENT32_SGIX ||0x81A7||
+
+
+
+== Errors ==
+
+INVALID_OPERATION is generated if TexImage1D or TexImage2D parameter
+<format> is DEPTH_COMPONENT and parameter <components> is not
+DEPTH_COMPONENT, DEPTH_COMPONENT16_SGI, DEPTH_COMPONENT24_SGI, or
+DEPTH_COMPONENT32_SGI.
+
+INVALID_OPERATION is generated if TexImage3DEXT parameter <format> is
+DEPTH_COMPONENT and parameter <internalformat> is not
+DEPTH_COMPONENT, DEPTH_COMPONENT16_SGI, DEPTH_COMPONENT24_SGI, or
+DEPTH_COMPONENT32_SGI.
+
+INVALID_OPERATION is generated if CopyTexImage1DEXT or CopyTexImage2DEXT
+parameter <internalformat> is DEPTH_COMPONENT, DEPTH_COMPONENT16_SGI,
+DEPTH_COMPONENT24_SGI, or DEPTH_COMPONENT32_SGI, and there is no
+depth buffer.
+
+
+== New State ==
+
+None
+
+
+== New Implementation Dependent State ==
+
+None

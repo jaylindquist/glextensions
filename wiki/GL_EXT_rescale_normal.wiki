@@ -7,6 +7,7 @@
   * [GL_EXT_rescale_normal#New_Procedures_and_Functions New Procedures and Functions]
   * [GL_EXT_rescale_normal#New_Tokens New Tokens]
   * [GL_EXT_rescale_normal#Errors Errors]
+  * [GL_EXT_rescale_normal#New_State New State]
   * [GL_EXT_rescale_normal#New_Implementation_Dependent_State New Implementation Dependent State]
 
 == Dependencies ==
@@ -33,9 +34,9 @@ None
 
 == New Tokens ==
 
-Accepted by the <cap> parameter of Enable, Disable, and IsEnabled,
-and by the <pname> parameter of GetBooleanv, GetIntegerv, GetFloatv,
-and GetDoublev:
+Accepted by the <cap> parameter of Enable, Disable, and !IsEnabled,
+and by the <pname> parameter of !GetBooleanv, !GetIntegerv, !GetFloatv,
+and !GetDoublev:
 
 ||RESCALE_NORMAL_EXT||
 
@@ -44,6 +45,11 @@ and GetDoublev:
 
 None
 
+
+== New State ==
+
+|| *Get Value* || *Get Command* || *Type* || *Initial Value* ||
+||RESCALE_NORMAL_EXT ||!IsEnabled || B ||FALSE||
 
 == New Implementation Dependent State ==
 

@@ -19,7 +19,7 @@ None
 
 New texture environment function ADD is supported with the following
 equation:
-Cv = Cf + Ct
+`Cv = Cf + Ct`
 
 New function may be specified by calling TexEnv with ADD token.
 
@@ -51,10 +51,9 @@ None
 
 The Type of TEXTURE_ENV_MODE in Table F.2 should be changed to
 
-1 * xZ5
+`1 * xZ5`
 
 
 == New Implementation Dependent State ==
 
 None
-

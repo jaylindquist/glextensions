@@ -29,7 +29,7 @@ color is the sum of the second color and the color resulting from
 texture application.  If texture is not enabled, the fragment color
 is the sum of the two colors.
 
-A new control to LightModel*, LIGHT_MODEL_COLOR_CONTROL_EXT, manages
+A new control to LightModel, LIGHT_MODEL_COLOR_CONTROL_EXT, manages
 the values of the two colors.  It takes values: SINGLE_COLOR_EXT, a
 compatibility mode, and SEPARATE_SPECULAR_COLOR_EXT, the object of
 this extension.  In single color mode, the primary color is the
@@ -53,13 +53,13 @@ None.
 
 == New Tokens ==
 
-Accepted by the <pname> parameter of LightModel*, and also by the
+Accepted by the <pname> parameter of LightModel, and also by the
 <pname> parameter of GetBooleanv, GetIntegerv, GetFloatv, and
 GetDoublev:
 
 ||LIGHT_MODEL_COLOR_CONTROL_EXT	|| 0x81F8||
 
-Accepted by the <param> parameter of LightModel* when <pname> is
+Accepted by the <param> parameter of LightModel when <pname> is
 LIGHT_MODEL_COLOR_CONTROL_EXT:
 
 ||SINGLE_COLOR_EXT		||	0x81F9||
@@ -69,4 +69,3 @@ LIGHT_MODEL_COLOR_CONTROL_EXT:
 == Errors ==
 
 None.
-

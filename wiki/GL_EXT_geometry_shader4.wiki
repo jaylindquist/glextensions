@@ -1,0 +1,200 @@
+#summary GL_EXT_geometry_shader4
+
+== Contents ==
+
+  * [GL_EXT_geometry_shader4#Dependencies Dependencies]
+  * [GL_EXT_geometry_shader4#Overview Overview]
+  * [GL_EXT_geometry_shader4#New_Procedures_and_Functions New Procedures and Functions]
+  * [GL_EXT_geometry_shader4#New_Tokens New Tokens]
+  * [GL_EXT_geometry_shader4#Errors Errors]
+  * [GL_EXT_geometry_shader4#New_State New State]
+  * [GL_EXT_geometry_shader4#New_Implementation_Dependent_State New Implementation Dependent State]
+
+== Dependencies ==
+
+OpenGL 1.1 is required.
+
+This extension is written against the OpenGL 2.0 specification.
+
+[GL_EXT_framebuffer_object] interacts with this extension.
+
+[GL_EXT_framebuffer_blit] interacts with this extension.
+
+[GL_EXT_texture_array] interacts with this extension.
+
+[GL_ARB_texture_rectangle] trivially affects the definition of this
+extension.
+
+[GL_EXT_texture_buffer_object] trivially affects the definition of this
+extension.
+
+[GL_NV_primitive_restart] trivially affects the definition of this
+extension.
+
+This extension interacts with [GL_EXT_transform_feedback].
+
+
+== Overview ==
+
+EXT_geometry_shader4 defines a new shader type available to be run on the
+GPU, called a geometry shader. Geometry shaders are run after vertices are
+transformed, but prior to color clamping, flat shading and clipping.
+
+A geometry shader begins with a single primitive (point, line,
+triangle). It can read the attributes of any of the vertices in the
+primitive and use them to generate new primitives. A geometry shader has a
+fixed output primitive type (point, line strip, or triangle strip) and
+emits vertices to define a new primitive. A geometry shader can emit
+multiple disconnected primitives. The primitives emitted by the geometry
+shader are clipped and then processed like an equivalent OpenGL primitive
+specified by the application.
+
+Furthermore, EXT_geometry_shader4 provides four additional primitive
+types: lines with adjacency, line strips with adjacency, separate
+triangles with adjacency, and triangle strips with adjacency.  Some of the
+vertices specified in these new primitive types are not part of the
+ordinary primitives, instead they represent neighboring vertices that are
+adjacent to the two line segment end points (lines/strips) or the three
+triangle edges (triangles/tstrips). These vertices can be accessed by
+geometry shaders and used to match up the vertices emitted by the geometry
+shader with those of neighboring primitives.
+
+Since geometry shaders expect a specific input primitive type, an error
+will occur if the application presents primitives of a different type.
+For example, if a geometry shader expects points, an error will occur at
+Begin() time, if a primitive mode of TRIANGLES is specified.
+
+
+== New Procedures and Functions ==
+{{{
+void ProgramParameteriEXT(uint program, enum pname, int value);
+void FramebufferTextureEXT(enum target, enum attachment,
+uint texture, int level);
+void FramebufferTextureLayerEXT(enum target, enum attachment,
+uint texture, int level, int layer);
+void FramebufferTextureFaceEXT(enum target, enum attachment,
+uint texture, int level, enum face);
+}}}
+
+== New Tokens ==
+
+Accepted by the <type> parameter of !CreateShader and returned by the
+<params> parameter of !GetShaderiv:
+
+||GEOMETRY_SHADER_EXT      ||     0x8DD9||
+
+Accepted by the <pname> parameter of ProgramParameteriEXT and
+!GetProgramiv:
+
+||GEOMETRY_VERTICES_OUT_EXT ||         0x8DDA||
+||GEOMETRY_INPUT_TYPE_EXT ||     0x8DDB||
+||GEOMETRY_OUTPUT_TYPE_EXT  ||   0x8DDC||
+
+Accepted by the <pname> parameter of !GetBooleanv, !GetIntegerv,
+!GetFloatv, and !GetDoublev:
+
+||MAX_GEOMETRY_TEXTURE_IMAGE_UNITS_EXT        ||     0x8C29||
+||MAX_GEOMETRY_VARYING_COMPONENTS_EXT         ||     0x8DDD||
+||MAX_VERTEX_VARYING_COMPONENTS_EXT           ||     0x8DDE||
+||MAX_VARYING_COMPONENTS_EXT                  ||     0x8B4B||
+||MAX_GEOMETRY_UNIFORM_COMPONENTS_EXT         ||     0x8DDF||
+||MAX_GEOMETRY_OUTPUT_VERTICES_EXT            ||     0x8DE0||
+||MAX_GEOMETRY_TOTAL_OUTPUT_COMPONENTS_EXT    ||     0x8DE1||
+
+Accepted by the <mode> parameter of Begin, !DrawArrays,
+!MultiDrawArrays, !DrawElements, !MultiDrawElements, and
+!DrawRangeElements:
+
+||LINES_ADJACENCY_EXT                       ||       0xA||
+||LINE_STRIP_ADJACENCY_EXT                  ||       0xB||
+||TRIANGLES_ADJACENCY_EXT                   ||       0xC||
+||TRIANGLE_STRIP_ADJACENCY_EXT              ||       0xD||
+
+Returned by CheckFramebufferStatusEXT:
+
+||FRAMEBUFFER_INCOMPLETE_LAYER_TARGETS_EXT     ||    0x8DA8||
+||FRAMEBUFFER_INCOMPLETE_LAYER_COUNT_EXT      ||     0x8DA9||
+
+Accepted by the <pname> parameter of GetFramebufferAttachmentParameterivEXT:
+
+||FRAMEBUFFER_ATTACHMENT_LAYERED_EXT          ||     0x8DA7||
+||FRAMEBUFFER_ATTACHMENT_TEXTURE_LAYER_EXT    ||     0x8CD4||
+
+Accepted by the <cap> parameter of Enable, Disable, and !IsEnabled,
+and by the <pname> parameter of !GetIntegerv, !GetFloatv, !GetDoublev,
+and !GetBooleanv:
+
+||PROGRAM_POINT_SIZE_EXT          ||                 0x8642||
+
+(Note: FRAMEBUFFER_ATTACHMENT_TEXTURE_LAYER_EXT is simply an alias for the
+FRAMEBUFFER_ATTACHMENT_TEXTURE_3D_ZOFFSET_EXT token provided in
+[GL_EXT_framebuffer_object].  This extension generalizes the notion of
+"<zoffset>" to include layers of an array texture.)
+
+(Note:  PROGRAM_POINT_SIZE_EXT is simply an alias for the
+VERTEX_PROGRAM_POINT_SIZE token provided in OpenGL 2.0, which is itself an
+alias for VERTEX_PROGRAM_POINT_SIZE_ARB provided by
+[GL_ARB_vertex_program]. Program-computed point sizes can be enabled if
+geometry shaders are enabled.)
+
+
+== Errors ==
+
+The error INVALID_VALUE is generated by ProgramParameteriEXT if <pname> is
+GEOMETRY_INPUT_TYPE_EXT and <value> is not one of POINTS, LINES,
+LINES_ADJACENCY_EXT, TRIANGLES or TRIANGLES_ADJACENCY_EXT.
+
+The error INVALID_VALUE is generated by ProgramParameteriEXT if <pname> is
+GEOMETRY_OUTPUT_TYPE_EXT and <value> is not one of POINTS, LINE_STRIP or
+TRIANGLE_STRIP.
+
+The error INVALID_VALUE is generated by ProgramParameteriEXT if <pname> is
+GEOMETRY_VERTICES_OUT_EXT and <value> is negative.
+
+The error INVALID_VALUE is generated by ProgramParameteriEXT if <pname> is
+GEOMETRY_VERTICES_OUT_EXT and <value> exceeds
+MAX_GEOMETRY_OUTPUT_VERTICES_EXT.
+
+The error INVALID_VALUE is generated by ProgramParameteriEXT if <pname> is
+set to GEOMETRY_VERTICES_OUT_EXT and the product of <value> and the sum of
+all components of all active varying variables exceeds
+MAX_GEOMETRY_TOTAL_OUTPUT_COMPONENTS_EXT.
+
+The error INVALID_OPERATION is generated if Begin, or any command that
+implicitly calls Begin, is called when a geometry shader is active and:
+
+  * the input primitive type of the current geometry shader is POINTS and <mode> is not POINTS,
+  * the input primitive type of the current geometry shader is LINES and <mode> is not LINES, LINE_STRIP, or LINE_LOOP,
+  * the input primitive type of the current geometry shader is TRIANGLES and <mode> is not TRIANGLES, TRIANGLE_STRIP or TRIANGLE_FAN,
+  * the input primitive type of the current geometry shader is LINES_ADJACENCY_EXT and <mode> is not LINES_ADJACENCY_EXT or LINE_STRIP_ADJACENCY_EXT, or
+  * the input primitive type of the current geometry shader is TRIANGLES_ADJACENCY_EXT and <mode> is not TRIANGLES_ADJACENCY_EXT or TRIANGLE_STRIP_ADJACENCY_EXT.
+
+
+== New State ==
+
+
+|| *Get Value* || *Type* || *Get Command* || *Initial Value* || *Description* ||
+||FRAMEBUFFER_ATTACHMENT_LAYERED_EXT||nxB||GetFramebufferAttachmentParameterivEXT|| FALSE||Framebuffer attachment is layered||
+
+|| *Get Value* || *Type* || *Get Command* || *Value* || *Description* ||
+||SHADER_TYPE||Z2||!GetShaderiv||- ||Type of shader (vertex, Fragment, geometry)||
+
+
+|| *Get Value* || *Type* || *Get Command* || *Initial Value* || *Description* ||
+||GEOMETRY_VERTICES_OUT_EXT||Z+||!GetProgramiv||0||max # of output vertices||
+||GEOMETRY_INPUT_TYPE_EXT||Z5||!GetProgramiv||TRIANGLES||Primitive input type||
+||GEOMETRY_OUTPUT_TYPE_EXT||Z3||!GetProgramiv||TRIANGLE_STRIP||Primitive output type ||
+
+
+== New Implementation Dependent State ==
+
+
+||Get Value||Type||Get Command||Min. Value||Description||
+||MAX_GEOMETRY_TEXTURE_IMAGE_UNITS_EXT||Z+||!GetIntegerv||0|| maximum number of texture image units accessible in a geometry shader||
+||MAX_GEOMETRY_OUTPUT_VERTICES_EXT||Z+||!GetIntegerv|| 256||maximum number of vertices that any geometry shader can can emit||
+||MAX_GEOMETRY_TOTAL_OUTPUT_COMPONENTS_EXT||Z+||!GetIntegerv||1024||maximum number  total components (all vertices) of active varyings that a geometry shader can emit||
+||MAX_GEOMETRY_UNIFORM_COMPONENTS_EXT||Z+||!GetIntegerv||512||Number of words for geometry shader uniform variables||
+||MAX_GEOMETRY_VARYING_COMPONENTS_EXT||Z+||!GetIntegerv||32||Number of components for varying variables between geometry and fragment shaders||
+||MAX_VERTEX_VARYING_COMPONENTS_EXT||Z+||!GetIntegerv||32||Number of components for varying variables between Vertex and geometry shaders||
+||MAX_VARYING_COMPONENTS_EXT||Z+||!GetIntegerv||32||Alias for  MAX_VARYING_FLOATS||
+

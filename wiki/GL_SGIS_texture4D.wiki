@@ -1,0 +1,182 @@
+#summary GL_SGIS_texture4D
+
+== Contents ==
+
+  * [GL_SGIS_texture4D#Dependencies Dependencies]
+  * [GL_SGIS_texture4D#Overview Overview]
+  * [GL_SGIS_texture4D#New_Procedures_and_Functions New Procedures and Functions]
+  * [GL_SGIS_texture4D#New_Tokens New Tokens]
+  * [GL_SGIS_texture4D#Errors Errors]
+  * [GL_SGIS_texture4D#New_Implementation_Dependent_State New Implementation Dependent State]
+
+== Dependencies ==
+
+[GL_EXT_abgr] affects the definition of this extension
+
+[GL_EXT_texture] is required
+
+[GL_EXT_texture3D] is required
+
+[GL_EXT_subtexture] affects the definition of this extension
+
+== Overview ==
+
+This extension defines 4-dimensional texture mapping.  If EXT_subtexture
+is supported, this extension also defines a mechanism to redefine a
+portion of an existing 4-dimensional texture image.  Because
+EXT_texture3D is required, this extension utilizes the 3-dimensional
+image support defined in by EXT_texture3D as a base for 4-dimensional
+image manipulation.
+
+The 4th dimension has an abstract, rather than physical, reference
+and will be called "extent", since the definition of extent is "that which
+specifies the range or magnitude of an area or volume."
+
+Four-dimensional texture mapping is more constrained than its one, two,
+and three-dimensional counterparts.  Mipmapping is not supported, so
+only the level-zero 4-dimensional texture image can be defined.  Cubic
+filtering is not supported, so the border width must be either zero or
+one.
+
+Four-dimensional textures are used primarily as color lookup tables for
+color conversion.
+
+
+== New Procedures and Functions ==
+{{{
+void TexImage4DSGIS(enum target,
+                    int level,
+                    enum internalformat,
+                    sizei width,
+                    sizei height,
+                    sizei depth,
+                    sizei extent,
+                    int border,
+                    enum format,
+                    enum type,
+                    const void* pixels);
+
+void TexSubImage4DSGIS(enum target,
+                       int level,
+                       int xoffset,
+                       int yoffset,
+                       int zoffset,
+                       int woffset,
+                       sizei width,
+                       sizei height,
+                       sizei depth,
+                       sizei extent,
+                       enum format,
+                       enum type,
+                       const void* pixels);
+}}}
+
+== New Tokens ==
+
+Accepted by the <pname> parameter of GetBooleanv, GetIntegerv,
+GetFloatv, and GetDoublev, and by the <pname> parameter of PixelStore:
+
+||PACK_SKIP_VOLUMES_SGIS||
+||PACK_IMAGE_DEPTH_SGIS||
+||UNPACK_SKIP_VOLUMES_SGIS||
+||UNPACK_IMAGE_DEPTH_SGIS||
+
+Accepted by the <cap> parameter of Enable, Disable, and IsEnabled, by
+the <pname> parameter of GetBooleanv, GetIntegerv, GetFloatv, and
+GetDoublev, and by the <target> parameter of TexImage4DSGIS, GetTexImage,
+GetTexLevelParameteriv, GetTexLevelParameterfv, GetTexParameteriv, and
+GetTexParameterfv:
+
+||TEXTURE_4D_SGIS||
+
+Accepted by the <target> parameter of TexImage4DSGIS,
+GetTexLevelParameteriv, and GetTexLevelParameterfv:
+
+||PROXY_TEXTURE_4D_SGIS||
+
+Accepted by the <pname> parameter of GetTexLevelParameteriv and
+GetTexLevelParameterfv:
+
+||TEXTURE_4DSIZE_SGIS||
+
+Accepted by the <pname> parameter of TexParameteriv, TexParameterfv,
+GetTexParameteriv, and GetTexParameterfv:
+
+||TEXTURE_WRAP_Q_SGIS||
+
+Accepted by the <pname> parameter of GetBooleanv, GetIntegerv,
+GetFloatv, and GetDoublev:
+
+||MAX_4D_TEXTURE_SIZE_SGIS||
+||TEXTURE_4D_BINDING_SGIS||
+
+== Errors ==
+
+INVALID_ENUM is generated if TexImage4DSGIS parameter <target> is not
+TEXTURE_4D_SGIS.
+
+INVALID_VALUE is generated if TexImage4DSGIS parameter <level> is less
+than zero.
+
+INVALID_ENUM is generated if TexImage4DSGIS parameter <internalformat> is
+not ALPHA, RGB, RGBA, LUMINANCE, LUMINANCE_ALPHA, or one of the tokens
+defined by the EXT_texture extension.  (Values 1, 2, 3, and 4 are not
+accepted as internal formats by TexImage4DSGIS).
+
+INVALID_VALUE is generated if TexImage4DSGIS parameter <width>, <height>,
+or <depth> is less than zero, or cannot be represented as
+2**k + 2*border for some integer k.
+
+INVALID_VALUE is generated if TexImage4DSGIS parameter <border> is not 0
+or 1.
+
+INVALID_ENUM is generated if TexImage4DSGIS parameter <format> is not
+COLOR_INDEX, RED, GREEN, BLUE, ALPHA, RGB, RGBA, LUMINANCE, or
+LUMINANCE_ALPHA (or ABGR_EXT if EXT_abgr is supported).
+
+INVALID_ENUM is generated if TexImage4DSGIS parameter <type> is not
+UNSIGNED_BYTE, BYTE, UNSIGNED_SHORT, SHORT, UNSIGNED_INT, INT, or FLOAT.
+
+INVALID_OPERATION is generated if TexImage4DSGIS is called between
+execution of Begin and the corresponding execution of End.
+
+TEXTURE_TOO_LARGE_SGI is generated if the texture as specified cannot be
+accommodated by the implementation.  This error will not occur if none
+of <width>, <height>, or <depth> is greater than MAX_4D_TEXTURE_SIZE_SGIS.
+
+INVALID_ENUM is generated by TexSubImage4DSGIS if its <target> parameter
+is not TEXTURE_4D_SGIS.
+
+INVALID_VALUE is generated by TexSubImage4DSGIS if the specified texture
+array has not been defined by a previous TexImage4DSGIS operation.
+
+INVALID_VALUE is generated if TexSubImage4DSGIS parameter <level> is not
+equal to zero.
+
+INVALID_VALUE is generated if TexSubImage4DSGIS parameter <width>,
+<height>, <depth>, or <extent> is negative.
+
+INVALID_VALUE is generated if TexSubImage4DSGIS parameter <xoffset>,
+<yoffset>, <zoffset>, or <woffset> is less than -TEXTURE_BORDER.
+
+INVALID_VALUE is generated by TexSubImage4DSGIS if
+(xoffset + width) > (TEXTURE_WIDTH - TEXTURE_BORDER), or if
+(yoffset + height) > (TEXTURE_HEIGHT - TEXTURE_BORDER), or if
+(zoffset + depth) > (TEXTURE_DEPTH_EXT - TEXTURE_BORDER), or if
+(woffset + extent) > (TEXTURE_4DSIZE_SGIS - TEXTURE_BORDER).
+
+INVALID_ENUM is generated if TexSubImage4DSGIS parameter <format> is not
+COLOR_INDEX, RED, GREEN, BLUE, ALPHA, RGB, RGBA, LUMINANCE, or
+LUMINANCE_ALPHA (or ABGR_EXT if EXT_abgr is supported).
+
+INVALID_ENUM is generated if TexSubImage4DSGIS parameter <type> is not
+UNSIGNED_BYTE, BYTE, UNSIGNED_SHORT, SHORT, UNSIGNED_INT, INT, or FLOAT.
+
+INVALID_OPERATION is generated if TexSubImage4DSGIS is called between
+execution of Begin and the corresponding execution of End.
+
+
+== New Implementation Dependent State ==
+
+|| *Get Value* || *Get Command* || *Type* || *Minimum Value* ||
+||MAX_4D_TEXTURE_SIZE_SGIS || GetIntegerv || Z+	|| 16 ||

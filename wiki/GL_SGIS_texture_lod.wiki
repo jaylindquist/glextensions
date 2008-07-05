@@ -18,9 +18,9 @@
 
 [GL_EXT_texture_object] affects the definition of this extension
 
-[GL_SGI_detail_texture] affects the definition of this extension
+[GL_SGIS_detail_texture] affects the definition of this extension
 
-[GL_SGI_sharpen_texture] affects the definition of this extension
+[GL_SGIS_sharpen_texture] affects the definition of this extension
 
 
 

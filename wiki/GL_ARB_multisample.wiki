@@ -12,6 +12,7 @@
 == Dependencies ==
 
 [WGL_EXT_extensions_string] is required.
+
 [WGL_EXT_pixel_format] is required.
 
 
@@ -99,4 +100,3 @@ corresponding End.
 || *Get Value* || *Get Command* || *Type* || *Minimum Value* ||
 ||SAMPLE_BUFFERS_ARB   ||    GetIntegerv  ||  Z+   ||   0||
 ||SAMPLES_ARB           ||   GetIntegerv  ||  Z+    ||  0||
-

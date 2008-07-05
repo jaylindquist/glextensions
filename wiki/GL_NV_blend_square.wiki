@@ -1,0 +1,54 @@
+#summary GL_NV_blend_square
+
+== Contents ==
+
+  * [GL_NV_blend_square#Dependencies Dependencies]
+  * [GL_NV_blend_square#Overview Overview]
+  * [GL_NV_blend_square#New_Procedures_and_Functions New Procedures and Functions]
+  * [GL_NV_blend_square#New_Tokens New Tokens]
+  * [GL_NV_blend_square#Errors Errors]
+  * [GL_NV_blend_square#New_State New State]
+  * [GL_NV_blend_square#New_Implementation_Dependent_State New Implementation Dependent State]
+
+== Dependencies ==
+
+Written based on the wording of the OpenGL 1.2.1 specification.
+
+
+== Overview ==
+
+It is useful to be able to multiply a number by itself in the blending
+stages -- for example, in certain types of specular lighting effects
+where a result from a dot product needs to be taken to a high power.
+
+This extension provides four additional blending factors to permit
+this and other effects: SRC_COLOR and ONE_MINUS_SRC_COLOR for source
+blending factors, and DST_COLOR and ONE_MINUS_DST_COLOR for destination
+blending factors.
+
+Direct3D provides capability bits for advertising these additional
+blend modes.
+
+
+== New Procedures and Functions ==
+
+None
+
+
+== New Tokens ==
+
+None
+
+
+== Errors ==
+
+None
+
+
+== New State ==
+
+
+== New Implementation Dependent State ==
+
+None
+

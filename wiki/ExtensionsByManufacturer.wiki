@@ -208,7 +208,9 @@ List of OpenGL Extensions by manufacturer
 
 == Silicon Graphics ==
 
+  * [GL_SGIS_detail_texture]
   * [GL_SGIS_generate_mipmap]
+  * [GL_SGIS_sharpen_texture]
   * [GL_SGIS_texture_edge_clamp]
   * [GL_SGIS_texture_lod]
   * [GL_SGIX_depth_texture]

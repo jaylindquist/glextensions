@@ -1,0 +1,324 @@
+#summary GL_ARB_shader_objects
+
+== Contents ==
+
+  * [GL_ARB_shader_objects#Dependencies Dependencies]
+  * [GL_ARB_shader_objects#Overview Overview]
+  * [GL_ARB_shader_objects#New_Procedures_and_Functions New Procedures and Functions]
+  * [GL_ARB_shader_objects#New_Tokens New Tokens]
+  * [GL_ARB_shader_objects#Errors Errors]
+  * [GL_ARB_shader_objects#New_State New State]
+  * [GL_ARB_shader_objects#New_Implementation_Dependent_State New Implementation Dependent State]
+
+== Dependencies ==
+
+OpenGL 1.0 is required.
+
+This extension is written against version 1.10 of the OpenGL Shading
+Language Specification.
+
+The extension is written against the OpenGL 1.4 Specification.
+
+
+== Overview ==
+
+This extension adds API calls that are necessary to manage shader
+objects and program objects as defined in the OpenGL 2.0 white papers by
+3Dlabs.
+
+The generation of an executable that runs on one of OpenGL's
+programmable units is modeled to that of developing a typical C/C++
+application. There are one or more source files, each of which are
+stored by OpenGL in a shader object. Each shader object (source file)
+needs to be compiled and attached to a program object. Once all shader
+objects are compiled successfully, the program object needs to be linked
+to produce an executable. This executable is part of the program object,
+and can now be loaded onto the programmable units to make it part of the
+current OpenGL state. Both the compile and link stages generate a text
+string that can be queried to get more information. This information
+could be, but is not limited to, compile errors, link errors,
+optimization hints, etc. Values for uniform variables, declared in a
+shader, can be set by the application and used to control a shader's
+behavior.
+
+This extension defines functions for creating shader objects and program
+objects, for compiling shader objects, for linking program objects, for
+attaching shader objects to program objects, and for using a program
+object as part of current state. Functions to load uniform values are
+also defined. Some house keeping functions, like deleting an object and
+querying object state, are also provided.
+
+Although this extension defines the API for creating shader objects, it
+does not define any specific types of shader objects. It is assumed that
+this extension will be implemented along with at least one such
+additional extension for creating a specific type of OpenGL 2.0 shader
+(e.g., the [GL_ARB_fragment_shader] extension or the [GL_ARB_vertex_shader]
+extension).
+
+
+== New Procedures and Functions ==
+{{{
+void DeleteObjectARB(handleARB obj)
+
+handleARB GetHandleARB(enum pname)
+
+void DetachObjectARB(handleARB containerObj, handleARB attachedObj)
+
+handleARB CreateShaderObjectARB(enum shaderType)
+
+void ShaderSourceARB(handleARB shaderObj, sizei count, const charARB **string,
+const int *length)
+
+void CompileShaderARB(handleARB shaderObj)
+
+handleARB CreateProgramObjectARB(void)
+
+void AttachObjectARB(handleARB containerObj, handleARB obj)
+
+void LinkProgramARB(handleARB programObj)
+
+void UseProgramObjectARB(handleARB programObj)
+
+void ValidateProgramARB(handleARB programObj)
+
+void Uniform1fARB(int location, float v0)
+void Uniform2fARB(int location, float v0, float v1)
+void Uniform3fARB(int location, float v0, float v1, float v2)
+void Uniform4fARB(int location, float v0, float v1, float v2, float v3)
+
+void Uniform1iARB(int location, int v0)
+void Uniform2iARB(int location, int v0, int v1)
+void Uniform3iARB(int location, int v0, int v1, int v2)
+void Uniform4iARB(int location, int v0, int v1, int v2, int v3)
+
+void Uniform1fvARB(int location, sizei count, const float *value)
+void Uniform2fvARB(int location, sizei count, const float *value)
+void Uniform3fvARB(int location, sizei count, const float *value)
+void Uniform4fvARB(int location, sizei count, const float *value)
+
+void Uniform1ivARB(int location, sizei count, const int *value)
+void Uniform2ivARB(int location, sizei count, const int *value)
+void Uniform3ivARB(int location, sizei count, const int *value)
+void Uniform4ivARB(int location, sizei count, const int *value)
+
+void UniformMatrix2fvARB(int location, sizei count, boolean transpose, const float *value)
+void UniformMatrix3fvARB(int location, sizei count, boolean transpose, const float *value)
+void UniformMatrix4fvARB(int location, sizei count, boolean transpose, const float *value)
+
+void GetObjectParameterfvARB(handleARB obj, enum pname, float *params)
+void GetObjectParameterivARB(handleARB obj, enum pname, int *params)
+
+void GetInfoLogARB(handleARB obj, sizei maxLength, sizei *length, charARB *infoLog)
+
+void GetAttachedObjectsARB(handleARB containerObj, sizei maxCount, sizei *count,
+handleARB *obj)
+
+int GetUniformLocationARB(handleARB programObj, const charARB *name)
+
+void GetActiveUniformARB(handleARB programObj, uint index, sizei maxLength,
+sizei *length, int *size, enum *type, charARB *name)
+
+void GetUniformfvARB(handleARB programObj, int location, float *params)
+void GetUniformivARB(handleARB programObj, int location, int *params)
+
+void GetShaderSourceARB(handleARB obj, sizei maxLength, sizei *length,
+                        charARB *source)
+}}}
+
+== New Tokens ==
+
+Accepted by the <pname> argument of GetHandleARB:
+
+||PROGRAM_OBJECT_ARB    || 0x8B40||
+
+Accepted by the <pname> parameter of GetObjectParameter{fi}vARB:
+
+||OBJECT_TYPE_ARB                         ||        0x8B4E||
+||OBJECT_SUBTYPE_ARB                      ||        0x8B4F||
+||OBJECT_DELETE_STATUS_ARB                 ||       0x8B80||
+||OBJECT_COMPILE_STATUS_ARB                ||       0x8B81||
+||OBJECT_LINK_STATUS_ARB                   ||       0x8B82||
+||OBJECT_VALIDATE_STATUS_ARB               ||       0x8B83||
+||OBJECT_INFO_LOG_LENGTH_ARB               ||       0x8B84||
+||OBJECT_ATTACHED_OBJECTS_ARB             ||        0x8B85||
+||OBJECT_ACTIVE_UNIFORMS_ARB              ||        0x8B86||
+||OBJECT_ACTIVE_UNIFORM_MAX_LENGTH_ARB     ||       0x8B87||
+||OBJECT_SHADER_SOURCE_LENGTH_ARB          ||       0x8B88||
+
+Returned by the <params> parameter of GetObjectParameter{fi}vARB:
+
+||SHADER_OBJECT_ARB    ||  0x8B48||
+
+Returned by the <type> parameter of GetActiveUniformARB:
+
+||FLOAT                             ||              0x1406||
+||FLOAT_VEC2_ARB                    ||              0x8B50||
+||FLOAT_VEC3_ARB                    ||              0x8B51||
+||FLOAT_VEC4_ARB                    ||              0x8B52||
+||INT                               ||              0x1404||
+||INT_VEC2_ARB                      ||              0x8B53||
+||INT_VEC3_ARB                      ||              0x8B54||
+||INT_VEC4_ARB                       ||             0x8B55||
+||BOOL_ARB                          ||              0x8B56||
+||BOOL_VEC2_ARB                     ||              0x8B57||
+||BOOL_VEC3_ARB                     ||              0x8B58||
+||BOOL_VEC4_ARB                      ||             0x8B59||
+||FLOAT_MAT2_ARB                     ||             0x8B5A||
+||FLOAT_MAT3_ARB                    ||              0x8B5B||
+||FLOAT_MAT4_ARB                    ||              0x8B5C||
+||SAMPLER_1D_ARB                     ||             0x8B5D||
+||SAMPLER_2D_ARB                    ||              0x8B5E||
+||SAMPLER_3D_ARB                    ||              0x8B5F||
+||SAMPLER_CUBE_ARB                  ||              0x8B60||
+||SAMPLER_1D_SHADOW_ARB             ||              0x8B61||
+||SAMPLER_2D_SHADOW_ARB             ||              0x8B62||
+||SAMPLER_2D_RECT_ARB               ||              0x8B63||
+||SAMPLER_2D_RECT_SHADOW_ARB        ||              0x8B64||
+
+
+== Errors ==
+
+The error INVALID_VALUE is generated by any command that takes one or
+more handles as input, and one or more of these handles are not an
+object handle generated by OpenGL. Note that this error is also set when
+passing in the value 0 as a handle, except for UseProgramObjectARB and
+DeleteObject. Passing in 0 to UseProgramObjectARB is valid, and ignored
+by DeleteObject.
+
+The error INVALID_OPERATION is generated by AttachObjectARB if <obj> is
+not of type SHADER_OBJECT_ARB or if <containerObj> is not of type
+PROGRAM_OBJECT_ARB.
+
+The error INVALID_OPERATION is generated by AttachObjectARB if <obj> is
+already attached to <containerObj>.
+
+The error INVALID_OPERATION is generated by DetachObjectARB if
+<attachedObj> is not attached to <containerObj>.
+
+The error INVALID_OPERATION is generated by DetachObjectARB if
+<containerObj> is not of type PROGRAM_OBJECT_ARB.
+
+The error INVALID_OPERATION is generated by ShaderSourceARB and
+CompileShaderARB if <shaderObj> is not of type SHADER_OBJECT_ARB.
+
+The error INVALID_OPERATION is generated by LinkProgramARB if
+<programObj> is not of type PROGRAM_OBJECT_ARB.
+
+The error INVALID_OPERATION is generated by UseProgramObjectARB if
+<programObj> is not of type PROGRAM_OBJECT_ARB.
+
+The error INVALID_OPERATION is generated by UseProgramObjectARB if
+<programObj> could not be made part of the current state.
+
+The error INVALID_OPERATION is generated by GetUniformLocationARB if
+<programObj> is not of type PROGRAM_OBJECT_ARB or if <programObj> has
+not been linked successfully.
+
+The error INVALID_OPERATION is generated by GetActiveUniformARB if
+<programObj> is not of type PROGRAM_OBJECT_ARB.
+
+The error INVALID_VALUE is generated by GetActiveUniformARB if <index>
+is greater than or equal to OBJECT_ACTIVE_UNIFORMS_ARB.
+
+The error INVALID_OPERATION is generated by the Uniform*ARB commands if
+the size does not match the size of the uniform declared in the shader.
+
+The error INVALID_OPERATION is generated by the Uniform*ARB commands if
+the type does not match the type of the uniform declared in the shader,
+if the uniform is not of type Boolean.
+
+The error INVALID_OPERATION is generated by the Uniform*ARB commands if
+<location> is not -1 and <location> does not exist for the program object
+currently in use.
+
+The error INVALID_OPERATION is generated by the Uniform*ARB commands if
+there is no program object in use.
+
+The error INVALID_OPERATION is generated if a uniform command other than
+Uniform1i{v}ARB is used to load a sampler value.
+
+The error INVALID_OPERATION is generated by ValidateProgramARB if
+<programObj> is not of type PROGRAM_OBJECT_ARB.
+
+The error INVALID_OPERATION is generated by GetObjectParameter{if}vARB
+if <pname> is OBJECT_TYPE_ARB or OBJECT_DELETE_STATUS_ARB or
+OBJECT_INFO_LOG_LENGTH_ARB and <obj> is not of type PROGRAM_OBJECT_ARB
+or SHADER_OBJECT_ARB.
+
+The error INVALID_OPERATION is generated by GetObjectParameter{if}vARB
+if <pname> is OBJECT_LINK_STATUS_ARB or OBJECT_VALIDATE_STATUS_ARB or
+OBJECT_ATTACHED_OBJECTS_ARB or OBJECT_ACTIVE_UNIFORMS_ARB or
+OBJECT_ACTIVE_UNIFORM_MAX_LENGTH_ARB and <obj> is not of type
+PROGRAM_OBJECT_ARB.
+
+The error INVALID_OPERATION is generated by GetObjectParameter{if}vARB
+if <pname> is OBJECT_SUBTYPE_ARB or OBJECT_COMPILE_STATUS_ARB or
+OBJECT_SHADER_SOURCE_LENGTH_ARB and <obj> is not of type
+SHADER_OBJECT_ARB.
+
+The error INVALID_OPERATION is generated by GetAttachedObjectsARB if
+<containerObj> is not of type PROGRAM_OBJECT_ARB.
+
+The error INVALID_OPERATION is generated by GetInfoLogARB if <obj> is
+not of type SHADER_OBJECT_ARB or PROGRAM_OBJECT_ARB.
+
+The error INVALID_OPERATION is generated by GetShaderSourceARB if <obj>
+is not of type SHADER_OBJECT_ARB.
+
+The error INVALID_OPERATION is generated by GetUniform{if}vARB if
+<programObj> is not of type PROGRAM_OBJECT_ARB or if <programObj> has
+not been linked successfully or if <location> is not a valid location
+for <programObj>.
+
+The error INVALID_OPERATION is generated if Begin, RasterPos, or any
+command that performs an explicit Begin is called if:
+
+- One or more samplers of different types in the current program
+object access the same texture image unit.
+
+- More than the maximum allowable texture image units are accessed
+based on the count of active samplers and the rest of the GL state
+(note that LinkProgramARB can normally resolve this, except for the
+case where an ARB_vertex_shader shader is mixed with an
+ARB_fragment_program shader or mixed with fixed-function fragment
+processing).
+
+
+== New State ==
+
+|| *Get Value* || *Type* || *Get Command* || *Initial Value* || *Description* ||
+||PROGRAM_OBJECT_ARB||H  || GetHandle   ||  0 ||Handle of current program object||
+
+|| *Get Value* || *Type* || *Get Command* || *Initial Value* || *Description* ||
+||-            || H      ||               ||object specific  ||object handle  ||
+||-            || 0+xchar|| GetInfoLogARB ||     ""      ||Info log for shader objects||
+||-            || 0+xchar|| GetShaderSourceARB|| ""      ||source for a shader||
+||OBJECT_TYPE_ARB||Z+    ||GetObjectParameterivARB||SHADER_OBJECT||Type of object||
+||OBJECT_SUBTYPE_ARB||Z+ ||GetObjectParameterivARB|| -||   Sub type of object||
+||OBJECT_DELETE_STATUS_ARB ||B||GetObjectParameterivARB||FALSE||Shader deleted  ||
+||OBJECT_COMPILE_STATUS_ARB||B||GetObjectParameterivARB||FALSE||Compile succeeded||
+||OBJECT_INFO_LOG_LENGTH_ARB||Z+ ||GetObjectParameterivARB||0||Length of info log ||
+||OBJECT_SHADER_SOURCE_LENGTH_ARB||Z+||GetObjectParameterivARB||0 ||Length of source code||
+
+|| *Get Value* || *Type* || *Get Command* || *Initial Value* || *Description* ||
+||-            || 0+xZ+  ||GetActiveUniformARB|| - ||Size of active uniform||
+||-            || 0+xZ+  ||GetActiveUniformARB||   - ||Type of active uniform ||
+||-            || 0+xcharARB||GetActiveUniformARB||  "" ||Name of active uniform||
+||-            || 0+xZ   ||GetUniformLocationARB|| -  ||Location of active uniform  ||
+||-            || 0+xchar||GetInfoLogARB || "" ||Info log for program objects||
+||OBJECT_ATTACHED_OBJECTS_ARB||Z+||GetObjectParameterivARB||0||Number of attached objects||
+||OBJECT_ACTIVE_UNIFORMS_ARB||Z+||GetObjectParameterivARB||0|| Number of active uniforms||
+||OBJECT_DELETE_STATUS_ARB||B||GetObjectParameterivARB||FALSE||Program object deleted||
+||OBJECT_LINK_STATUS_ARB||B||GetObjectParameterivARB ||FALSE||Link succeeded||
+||OBJECT_VALIDATE_STATUS_ARB||B||GetObjectParameterivARB||FALSE||Validate succeeded||
+||OBJECT_INFO_LOG_LENGTH_ARB||Z+||GetObjectParameterivARB|| 0||Length of info log ||
+||OBJECT_TYPE_ARB|| Z+    || GetObjectParameterivARB||PROGRAM_OBJECT||Type of object||
+||OBJECT_ACTIVE_UNIFORM_MAX_LENGTH_ARB||Z+||GetObjectParameterivARB||0 ||Max uniform name length||
+||-              || 0+xhandle||GetAttachedObjectsARB||empty list ||Shader objects attached||
+||-              || H       ||  ||  object specific||object handle||
+
+
+== New Implementation Dependent State ==
+
+None
+

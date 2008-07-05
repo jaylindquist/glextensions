@@ -75,7 +75,7 @@ image at all, but this will likely result in unacceptable
 performance.  Instead, it makes more sense to stop rendering when
 the number of pixels in each layer falls below a given threshold.
 
-- Occlusion queries can replace !glReadPixels of the depth buffer to
+- Occlusion queries can replace glReadPixels of the depth buffer to
 determine whether (for example) a light source is visible for the
 purposes of a lens flare effect or a halo to simulate glare.  Pixel
 counts allow you to compute the percentage of the light source that
@@ -164,4 +164,3 @@ and the corresponding execution of End.
 
 
 == New Implementation Dependent State ==
-

@@ -140,6 +140,7 @@ List of OpenGL Extensions by manufacturer
 == IBM ==
 
   * [GL_IBM_rasterpos_clip]
+  * [GL_IBM_texture_edge_clamp]
   * [GL_IBM_texture_mirrored_repeat]
 
 == Kinetix ==

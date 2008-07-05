@@ -85,8 +85,8 @@ Accepted by the <components> parameter of TexImage1D and TexImage2D:
 ||RGBA12_EXT                       ||0x805A||
 ||RGBA16_EXT                       ||0x805B||
 
-Accepted by the <pname> parameters of GetTexLevelParameteriv and
-GetTexLevelParameterfv:
+Accepted by the <pname> parameters of !GetTexLevelParameteriv and
+!GetTexLevelParameterfv:
 
 ||TEXTURE_RED_SIZE_EXT             ||0x805C||
 ||TEXTURE_GREEN_SIZE_EXT           ||0x805D||
@@ -95,19 +95,19 @@ GetTexLevelParameterfv:
 ||TEXTURE_LUMINANCE_SIZE_EXT       ||0x8060||
 ||TEXTURE_INTENSITY_SIZE_EXT       ||0x8061||
 
-Accepted by the <params> parameter of TexEnvf, TexEnvi, TexEnvfv, and
-TexEnvfi when the <pname> parameter value is
+Accepted by the <params> parameter of !TexEnvf, !TexEnvi, !TexEnvfv, and
+!TexEnvfi when the <pname> parameter value is
 GL_TEXTURE_ENV_MODE
 
 ||REPLACE_EXT                      ||0x8062||
 
 Accepted by the <target> parameters of TexImage1D,
-GetTexLevelParameteriv, and GetTexLevelParameterfv:
+!GetTexLevelParameteriv, and !GetTexLevelParameterfv:
 
 ||PROXY_TEXTURE_1D_EXT             ||0x8063||
 
 Accepted by the <target> parameters of TexImage2D,
-GetTexLevelParameteriv, and GetTexLevelParameterfv:
+!GetTexLevelParameteriv, and !GetTexLevelParameterfv:
 
 ||PROXY_TEXTURE_2D_EXT             ||0x8064||
 

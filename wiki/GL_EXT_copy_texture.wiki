@@ -30,50 +30,50 @@ supported only for partial replacement.
 
 
 == New Procedures and Functions ==
-
+{{{
 void CopyTexImage1DEXT(enum target,
-int level,
-enum internalformat,
-int x,
-int y,
-sizei width,
-int border);
+                       int level,
+                       enum internalformat,
+                       int x,
+                       int y,
+                       sizei width,
+                       int border);
 
 void CopyTexImage2DEXT(enum target,
-int level,
-enum internalformat,
-int x,
-int y,
-sizei width,
-sizei height,
-int border);
+                       int level,
+                       enum internalformat,
+                       int x,
+                       int y,
+                       sizei width,
+                       sizei height,
+                       int border);
 
 void CopyTexSubImage1DEXT(enum target,
-int level,
-int xoffset,
-int x,
-int y,
-sizei width);
+                          int level,
+                          int xoffset,
+                          int x,
+                          int y,
+                          sizei width);
 
 void CopyTexSubImage2DEXT(enum target,
-int level,
-int xoffset,
-int yoffset,
-int x,
-int y,
-sizei width,
-sizei height);
+                          int level,
+                          int xoffset,
+                          int yoffset,
+                          int x,
+                          int y,
+                          sizei width,
+                          sizei height);
 
 void CopyTexSubImage3DEXT(enum target,
-int level,
-int xoffset,
-int yoffset,
-int zoffset,
-int x,
-int y,
-sizei width,
-sizei height);
-
+                          int level,
+                          int xoffset,
+                          int yoffset,
+                          int zoffset,
+                          int x,
+                          int y,
+                          sizei width,
+                          sizei height);
+}}}
 
 == New Tokens ==
 

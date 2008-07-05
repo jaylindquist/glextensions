@@ -1,0 +1,61 @@
+#summary GL_ARB_texture_env_dot3
+
+== Contents ==
+
+  * [GL_ARB_texture_env_dot3#Dependencies Dependencies]
+  * [GL_ARB_texture_env_dot3#Overview Overview]
+  * [GL_ARB_texture_env_dot3#New_Procedures_and_Functions New Procedures and Functions]
+  * [GL_ARB_texture_env_dot3#New_Tokens New Tokens]
+  * [GL_ARB_texture_env_dot3#Errors Errors]
+  * [GL_ARB_texture_env_dot3#New_State New State]
+  * [GL_ARB_texture_env_dot3#New_Implementation_Dependent_State New Implementation Dependent State]
+
+== Dependencies ==
+
+This extension is written against the OpenGL 1.2.1 Specification.
+OpenGL 1.1, [GL_ARB_multitexture] and [GL_ARB_texture_env_combine] are required
+for this extension.
+
+
+== Overview ==
+
+Adds new operation to the texture combiner operations.
+
+||DOT3_RGB_ARB  ||    Arg0 <dotprod> Arg1||
+||DOT3_RGBA_ARB ||   Arg0 <dotprod> Arg1||
+
+where Arg0, Arg1 are specified by <params> parameter of
+TexEnvf, TexEnvi, TexEnvfv, and TexEnviv when the <pname>
+parameter value is SOURCE0_RGB_ARB and SOURCE1_RGB_ARB.
+
+
+== New Procedures and Functions ==
+
+None
+
+
+== New Tokens ==
+
+Accepted by the <params> parameter of TexEnvf, TexEnvi, TexEnvfv,
+and TexEnviv when the <pname> parameter value is COMBINE_RGB_ARB
+
+||DOT3_RGB_ARB          ||      0x86AE||
+||DOT3_RGBA_ARB         ||      0x86AF||
+
+
+== Errors ==
+
+INVALID_ENUM is generated if <params> value for COMBINE_RGB_ARB
+is not one of REPLACE, MODULATE, ADD, ADD_SIGNED_ARB,
+INTERPOLATE_ARB, SUBTRACT_ARB, DOT3_RGB_ARB or DOT3_RGBA_ARB.
+
+
+== New State ==
+
+None
+
+
+== New Implementation Dependent State ==
+
+None
+

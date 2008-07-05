@@ -1,4 +1,4 @@
- #summary GL_EXT_texture_sRGB
+#summary GL_EXT_texture_sRGB
 
 == Contents ==
 

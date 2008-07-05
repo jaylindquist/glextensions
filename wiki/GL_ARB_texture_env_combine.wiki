@@ -1,0 +1,167 @@
+#summary GL_ARB_texture_env_combine
+
+== Contents ==
+
+  * [GL_ARB_texture_env_combine#Dependencies Dependencies]
+  * [GL_ARB_texture_env_combine#Overview Overview]
+  * [GL_ARB_texture_env_combine#New_Procedures_and_Functions New Procedures and Functions]
+  * [GL_ARB_texture_env_combine#New_Tokens New Tokens]
+  * [GL_ARB_texture_env_combine#Errors Errors]
+  * [GL_ARB_texture_env_combine#New_State New State]
+  * [GL_ARB_texture_env_combine#New_Implementation_Dependent_State New Implementation Dependent State]
+
+== Dependencies ==
+
+This extension is written against the OpenGL 1.2.1 Specification.
+
+OpenGL 1.1 and [GL_ARB_multitexture] are required for this extension.
+
+
+== Overview ==
+
+New texture environment function COMBINE_ARB allows programmable
+texture combiner operations, including:
+
+||REPLACE             ||    `Arg0` ||
+||MODULATE            ||    `Arg0 * Arg1` ||
+||ADD                 ||    `Arg0 + Arg1` ||
+||ADD_SIGNED_ARB       ||   `Arg0 + Arg1 - 0.5` ||
+||SUBTRACT_ARB        ||    `Arg0 - Arg1` ||
+||INTERPOLATE_ARB     ||    `Arg0 * (Arg2) + Arg1 * (1-Arg2)` ||
+
+where Arg0, Arg1 and Arg2 are derived from
+
+||PRIMARY_COLOR_ARB      || primary color of incoming fragment||
+||TEXTURE               ||  texture color of corresponding texture unit||
+||CONSTANT_ARB           || texture environment constant color||
+||PREVIOUS_ARB          ||  result of previous texture environment; on texture unit 0, this maps to PRIMARY_COLOR_ARB||
+
+In addition, the result may be scaled by 1.0, 2.0 or 4.0.
+
+
+== New Procedures and Functions ==
+
+None
+
+
+== New Tokens ==
+
+Accepted by the <params> parameter of TexEnvf, TexEnvi, TexEnvfv,
+and TexEnviv when the <pname> parameter value is TEXTURE_ENV_MODE
+
+||COMBINE_ARB                ||                     0x8570||
+
+Accepted by the <pname> parameter of TexEnvf, TexEnvi, TexEnvfv,
+and TexEnviv when the <target> parameter value is TEXTURE_ENV
+
+||COMBINE_RGB_ARB              ||                   0x8571||
+||COMBINE_ALPHA_ARB            ||                   0x8572||
+||SOURCE0_RGB_ARB              ||                   0x8580||
+||SOURCE1_RGB_ARB              ||                   0x8581||
+||SOURCE2_RGB_ARB              ||                   0x8582||
+||SOURCE0_ALPHA_ARB             ||                  0x8588||
+||SOURCE1_ALPHA_ARB             ||                  0x8589||
+||SOURCE2_ALPHA_ARB            ||                   0x858A||
+||OPERAND0_RGB_ARB             ||                   0x8590||
+||OPERAND1_RGB_ARB              ||                  0x8591||
+||OPERAND2_RGB_ARB             ||                   0x8592||
+||OPERAND0_ALPHA_ARB           ||                   0x8598||
+||OPERAND1_ALPHA_ARB           ||                   0x8599||
+||OPERAND2_ALPHA_ARB           ||                   0x859A||
+||RGB_SCALE_ARB                ||                   0x8573||
+||ALPHA_SCALE|| ||
+
+Accepted by the <params> parameter of TexEnvf, TexEnvi, TexEnvfv,
+and TexEnviv when the <pname> parameter value is COMBINE_RGB_ARB
+or COMBINE_ALPHA_ARB
+
+||REPLACE ||
+||MODULATE ||
+||ADD ||
+||ADD_SIGNED_ARB ||                                 0x8574||
+||INTERPOLATE_ARB   ||                              0x8575||
+||SUBTRACT_ARB    ||                                0x84E7||
+
+Accepted by the <params> parameter of TexEnvf, TexEnvi, TexEnvfv,
+and TexEnviv when the <pname> parameter value is SOURCE0_RGB_ARB,
+SOURCE1_RGB_ARB, SOURCE2_RGB_ARB, SOURCE0_ALPHA_ARB,
+SOURCE1_ALPHA_ARB, or SOURCE2_ALPHA_ARB
+
+||TEXTURE|| ||
+||CONSTANT_ARB    ||                                0x8576||
+||PRIMARY_COLOR_ARB       ||                        0x8577||
+||PREVIOUS_ARB            ||                        0x8578||
+
+Accepted by the <params> parameter of TexEnvf, TexEnvi, TexEnvfv,
+and TexEnviv when the <pname> parameter value is
+OPERAND0_RGB_ARB, OPERAND1_RGB_ARB, or OPERAND2_RGB_ARB
+
+||SRC_COLOR||
+||ONE_MINUS_SRC_COLOR||
+||SRC_ALPHA||
+||ONE_MINUS_SRC_ALPHA||
+
+Accepted by the <params> parameter of TexEnvf, TexEnvi, TexEnvfv,
+and TexEnviv when the <pname> parameter value is
+OPERAND0_ALPHA_ARB, OPERAND1_ALPHA_ARB, or OPERAND2_ALPHA_ARB
+
+||SRC_ALPHA||
+||ONE_MINUS_SRC_ALPHA||
+
+Accepted by the <params> parameter of TexEnvf, TexEnvi, TexEnvfv,
+and TexEnviv when the <pname> parameter value is RGB_SCALE_ARB or
+ALPHA_SCALE
+
+||1.0||
+||2.0||
+||4.0||
+
+
+== Errors ==
+
+INVALID_ENUM is generated if <params> value for COMBINE_RGB_ARB or
+COMBINE_ALPHA_ARB is not one of REPLACE, MODULATE, ADD,
+ADD_SIGNED_ARB, INTERPOLATE_ARB, or SUBTRACT_ARB
+
+INVALID_ENUM is generated if <params> value for SOURCE0_RGB_ARB,
+SOURCE1_RGB_ARB, SOURCE2_RGB_ARB, SOURCE0_ALPHA_ARB,
+SOURCE1_ALPHA_ARB or SOURCE2_ALPHA_ARB is not one of TEXTURE,
+CONSTANT_ARB, PRIMARY_COLOR_ARB, or PREVIOUS_ARB.
+
+INVALID_ENUM is generated if <params> value for OPERAND0_RGB_ARB,
+OPERAND1_RGB_ARB, or OPERAND2_RGB_ARB is not one of SRC_COLOR,
+ONE_MINUS_SRC_COLOR, SRC_ALPHA or ONE_MINUS_SRC_ALPHA.
+
+INVALID_ENUM is generated if <params> value for OPERAND0_ALPHA_ARB,
+OPERAND1_ALPHA_ARB, or OPERAND2_ALPHA_ARB is not one of SRC_ALPHA
+or ONE_MINUS_SRC_ALPHA.
+
+INVALID_VALUE is generated if <params> value for RGB_SCALE_ARB or
+ALPHA_SCALE is not one of 1.0, 2.0, or 4.0.
+
+
+== New State ==
+
+|| *Get Value* || *Get Command* || *Type* || *Initial Value* ||
+||COMBINE_RGB_ARB    || GetTexEnviv ||   n x Z4 ||  MODULATE ||
+||COMBINE_ALPHA_ARB ||  GetTexEnviv  ||  n x Z4 ||  MODULATE||
+||SOURCE0_RGB_ARB    || GetTexEnviv  ||  n x Z3 ||  TEXTURE ||
+||SOURCE1_RGB_ARB   ||  GetTexEnviv  ||  n x Z3 ||  PREVIOUS_ARB ||
+||SOURCE2_RGB_ARB   ||  GetTexEnviv  ||  n x Z3 ||  CONSTANT_ARB||
+||SOURCE0_ALPHA_ARB ||  GetTexEnviv  ||  n x Z3  || TEXTURE||
+||SOURCE1_ALPHA_ARB ||  GetTexEnviv  ||  n x Z3 ||  PREVIOUS_ARB||
+||SOURCE2_ALPHA_ARB ||  GetTexEnviv  ||  n x Z3 ||  CONSTANT_ARB||
+||OPERAND0_RGB_ARB  ||  GetTexEnviv  ||  n x Z6  || SRC_COLOR||
+||OPERAND1_RGB_ARB  ||  GetTexEnviv ||   n x Z6 ||  SRC_COLOR||
+||OPERAND2_RGB_ARB   || GetTexEnviv  ||  n x Z1  || SRC_ALPHA ||
+||OPERAND0_ALPHA_ARB || GetTexEnviv  ||  n x Z4  || SRC_ALPHA||
+||OPERAND1_ALPHA_ARB || GetTexEnviv  ||  n x Z4 ||  SRC_ALPHA||
+||OPERAND2_ALPHA_ARB || GetTexEnviv  ||  n x Z1 ||  SRC_ALPHA ||
+||RGB_SCALE_ARB      || GetTexEnvfv ||   n x R3  || 1.0||
+||ALPHA_SCALE        || GetTexEnvfv  ||  n x R3  || 1.0||
+
+
+== New Implementation Dependent State ==
+
+None
+

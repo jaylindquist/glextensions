@@ -1,0 +1,70 @@
+#summary GL_ARB_transpose_matrix
+
+== Contents ==
+
+  * [GL_ARB_transpose_matrix#Dependencies Dependencies]
+  * [GL_ARB_transpose_matrix#Overview Overview]
+  * [GL_ARB_transpose_matrix#New_Procedures_and_Functions New Procedures and Functions]
+  * [GL_ARB_transpose_matrix#New_Tokens New Tokens]
+  * [GL_ARB_transpose_matrix#Errors Errors]
+  * [GL_ARB_transpose_matrix#New_State New State]
+  * [GL_ARB_transpose_matrix#New_Implementation_Dependent_State New Implementation Dependent State]
+
+== Dependencies ==
+
+This extensions is written against the OpenGL 1.2 Specification.
+May be implemented in any version of OpenGL.
+
+
+== Overview ==
+
+New functions and tokens are added allowing application matrices
+stored in row major order rather than column major order to be
+transferred to the OpenGL implementation.  This allows an application
+to use standard C-language 2-dimensional arrays (`m[row][col]`) and
+have the array indices match the expected matrix row and column indexes.
+These arrays are referred to as transpose matrices since they are
+the transpose of the standard matrices passed to OpenGL.
+
+This extension adds an interface for transfering data to and from the
+OpenGL pipeline, it does not change any OpenGL processing or imply any
+changes in state representation.
+
+
+== New Procedures and Functions ==
+{{{
+void LoadTransposeMatrix{fd}ARB(T m[16]);
+void MultTransposeMatrix{fd}ARB(T m[16]);
+}}}
+
+== New Tokens ==
+
+Accepted by the <pname> parameter of GetBooleanv, GetIntegerv, GetFloatv,
+and GetDoublev
+
+||TRANSPOSE_MODELVIEW_MATRIX_ARB   || 0x84E3||
+||TRANSPOSE_PROJECTION_MATRIX_ARB  || 0x84E4||
+||TRANSPOSE_TEXTURE_MATRIX_ARB     || 0x84E5||
+||TRANSPOSE_COLOR_MATRIX_ARB       || 0x84E6||
+
+
+
+== Errors ==
+
+No new errors, but error behavoir is inherited by the commands
+that the transpose commands are implemented on top of
+(LoadMatrix, MultMatrix, and Get`*`).
+
+
+== New State ==
+
+None
+
+TRANSPOSE`_*_`MATRIX_ARB refer to the same state as their non-transposed
+counterparts.
+
+
+== New Implementation Dependent State ==
+
+None
+

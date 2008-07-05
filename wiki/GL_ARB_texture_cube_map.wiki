@@ -1,0 +1,159 @@
+#summary GL_ARB_texture_cube_map
+
+== Contents ==
+
+  * [GL_ARB_texture_cube_map#Dependencies Dependencies]
+  * [GL_ARB_texture_cube_map#Overview Overview]
+  * [GL_ARB_texture_cube_map#New_Procedures_and_Functions New Procedures and Functions]
+  * [GL_ARB_texture_cube_map#New_Tokens New Tokens]
+  * [GL_ARB_texture_cube_map#Errors Errors]
+  * [GL_ARB_texture_cube_map#New_State New State]
+  * [GL_ARB_texture_cube_map#New_Implementation_Dependent_State New Implementation Dependent State]
+  * [GL_ARB_texture_cube_map#Backwards_Compatibility Backwards Compatibility]
+
+== Dependencies ==
+
+None.
+
+Written based on the wording of the OpenGL 1.2.1 specification but
+not dependent on it.
+
+
+== Overview ==
+
+This extension provides a new texture generation scheme for cube
+map textures.  Instead of the current texture providing a 1D, 2D,
+or 3D lookup into a 1D, 2D, or 3D texture image, the texture is a
+set of six 2D images representing the faces of a cube.  The (s,t,r)
+texture coordinates are treated as a direction vector emanating from
+the center of a cube.  At texture generation time, the interpolated
+per-fragment (s,t,r) selects one cube face 2D image based on the
+largest magnitude coordinate (the major axis).  A new 2D (s,t) is
+calculated by dividing the two other coordinates (the minor axes
+values) by the major axis value.  Then the new (s,t) is used to
+lookup into the selected 2D texture image face of the cube map.
+
+Unlike a standard 1D, 2D, or 3D texture that have just one target,
+a cube map texture has six targets, one for each of its six 2D texture
+image cube faces.  All these targets must be consistent, complete,
+and have equal width and height (ie, square dimensions).
+
+This extension also provides two new texture coordinate generation modes
+for use in conjunction with cube map texturing.  The reflection map
+mode generates texture coordinates (s,t,r) matching the vertex's
+eye-space reflection vector.  The reflection map mode
+is useful for environment mapping without the singularity inherent
+in sphere mapping.  The normal map mode generates texture coordinates
+(s,t,r) matching the vertex's transformed eye-space
+normal.  The normal map mode is useful for sophisticated cube
+map texturing-based diffuse lighting models.
+
+The intent of the new texgen functionality is that an application using
+cube map texturing can use the new texgen modes to automatically
+generate the reflection or normal vectors used to look up into the
+cube map texture.
+
+An application note:  When using cube mapping with dynamic cube
+maps (meaning the cube map texture is re-rendered every frame),
+by keeping the cube map's orientation pointing at the eye position,
+the texgen-computed reflection or normal vector texture coordinates
+can be always properly oriented for the cube map.  However if the
+cube map is static (meaning that when view changes, the cube map
+texture is not updated), the texture matrix must be used to rotate
+the texgen-computed reflection or normal vector texture coordinates
+to match the orientation of the cube map.  The rotation can be
+computed based on two vectors: 1) the direction vector from the cube
+map center to the eye position (both in world coordinates), and 2)
+the cube map orientation in world coordinates.  The axis of rotation
+is the cross product of these two vectors; the angle of rotation is
+the arcsin of the dot product of these two vectors.
+
+
+== New Procedures and Functions ==
+
+None
+
+
+== New Tokens ==
+
+Accepted by the <param> parameters of TexGend, TexGenf, and TexGeni
+when <pname> parameter is TEXTURE_GEN_MODE:
+
+||NORMAL_MAP_ARB          ||            0x8511||
+||REFLECTION_MAP_ARB      ||            0x8512||
+
+When the <pname> parameter of TexGendv, TexGenfv, and TexGeniv is
+TEXTURE_GEN_MODE, then the array <params> may also contain
+NORMAL_MAP_ARB or REFLECTION_MAP_ARB.
+
+Accepted by the <cap> parameter of Enable, Disable, IsEnabled, and
+by the <pname> parameter of GetBooleanv, GetIntegerv, GetFloatv,
+and GetDoublev, and by the <target> parameter of BindTexture,
+GetTexParameterfv, GetTexParameteriv, TexParameterf, TexParameteri,
+TexParameterfv, and TexParameteriv:
+
+||TEXTURE_CUBE_MAP_ARB           ||     0x8513||
+
+Accepted by the <pname> parameter of GetBooleanv, GetIntegerv,
+GetFloatv, and GetDoublev:
+
+||TEXTURE_BINDING_CUBE_MAP_ARB   ||     0x8514||
+
+Accepted by the <target> parameter of GetTexImage,
+GetTexLevelParameteriv, GetTexLevelParameterfv, TexImage2D,
+CopyTexImage2D, TexSubImage2D, and CopySubTexImage2D:
+
+||TEXTURE_CUBE_MAP_POSITIVE_X_ARB  ||   0x8515||
+||TEXTURE_CUBE_MAP_NEGATIVE_X_ARB   ||  0x8516||
+||TEXTURE_CUBE_MAP_POSITIVE_Y_ARB ||    0x8517||
+||TEXTURE_CUBE_MAP_NEGATIVE_Y_ARB  ||   0x8518||
+||TEXTURE_CUBE_MAP_POSITIVE_Z_ARB  ||   0x8519||
+||TEXTURE_CUBE_MAP_NEGATIVE_Z_ARB  ||   0x851A||
+
+Accepted by the <target> parameter of GetTexLevelParameteriv,
+GetTexLevelParameterfv, GetTexParameteriv, and TexImage2D:
+
+||PROXY_TEXTURE_CUBE_MAP_ARB       ||   0x851B||
+
+Accepted by the <pname> parameter of GetBooleanv, GetDoublev,
+GetIntegerv, and GetFloatv:
+
+||MAX_CUBE_MAP_TEXTURE_SIZE_ARB     ||  0x851C||
+
+
+== Errors ==
+
+INVALID_ENUM is generated when TexGen is called with a <coord> of Q
+when <pname> indicates REFLECTION_MAP_ARB or NORMAL_MAP_ARB.
+
+INVALID_VALUE is generated when the target parameter to TexImage2D
+or CopyTexImage2D is one of the six cube map 2D image targets and
+the width and height parameters are not equal.
+
+
+== New State ==
+|| *Get Value* || *Type* || *Get Command* || *Initial Value* || *Description* ||
+||TEXTURE_CUBE_MAP_ARB||B || IsEnabled || False || True if cube map texturing is enabled||
+||TEXTURE_BINDING_CUBE_MAP_ARB || Z+ || GetIntegerv || 0||Texture object for TEXTURE_CUBE_MAP ||
+||TEXTURE_CUBE_MAP_POSITIVE_X_ARB ||nxI ||GetTexImage ||see 3.8||positive x face cube map texture image at lod i||
+||TEXTURE_CUBE_MAP_NEGATIVE_X_ARB || nxI||  GetTexImage || see 3.8   ||negative x face cube map texture image at lod i||
+||TEXTURE_CUBE_MAP_POSITIVE_Y_ARB ||nxI ||GetTexImage ||see 3.8 || positive y face cube map texture image at lod i||
+||TEXTURE_CUBE_MAP_NEGATIVE_Y_ARB ||nxI ||GetTexImage ||see 3.8 || negative y face  cube map texture image at lod i||
+||TEXTURE_CUBE_MAP_POSITIVE_Z_ARB ||nxI ||etTexImage ||see 3.8 || positive z face  cube map texture image at lod i||
+||TEXTURE_CUBE_MAP_NEGATIVE_Z_ARB ||nxI ||GetTexImage ||see 3.8|| negative z   cube map texture image at lod i||
+
+|| *Get Value* || *Type* || *Get Command* || *Initial Value* || *Description* ||
+||TEXTURE_GEN_MODE || 4xZ5 || GetTexGeniv ||  EYE_LINEAR || Function used for texture texgen (for s,t,r, and q)||
+
+
+
+== New Implementation Dependent State ==
+|| *Get Value* || *Type* || *Get Command* || *Minimum Value* || *Description* ||
+||MAX_CUBE_MAP_TEXTURE_SIZE_ARB || Z+ || GetIntegerv ||16 || Maximum cube map texture image dimension ||
+
+
+== Backwards Compatibility ==
+
+This extension replaces [GL_EXT_texture_cube_map].  The tokens and
+name strings now refer to ARB instead of EXT.  Enumerant values
+are unchanged.

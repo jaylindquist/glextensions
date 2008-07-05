@@ -1,0 +1,63 @@
+#summary GL_EXT_blend_color
+
+== Contents ==
+
+  * [GL_EXT_blend_color#Dependencies Dependencies]
+  * [GL_EXT_blend_color#Overview Overview]
+  * [GL_EXT_blend_color#New_Procedures_and_Functions New Procedures and Functions]
+  * [GL_EXT_blend_color#New_Tokens New Tokens]
+  * [GL_EXT_blend_color#Errors Errors]
+  * [GL_EXT_blend_color#New_State New State]
+  * [GL_EXT_blend_color#New_Implementation_Dependent_State New Implementation Dependent State]
+
+== Dependencies ==
+
+None
+
+
+== Overview ==
+
+Blending capability is extended by defining a constant color that can
+be included in blending equations.  A typical usage is blending two
+RGB images.  Without the constant blend factor, one image must have
+an alpha channel with each pixel set to the desired blend factor.
+
+
+== New Procedures and Functions ==
+{{{
+void BlendColorEXT(clampf red,
+                   clampf green,
+                   clampf blue,
+                   clampf alpha);
+}}}
+
+== New Tokens ==
+
+Accepted by the <sfactor> and <dfactor> parameters of !BlendFunc:
+
+||CONSTANT_COLOR_EXT              || 0x8001||
+||ONE_MINUS_CONSTANT_COLOR_EXT   ||  0x8002||
+||CONSTANT_ALPHA_EXT              || 0x8003||
+||ONE_MINUS_CONSTANT_ALPHA_EXT    || 0x8004||
+
+Accepted by the <pname> parameter of !GetBooleanv, !GetIntegerv,
+!GetFloatv, and !GetDoublev:
+
+|| BLEND_COLOR_EXT || 0x8005||
+
+
+== Errors ==
+
+INVALID_OPERATION is generated if !BlendColorEXT is called between
+execution of Begin and the corresponding call to End.
+
+
+== New State ==
+
+|| *Get Value* || *Get Command* || *Type* || *Initial Value* ||
+||BLEND_COLOR_EXT || !GetFloatv || C  || (0,0,0,0) ||
+
+
+== New Implementation Dependent State ==
+
+None

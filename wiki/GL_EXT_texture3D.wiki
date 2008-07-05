@@ -118,5 +118,5 @@ of <width>, <height>, or <depth> is greater than MAX_3D_TEXTURE_SIZE_EXT.
 
 == New Implementation Dependent State ==
 
-||*Get Value*        ||*Get Command *            ||*Type  *          ||*Minimum Value*||
+|| *Get Value*  || *Get Command *     || *Type* || *Minimum Value* ||
 ||MAX_3D_TEXTURE_SIZE_EXT     ||GetIntegerv             ||Z+              ||16||

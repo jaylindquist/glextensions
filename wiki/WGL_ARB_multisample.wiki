@@ -65,9 +65,9 @@ the <piAttribIList> and <pfAttribIList> of wglChoosePixelFormatEXT:
 ||WGL_SAMPLE_BUFFERS_ARB     ||          0x2041||
 ||WGL_SAMPLES_ARB             ||         0x2042||
 
-Accepted by the <cap> parameter of Enable, Disable, and @IsEnabled,
-and by the <pname> parameter of @GetBooleanv, @GetIntegerv,
-@GetFloatv, and @GetDoublev:
+Accepted by the <cap> parameter of Enable, Disable, and !IsEnabled,
+and by the <pname> parameter of !GetBooleanv, !GetIntegerv,
+!GetFloatv, and !GetDoublev:
 
 ||MULTISAMPLE_ARB                  ||    0x809D||
 ||SAMPLE_ALPHA_TO_COVERAGE_ARB     ||    0x809E||

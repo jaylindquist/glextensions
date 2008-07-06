@@ -96,12 +96,12 @@ corresponding End.
 
 == New State ==
 || *Get Value* || *Get Command* || *Type* || *Initial Value* ||
-MULTISAMPLE_ARB              ||   !IsEnabled  ||    B   ||    TRUE || 
-SAMPLE_ALPHA_TO_COVERAGE_ARB ||   !IsEnabled   ||   B   ||    FALSE||
-SAMPLE_ALPHA_TO_ONE_ARB     ||    !IsEnabled   ||   B   ||    FALSE||
-SAMPLE_COVERAGE_ARB          ||   !IsEnabled   ||   B   ||    FALSE||
-SAMPLE_COVERAGE_VALUE_ARB   ||    !GetFloatv   ||   R+  ||    1 ||
-SAMPLE_COVERAGE_INVERT_ARB  ||    !GetBooleanv ||   B   ||    FALSE||
+||MULTISAMPLE_ARB              ||   !IsEnabled  ||    B   ||    TRUE || 
+||SAMPLE_ALPHA_TO_COVERAGE_ARB ||   !IsEnabled   ||   B   ||    FALSE||
+||SAMPLE_ALPHA_TO_ONE_ARB     ||    !IsEnabled   ||   B   ||    FALSE||
+||SAMPLE_COVERAGE_ARB          ||   !IsEnabled   ||   B   ||    FALSE||
+||SAMPLE_COVERAGE_VALUE_ARB   ||    !GetFloatv   ||   R+  ||    1 ||
+||SAMPLE_COVERAGE_INVERT_ARB  ||    !GetBooleanv ||   B   ||    FALSE||
 
 
 == New Implementation Dependent State ==

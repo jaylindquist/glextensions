@@ -193,6 +193,7 @@ List of OpenGL Extensions by manufacturer
   * [GL_NV_primitive_restart]
   * [GL_NV_register_combiners]
   * [GL_NV_register_combiners2]
+  * [GL_NV_texgen_emboss]
   * [GL_NV_texgen_reflection]
   * [GL_NV_texture_compression_vtc]
   * [GL_NV_texture_env_combine4]

@@ -1,0 +1,53 @@
+#summary GL_ARB_fragment_program_shadow
+
+== Contents ==
+
+  * [GL_ARB_fragment_program_shadow#Dependencies Dependencies]
+  * [GL_ARB_fragment_program_shadow#Overview Overview]
+  * [GL_ARB_fragment_program_shadow#New_Procedures_and_Functions New Procedures and Functions]
+  * [GL_ARB_fragment_program_shadow#New_Tokens New Tokens]
+
+== Dependencies ==
+
+The extension is written against the OpenGL 1.3 Specification.
+
+[GL_ARB_fragment_program] is required.
+
+[GL_ARB_shadow] is required.
+
+[GL_EXT_texture_rectange] affects the definition of this extension.
+
+
+== Overview ==
+
+This extension extends [GL_ARB_fragment_program] to remove
+the interaction with [GL_ARB_shadow].
+
+This extension defines the program option
+"ARB_fragment_program_shadow".
+
+If a fragment program specifies the option "ARB_fragment_program_shadow"
+
+SHADOW1D, SHADOW2D, SHADOWRECT
+
+are added as texture targets.  When shadow map comparisons are
+desired, specify the SHADOW1D, SHADOW2D, or SHADOWRECT texture
+targets in texture instructions.
+
+Programs must assure that the comparison mode for each depth
+texture (TEXTURE_COMPARE_MODE) and/or the internal texture
+format (DEPTH_COMPONENT) and the targets of the texture lookup
+instructions match.  Otherwise, if the comparison mode
+and/or the internal texture format are inconsistent with the
+texture target, the results of the texture lookup are undefined.
+
+
+== New Procedures and Functions ==
+
+None
+
+
+== New Tokens ==
+
+None
+

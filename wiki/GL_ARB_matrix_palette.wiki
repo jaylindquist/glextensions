@@ -1,0 +1,122 @@
+#summary GL_ARB_matrix_palette
+
+== Contents ==
+
+  * [GL_ARB_matrix_palette#Dependencies Dependencies]
+  * [GL_ARB_matrix_palette#Overview Overview]
+  * [GL_ARB_matrix_palette#New_Procedures_and_Functions New Procedures and Functions]
+  * [GL_ARB_matrix_palette#New_Tokens New Tokens]
+  * [GL_ARB_matrix_palette#Errors Errors]
+  * [GL_ARB_matrix_palette#New_State New State]
+  * [GL_ARB_matrix_palette#New_Implementation_Dependent_State New Implementation Dependent State]
+
+== Dependencies ==
+
+[GL_ARB_vertex_blend] and OpenGL 1.0 are required.
+
+This extension is written against the [GL_ARB_vertex_blend] extended
+OpenGL 1.2.1 Specification.
+
+
+== Overview ==
+
+This extension extends the abilities of [GL_ARB_vertex_blend] to include
+a palette of modelview matrices.  The n vertex units use a palette
+of m modelview matrices.  (Where n and m are constrained to
+implementation defined maxima.)  Each vertex has a set of n
+indices into the palette, and a corresponding set of n weights.
+Matrix indices can be changed for each vertex (between Begin and
+End).
+
+When this extension is utilized, the enabled units transform each
+vertex by the modelview matrices specified by the vertices'
+respective indices.  These results are subsequently scaled by the
+weights of the respective units and then summed to create the
+eyespace vertex.
+
+A similar procedure is followed for normals.  Normals, however,
+are transformed by the inverse transpose of the modelview matrix.
+
+
+== New Procedures and Functions ==
+{{{
+void CurrentPaletteMatrixARB(int index)
+
+void MatrixIndex{ubusui}vARB(int size, T *indices)
+
+void MatrixIndexPointerARB(int size, enum type, sizei stride,
+                           void *pointer)
+}}}
+
+
+== New Tokens ==
+
+Accepted by the <pname> parameters of !GetFloatv, !GetDoublev,
+and !IsEnabled, by the <mode> parameter of !MatrixMode, and by the
+<cap> parameters of Enable and Disable:
+
+||MATRIX_PALETTE_ARB:        ||     0x8840||
+
+Accepted by the <pname> parameters of !GetIntegerv, !GetFloatv, and
+!GetDoublev:
+
+||MAX_MATRIX_PALETTE_STACK_DEPTH_ARB  ||  0x8841||
+||MAX_PALETTE_MATRICES_ARB           ||   0x8842||
+||CURRENT_PALETTE_MATRIX_ARB         ||   0x8843||
+
+Accepted by the <cap> parameters of !EnableClientState and
+!DisableClientState and by the <pname> parameter of !IsEnabled:
+
+||MATRIX_INDEX_ARRAY_ARB         ||      0x8844||
+
+Accepted by the <pname> parameter of !GetFloatv:
+
+||CURRENT_MATRIX_INDEX_ARB   ||     0x8845||
+
+Accepted by the <pname> parameter of !GetIntegerv:
+||MATRIX_INDEX_ARRAY_SIZE_ARB      ||     0x8846||
+||MATRIX_INDEX_ARRAY_TYPE_ARB      ||     0x8847||
+||MATRIX_INDEX_ARRAY_STRIDE_ARB    ||     0x8848||
+
+Accepted by the <pname> parameter of !GetPointerv:
+||MATRIX_INDEX_ARRAY_POINTER_ARB    ||   0x8849||
+
+
+== Errors ==
+
+INVALID_VALUE is generated if the <size> parameter for
+MatrixIndexARB or MatrixIndexPointerARB is greater than
+MAX_VERTEX_UNITS_ARB, or if WEIGHT_SUM_UNITY_ARB is enabled
+and <size> is equal to MAX_VERTEX_UNITS_ARB.
+
+INVALID_VALUE is generated if the <count> parameter to
+CurrentPaletteMatrixARB is greater than MAX_PALETTE_MATRICES_ARB
+or if <count> is equal to zero.
+
+
+== New State ==
+
+|| *Get Value* || *Get Command* || *Type* || *Initial Value* || *Description* ||
+||CURRENT_MATRIX_INDEX_ARB||!GetIntegerv||n*Z+||0||array of current matrix indices||
+
+
+|| *Get Value* || *Get Command* || *Type* || *Initial Value* || *Description* ||
+||MATRIX_INDEX_ARRAY_ARB||B||!IsEnabled|| False||Matrix indices enable||
+||MATRIX_INDEX_ARRAY_SIZE_ARB||Z+||!GetIntegerv||0||Indices per element||
+||MATRIX_INDEX_ARRAY_TYPE_ARB|| Z_3||!GetIntegerv ||UBYTE||Type of indices||
+||MATRIX_INDEX_ARRAY_POINTER_ARB||Y||!GetPointerv||False||Pointer to the Matrix indices array||
+
+|| *Get Value* || *Get Command* || *Type* || *Initial Value* || *Description* ||
+||MATRIX_PALETTE_ARB||!GetFloatv||2*x1*xM4||Identity ||stack of current modelview matrix in the palette||
+||MATRIX_PALETTE_ARB ||!IsEnabled||B||FALSE||Enable for ARB_matrix_palette
+||CURRENT_PALETTE_MATRIX_ARB ||!GetIntegerv||Z+||0||index of current modelview matrix in the palette, as set by CurrentPaletteMatrixARB()||
+
+
+== New Implementation Dependent State ==
+
+|| *Get Value* || *Get Command* || *Type* || *Min Value* || *Description* ||
+||MAX_MATRIX_PALETTE_STACK_DEPTH_ARB ||!GetIntegerv||Z+||1||Max matrix palette stack depth||
+         
+
+|| *Get Value* || *Get Command* || *Type* || *Min Value* || *Description* ||
+||MAX_PALETTE_MATRICES_ARB||!GetIntegerv||Z+||MAX_VERTEX_UNITS_ARB||Max size of the matrix palette||

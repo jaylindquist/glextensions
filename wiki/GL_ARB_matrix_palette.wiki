@@ -108,7 +108,7 @@ or if <count> is equal to zero.
 
 || *Get Value* || *Get Command* || *Type* || *Initial Value* || *Description* ||
 ||MATRIX_PALETTE_ARB||!GetFloatv||2*x1*xM4||Identity ||stack of current modelview matrix in the palette||
-||MATRIX_PALETTE_ARB ||!IsEnabled||B||FALSE||Enable for ARB_matrix_palette
+||MATRIX_PALETTE_ARB ||!IsEnabled||B||FALSE||Enable for ARB_matrix_palette||
 ||CURRENT_PALETTE_MATRIX_ARB ||!GetIntegerv||Z+||0||index of current modelview matrix in the palette, as set by CurrentPaletteMatrixARB()||
 
 

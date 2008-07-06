@@ -229,6 +229,7 @@ List of OpenGL Extensions by manufacturer
   * [GL_SGIS_texture_lod]
   * [GL_SGIX_depth_texture]
   * [GL_SGIX_shadow]
+  * [GL_SGIX_shadow_ambient]
 
 == Sun Microsystems ==
 

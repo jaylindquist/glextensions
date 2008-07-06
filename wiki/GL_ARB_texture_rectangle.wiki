@@ -126,7 +126,7 @@ PROXY_TEXTURE_RECTANGLE_ARB.
 INVALID_ENUM is generated when TexImage2D is called and the target
 is TEXTURE_RECTANGLE_ARB or PROXY_TEXTURE_RECTANGLE_ARB and the
 format is COLOR_INDEX or the internalformat is COLOR_INDEX or one of
-the COLOR_INDEX<n>_EXT internal formats.
+the COLOR_INDEX<n>`_`EXT internal formats.
 
 INVALID_VALUE is generated when TexImage2D is called when the target
 is TEXTURE_RECTANGLE_ARB if border is any value other than zero or
@@ -191,4 +191,3 @@ zero when the tex is TEXTURE_RECTANGLE_ARB.
 This extension is semantically equivalent to [GL_EXT_texture_rectangle]
 and [GL_NV_texture_rectangle].  The tokens, and name strings now refer
 to ARB instead of EXT or NV.  Enumerant values are unchanged.
-

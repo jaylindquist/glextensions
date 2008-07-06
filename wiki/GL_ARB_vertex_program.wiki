@@ -1,0 +1,420 @@
+#summary GL_ARB_vertex_program
+
+== Contents ==
+
+  * [GL_ARB_vertex_program#Dependencies Dependencies]
+  * [GL_ARB_vertex_program#Overview Overview]
+  * [GL_ARB_vertex_program#New_Procedures_and_Functions New Procedures and Functions]
+  * [GL_ARB_vertex_program#New_Tokens New Tokens]
+  * [GL_ARB_vertex_program#Errors Errors]
+  * [GL_ARB_vertex_program#New_State New State]
+  * [GL_ARB_vertex_program#New_Implementation_Dependent_State New Implementation Dependent State]
+
+== Dependencies ==
+
+Written based on the wording of the OpenGL 1.3 specification and requires
+OpenGL 1.3.
+
+[GL_ARB_vertex_blend] and [GL_EXT_vertex_weighting] affect the definition of this
+extension.
+
+[GL_ARB_matrix_palette] affects the definition of this extension.
+
+[GL_ARB_point_parameters] and [GL_EXT_point_parameters] affect the definition of
+this extension.
+
+[GL_EXT_secondary_color] affects the definition of this extension.
+
+[GL_EXT_fog_coord affects] the definition of this extension.
+
+[GL_ARB_transpose_matrix] affects the definition of this extension.
+
+[GL_NV_vertex_program] interacts with this extension.
+
+[GL_EXT_vertex_shader] interacts with this extension.
+
+
+== Overview ==
+
+Unextended OpenGL mandates a certain set of configurable per-vertex
+computations defining vertex transformation, texture coordinate generation
+and transformation, and lighting.  Several extensions have added further
+per-vertex computations to OpenGL.  For example, extensions have defined
+new texture coordinate generation modes ([GL_ARB_texture_cube_map],
+[GL_NV_texgen_reflection], [GL_NV_texgen_emboss]), new vertex transformation modes
+([GL_ARB_vertex_blend], [GL_EXT_vertex_weighting]), new lighting modes (OpenGL 1.2's
+separate specular and rescale normal functionality), several modes for fog
+distance generation ([GL_NV_fog_distance]), and eye-distance point size
+attenuation ([[GL_EXT_point_parameters EXT]/[GL_ARB_point_parameters]).
+
+Each such extension adds a small set of relatively inflexible
+per-vertex computations.
+
+This inflexibility is in contrast to the typical flexibility provided by
+the underlying programmable floating point engines (whether micro-coded
+vertex engines, DSPs, or CPUs) that are traditionally used to implement
+OpenGL's per-vertex computations.  The purpose of this extension is to
+expose to the OpenGL application writer a significant degree of per-vertex
+programmability for computing vertex parameters.
+
+For the purposes of discussing this extension, a vertex program is a
+sequence of floating-point 4-component vector operations that determines
+how a set of program parameters (defined outside of OpenGL's Begin/End
+pair) and an input set of per-vertex parameters are transformed to a set
+of per-vertex result parameters.
+
+The per-vertex computations for standard OpenGL given a particular set of
+lighting and texture coordinate generation modes (along with any state for
+extensions defining per-vertex computations) is, in essence, a vertex
+program.  However, the sequence of operations is defined implicitly by the
+current OpenGL state settings rather than defined explicitly as a sequence
+of instructions.
+
+This extension provides an explicit mechanism for defining vertex program
+instruction sequences for application-defined vertex programs.  In order
+to define such vertex programs, this extension defines a vertex
+programming model including a floating-point 4-component vector
+instruction set and a relatively large set of floating-point 4-component
+registers.
+
+The extension's vertex programming model is designed for efficient
+hardware implementation and to support a wide variety of vertex programs.
+By design, the entire set of existing vertex programs defined by existing
+OpenGL per-vertex computation extensions can be implemented using the
+extension's vertex programming model.
+
+
+== New Procedures and Functions ==
+{{{
+void VertexAttrib1sARB(uint index, short x);
+void VertexAttrib1fARB(uint index, float x);
+void VertexAttrib1dARB(uint index, double x);
+void VertexAttrib2sARB(uint index, short x, short y);
+void VertexAttrib2fARB(uint index, float x, float y);
+void VertexAttrib2dARB(uint index, double x, double y);
+void VertexAttrib3sARB(uint index, short x, short y, short z);
+void VertexAttrib3fARB(uint index, float x, float y, float z);
+void VertexAttrib3dARB(uint index, double x, double y, double z);
+void VertexAttrib4sARB(uint index, short x, short y, short z, short w);
+void VertexAttrib4fARB(uint index, float x, float y, float z, float w);
+void VertexAttrib4dARB(uint index, double x, double y, double z, double w);
+void VertexAttrib4NubARB(uint index, ubyte x, ubyte y, ubyte z, ubyte w);
+
+void VertexAttrib1svARB(uint index, const short *v);
+void VertexAttrib1fvARB(uint index, const float *v);
+void VertexAttrib1dvARB(uint index, const double *v);
+void VertexAttrib2svARB(uint index, const short *v);
+void VertexAttrib2fvARB(uint index, const float *v);
+void VertexAttrib2dvARB(uint index, const double *v);
+void VertexAttrib3svARB(uint index, const short *v);
+void VertexAttrib3fvARB(uint index, const float *v);
+void VertexAttrib3dvARB(uint index, const double *v);
+void VertexAttrib4bvARB(uint index, const byte *v);
+void VertexAttrib4svARB(uint index, const short *v);
+void VertexAttrib4ivARB(uint index, const int *v);
+void VertexAttrib4ubvARB(uint index, const ubyte *v);
+void VertexAttrib4usvARB(uint index, const ushort *v);
+void VertexAttrib4uivARB(uint index, const uint *v);
+void VertexAttrib4fvARB(uint index, const float *v);
+void VertexAttrib4dvARB(uint index, const double *v);
+void VertexAttrib4NbvARB(uint index, const byte *v);
+void VertexAttrib4NsvARB(uint index, const short *v);
+void VertexAttrib4NivARB(uint index, const int *v);
+void VertexAttrib4NubvARB(uint index, const ubyte *v);
+void VertexAttrib4NusvARB(uint index, const ushort *v);
+void VertexAttrib4NuivARB(uint index, const uint *v);
+
+void VertexAttribPointerARB(uint index, int size, enum type,
+                            boolean normalized, sizei stride,
+                            const void *pointer);
+
+void EnableVertexAttribArrayARB(uint index);
+void DisableVertexAttribArrayARB(uint index);
+
+void ProgramStringARB(enum target, enum format, sizei len,
+                      const void *string);
+
+void BindProgramARB(enum target, uint program);
+
+void DeleteProgramsARB(sizei n, const uint *programs);
+
+void GenProgramsARB(sizei n, uint *programs);
+
+void ProgramEnvParameter4dARB(enum target, uint index,
+                              double x, double y, double z, double w);
+void ProgramEnvParameter4dvARB(enum target, uint index,
+                               const double *params);
+void ProgramEnvParameter4fARB(enum target, uint index,
+                              float x, float y, float z, float w);
+void ProgramEnvParameter4fvARB(enum target, uint index,
+                               const float *params);
+
+void ProgramLocalParameter4dARB(enum target, uint index,
+                                double x, double y, double z, double w);
+void ProgramLocalParameter4dvARB(enum target, uint index,
+                                 const double *params);
+void ProgramLocalParameter4fARB(enum target, uint index,
+                                float x, float y, float z, float w);
+void ProgramLocalParameter4fvARB(enum target, uint index,
+                                 const float *params);
+
+void GetProgramEnvParameterdvARB(enum target, uint index,
+                                 double *params);
+void GetProgramEnvParameterfvARB(enum target, uint index,
+                                 float *params);
+
+void GetProgramLocalParameterdvARB(enum target, uint index,
+                                   double *params);
+void GetProgramLocalParameterfvARB(enum target, uint index,
+                                   float *params);
+
+void GetProgramivARB(enum target, enum pname, int *params);
+
+void GetProgramStringARB(enum target, enum pname, void *string);
+
+void GetVertexAttribdvARB(uint index, enum pname, double *params);
+void GetVertexAttribfvARB(uint index, enum pname, float *params);
+void GetVertexAttribivARB(uint index, enum pname, int *params);
+
+void GetVertexAttribPointervARB(uint index, enum pname, void **pointer);
+
+boolean IsProgramARB(uint program);
+}}}
+
+
+== New Tokens ==
+
+Accepted by the <cap> parameter of Disable, Enable, and !IsEnabled, by the
+<pname> parameter of !GetBooleanv, !GetIntegerv, !GetFloatv, and !GetDoublev,
+and by the <target> parameter of ProgramStringARB, BindProgramARB,
+!ProgramEnvParameter4`[`df`][`v`]`ARB, !ProgramLocalParameter4`[`df`][`v`]`ARB,
+!GetProgramEnvParameter`[`df`]`vARB, !GetProgramLocalParameter`[`df`]`vARB,
+GetProgramivARB, and GetProgramStringARB.
+
+||VERTEX_PROGRAM_ARB                 ||             0x8620||
+
+Accepted by the <cap> parameter of Disable, Enable, and !IsEnabled, and by
+the <pname> parameter of !GetBooleanv, !GetIntegerv, !GetFloatv, and
+!GetDoublev:
+
+||VERTEX_PROGRAM_POINT_SIZE_ARB          ||         0x8642||
+||VERTEX_PROGRAM_TWO_SIDE_ARB            ||         0x8643||
+||COLOR_SUM_ARB                          ||         0x8458||
+
+Accepted by the <format> parameter of ProgramStringARB:
+
+||PROGRAM_FORMAT_ASCII_ARB              ||          0x8875||
+
+Accepted by the <pname> parameter of !GetVertexAttrib`[`dfi`]`vARB:
+
+||VERTEX_ATTRIB_ARRAY_ENABLED_ARB        ||         0x8622||
+||VERTEX_ATTRIB_ARRAY_SIZE_ARB           ||         0x8623||
+||VERTEX_ATTRIB_ARRAY_STRIDE_ARB         ||         0x8624||
+||VERTEX_ATTRIB_ARRAY_TYPE_ARB           ||         0x8625||
+||VERTEX_ATTRIB_ARRAY_NORMALIZED_ARB     ||         0x886A||
+||CURRENT_VERTEX_ATTRIB_ARB              ||         0x8626||
+
+Accepted by the <pname> parameter of GetVertexAttribPointervARB:
+
+||VERTEX_ATTRIB_ARRAY_POINTER_ARB         ||        0x8645||
+
+Accepted by the <pname> parameter of GetProgramivARB:
+
+||PROGRAM_LENGTH_ARB                       ||       0x8627||
+||PROGRAM_FORMAT_ARB                       ||       0x8876||
+||PROGRAM_BINDING_ARB                      ||       0x8677||
+||PROGRAM_INSTRUCTIONS_ARB                 ||       0x88A0||
+||MAX_PROGRAM_INSTRUCTIONS_ARB             ||       0x88A1||
+||PROGRAM_NATIVE_INSTRUCTIONS_ARB          ||       0x88A2||
+||MAX_PROGRAM_NATIVE_INSTRUCTIONS_ARB      ||       0x88A3||
+||PROGRAM_TEMPORARIES_ARB                  ||       0x88A4||
+||MAX_PROGRAM_TEMPORARIES_ARB              ||       0x88A5||
+||PROGRAM_NATIVE_TEMPORARIES_ARB           ||       0x88A6||
+||MAX_PROGRAM_NATIVE_TEMPORARIES_ARB       ||       0x88A7||
+||PROGRAM_PARAMETERS_ARB                   ||       0x88A8||
+||MAX_PROGRAM_PARAMETERS_ARB               ||       0x88A9||
+||PROGRAM_NATIVE_PARAMETERS_ARB            ||       0x88AA||
+||MAX_PROGRAM_NATIVE_PARAMETERS_ARB        ||       0x88AB||
+||PROGRAM_ATTRIBS_ARB                      ||       0x88AC||
+||MAX_PROGRAM_ATTRIBS_ARB                  ||       0x88AD||
+||PROGRAM_NATIVE_ATTRIBS_ARB               ||       0x88AE||
+||MAX_PROGRAM_NATIVE_ATTRIBS_ARB           ||       0x88AF||
+||PROGRAM_ADDRESS_REGISTERS_ARB            ||       0x88B0||
+||MAX_PROGRAM_ADDRESS_REGISTERS_ARB        ||       0x88B1||
+||PROGRAM_NATIVE_ADDRESS_REGISTERS_ARB     ||       0x88B2||
+||MAX_PROGRAM_NATIVE_ADDRESS_REGISTERS_ARB ||       0x88B3||
+||MAX_PROGRAM_LOCAL_PARAMETERS_ARB         ||       0x88B4||
+||MAX_PROGRAM_ENV_PARAMETERS_ARB           ||       0x88B5||
+||PROGRAM_UNDER_NATIVE_LIMITS_ARB          ||       0x88B6||
+
+Accepted by the <pname> parameter of GetProgramStringARB:
+
+||PROGRAM_STRING_ARB                     ||         0x8628||
+
+Accepted by the <pname> parameter of !GetBooleanv, !GetIntegerv,
+!GetFloatv, and !GetDoublev:
+
+||PROGRAM_ERROR_POSITION_ARB               ||       0x864B||
+||CURRENT_MATRIX_ARB                       ||       0x8641||
+||TRANSPOSE_CURRENT_MATRIX_ARB             ||       0x88B7||
+||CURRENT_MATRIX_STACK_DEPTH_ARB           ||       0x8640||
+||MAX_VERTEX_ATTRIBS_ARB                   ||       0x8869||
+||MAX_PROGRAM_MATRICES_ARB                 ||       0x862F||
+||MAX_PROGRAM_MATRIX_STACK_DEPTH_ARB       ||       0x862E||
+
+Accepted by the <name> parameter of !GetString:
+
+||PROGRAM_ERROR_STRING_ARB                ||        0x8874||
+
+Accepted by the <mode> parameter of !MatrixMode:
+
+||MATRIX0_ARB                          ||           0x88C0||
+||MATRIX1_ARB                          ||           0x88C1||
+||MATRIX2_ARB                          ||           0x88C2||
+||MATRIX3_ARB                          ||           0x88C3||
+||MATRIX4_ARB                          ||           0x88C4||
+||MATRIX5_ARB                          ||           0x88C5||
+||MATRIX6_ARB                          ||           0x88C6||
+||MATRIX7_ARB                          ||           0x88C7||
+||MATRIX8_ARB                          ||           0x88C8||
+||MATRIX9_ARB                          ||           0x88C9||
+||MATRIX10_ARB                         ||           0x88CA||
+||MATRIX11_ARB                         ||           0x88CB||
+||MATRIX12_ARB                         ||           0x88CC||
+||MATRIX13_ARB                         ||           0x88CD||
+||MATRIX14_ARB                         ||           0x88CE||
+||MATRIX15_ARB                         ||           0x88CF||
+||MATRIX16_ARB                         ||           0x88D0||
+||MATRIX17_ARB                         ||           0x88D1||
+||MATRIX18_ARB                         ||           0x88D2||
+||MATRIX19_ARB                         ||           0x88D3||
+||MATRIX20_ARB                         ||           0x88D4||
+||MATRIX21_ARB                         ||           0x88D5||
+||MATRIX22_ARB                         ||           0x88D6||
+||MATRIX23_ARB                         ||           0x88D7||
+||MATRIX24_ARB                         ||           0x88D8||
+||MATRIX25_ARB                         ||           0x88D9||
+||MATRIX26_ARB                         ||           0x88DA||
+||MATRIX27_ARB                         ||           0x88DB||
+||MATRIX28_ARB                         ||           0x88DC||
+||MATRIX29_ARB                         ||           0x88DD||
+||MATRIX30_ARB                         ||           0x88DE||
+||MATRIX31_ARB                         ||           0x88DF||
+
+
+== Errors ==
+
+The error INVALID_VALUE is generated by any !VertexAttrib*ARB or
+!GetVertexAttrib`*`ARB command if <index> is greater than or equal to
+MAX_VERTEX_ATTRIBS_ARB.
+
+The error INVALID_VALUE is generated by VertexAttribPointerARB or
+GetVertexAttribPointervARB if <index> is greater than or equal to
+MAX_VERTEX_ATTRIBS_ARB.
+
+The error INVALID_VALUE is generated by VertexAttribPointerARB if <size>
+is not one of 1, 2, 3, or 4.
+
+The error INVALID_VALUE is generated by VertexAttribPointerARB if <stride>
+is negative.
+
+The error INVALID_VALUE is generated by EnableVertexAttribArrayARB or
+DisableVertexAttribArrayARB if <index> is greater than or equal to
+MAX_VERTEX_ATTRIBS_ARB.
+
+The error INVALID_OPERATION is generated by ProgramStringARB if the
+program string <string> is syntactically incorrect or violates any
+semantic restriction of the execution environment of the specified program
+target <target>.
+
+The error INVALID_OPERATION is generated by BindProgramARB if <program> is
+the name of a program whose target does not match <target>.
+
+The error INVALID_VALUE is generated by any !ProgramEnvParameter`*`ARB or
+!GetProgramEnvParameter`*`ARB command if <index> is greater than or equal to
+the value of MAX_PROGRAM_ENV_PARAMETERS_ARB corresponding to the program
+target <target>.
+
+The error INVALID_VALUE is generated by any !ProgramLocalParameter`*`ARB or
+!GetProgramLocalParameter`*`ARB command if <index> is greater than or equal
+to the value of MAX_PROGRAM_LOCAL_PARAMETERS_ARB corresponding to the
+program target <target>.
+
+The error INVALID_OPERATION is generated if Begin, !RasterPos, or any
+command that performs an explicit Begin is called when vertex program mode
+is enabled and the currently bound vertex program object does not contain
+a valid vertex program.
+
+The error INVALID_OPERATION is generated by !GetVertexAttrib`*`ARB if <index>
+is zero and <pname> is CURRENT_VERTEX_ATTRIB_ARB.
+
+
+
+== New State ==
+
+|| *Get Value*  || *Type* || *Get Command* || *Initial Value* || *Description* ||
+||VERTEX_PROGRAM_ARB  ||  B ||  !IsEnabled ||  False   ||   vertex program enable    ||
+||VERTEX_PROGRAM_POINT_SIZE_ARB  ||  B  ||  !IsEnabled ||  False   ||   program-specified point size mode  ||
+||VERTEX_PROGRAM_TWO_SIDE_ARB ||  B  ||  !IsEnabled ||  False   ||   two-sided color mode  ||
+||-   ||  96+xR4||  GetProgramEnvParameterARB ||(0,0,0,0)   ||  program environment parameters||
+||CURRENT_VERTEX_ATTRIB_ARB   ||  16+xR4||  GetVertexAttribARB  ||   undefined  ||   generic vertex attributes  ||
+||PROGRAM_ERROR_POSITION_ARB  ||  Z  ||  !GetIntegerv  ||  -1   ||   last program error position   ||
+||PROGRAM_ERROR_STRING_ARB    ||  0+xub ||  !GetString ||  ""   ||   last program error string ||
+
+
+|| *Get Value*      || *Type* || *Get Command* || *Initial Value* || *Description* ||
+||VERTEX_ATTRIB_ARRAY_ENABLED_ARB || 16+xB ||  GetVertexAttribARB  ||   False ||  vertex attrib array enable||
+||VERTEX_ATTRIB_ARRAY_SIZE_ARB || 16+xZ ||  GetVertexAttribARB  ||   4  ||  vertex attrib array size  ||
+||VERTEX_ATTRIB_ARRAY_STRIDE_ARB  || 16+xZ+||  GetVertexAttribARB  ||   0   ||  vertex attrib array stride|| 
+||VERTEX_ATTRIB_ARRAY_TYPE_ARB  ||   16+xZ4||  GetVertexAttribARB    ||  FLOAT  ||    vertex attrib array type   ||
+||VERTEX_ATTRIB_ARRAY_NORMALIZED_ARB ||16+xB ||  GetVertexAttribARB   ||  False ||  vertex attrib array normalized	 ||
+||VERTEX_ATTRIB_ARRAY_POINTER_ARB || 16+xP ||  GetVertexAttribPointerARB ||  NULL  ||  vertex attrib array pointer	 ||
+
+
+|| *Get Value*      || *Type*   || *Get Command*    || *Initial Value* || *Description* ||
+||PROGRAM_BINDING_ARB   ||  Z+   ||  GetProgramivARB  || object-specific || bound program name     ||
+||PROGRAM_LENGTH_ARB    ||  Z+   ||  GetProgramivARB  || 0      || bound program length			||
+||PROGRAM_FORMAT_ARB    ||  Z1   ||  GetProgramivARB  || PROGRAM_FORMAT_ASCII_ARB||  bound program format	||
+||PROGRAM_STRING_ARB    ||  ubxn ||  GetProgramStringARB || (empty)   || bound program string			||
+||PROGRAM_INSTRUCTIONS_ARB    ||  Z+   ||  GetProgramivARB  || 0      || bound program instructions		||
+||PROGRAM_TEMPORARIES_ARB  ||  Z+   ||  GetProgramivARB  || 0      || bound program temporaries		||
+||PROGRAM_PARAMETERS_ARB   ||  Z+   ||  GetProgramivARB  || 0      || bound program parameter bindings ||
+||PROGRAM_ATTRIBS_ARB   ||  Z+   ||  GetProgramivARB  || 0      || bound program attribute bindings ||
+||PROGRAM_ADDRESS_REGISTERS_ARB  ||  Z+   ||  GetProgramivARB  || 0      || bound program address registers	 ||
+||PROGRAM_NATIVE_INSTRUCTIONS_ARB||  Z+   ||  GetProgramivARB  || 0     ||  bound program native instructions ||
+||PROGRAM_NATIVE_TEMPORARIES_ARB ||  Z+   ||  GetProgramivARB  || 0     ||  bound program native temporaries ||
+||PROGRAM_NATIVE_PARAMETERS_ARB  ||  Z+   ||  GetProgramivARB  || 0     ||  bound program native parameter bindings	 ||
+||PROGRAM_NATIVE_ATTRIBS_ARB  ||  Z+ || GetProgramivARB  || 0     ||  bound program native attribute bindings    ||
+||PROGRAM_NATIVE_ADDRESS_REGISTERS_ARB ||   Z+ || GetProgramivARB ||  0 ||  bound program native address registers	||
+||PROGRAM_UNDER_NATIVE_LIMITS_ARB || B ||  GetProgramivARB  || 0     ||  bound program under native resource limits	||
+||-         ||  96+xR4|| GetProgramLocalParameterARB  ||   (0,0,0,0)  ||  bound program local parameter value		||
+
+
+|| *Get Value* || *Type* || *Get Command*   || *Initial Value*  || *Description* || 
+||-  || 12+xR4||  -  ||  undefined  || temporary registers      ||
+||-  || 8+xR4 ||  -  ||  undefined  || vertex result registers  ||
+||   || 1+xZ1 ||  -  ||  undefined  || vertex program address registers	 ||
+
+
+|| *Get Value*        || *Type*   || *Get Command* || *Initial Value*  || *Description* ||
+||CURRENT_MATRIX_ARB     ||   m*n*xM^4 || !GetFloatv || Identity ||   current matrix    ||
+||CURRENT_MATRIX_STACK_DEPTH_ARB  ||   m*Z+  || !GetIntegerv  || 1     ||   current stack depth	 ||
+
+
+== New Implementation Dependent State ==
+
+|| *Get Value* || *Type* || *Get Command* || *Value* || *Description* ||
+||MAX_PROGRAM_ENV_PARAMETERS_ARB  || Z+ || GetProgramivARB|| 96 || maximum program env parameters  ||
+||MAX_PROGRAM_LOCAL_PARAMETERS_ARB || Z+ || GetProgramivARB|| 96 || maximum program local parameters ||
+||MAX_PROGRAM_MATRICES_ARB || Z+ || !GetIntegerv || 8 (not to exceed 32)|| maximum number of program matrices ||
+||MAX_PROGRAM_MATRIX_STACK_DEPTH_ARB || Z+ || !GetIntegerv || 1  || maximum program matrix stack depth ||
+||MAX_PROGRAM_INSTRUCTIONS_ARB || Z+ || GetProgramivARB|| 128 || maximum program instructions ||
+||MAX_PROGRAM_TEMPORARIES_ARB  || Z+ || GetProgramivARB|| 12 || maximum program temporaries||
+||MAX_PROGRAM_PARAMETERS_ARB  || Z+ || GetProgramivARB|| 96 || maximum program parameter bindings ||
+||MAX_PROGRAM_ATTRIBS_ARB  || Z+ || GetProgramivARB|| 16 || maximum program attribute bindings ||
+||MAX_PROGRAM_ADDRESS_REGISTERS_ARB || Z+ || GetProgramivARB|| 1  || maximum program address registers ||
+||MAX_PROGRAM_NATIVE_INSTRUCTIONS_ARB || Z+ || GetProgramivARB|| -  || maximum program native instructions ||
+||MAX_PROGRAM_NATIVE_TEMPORARIES_ARB || Z+ || GetProgramivARB|| -  || maximum program native temporaries ||
+||MAX_PROGRAM_NATIVE_PARAMETERS_ARB || Z+ || GetProgramivARB|| -  || maximum program native parameter bindings	||
+||MAX_PROGRAM_NATIVE_ATTRIBS_ARB  || Z+ || GetProgramivARB|| -  || maximum program native attribute bindings	||
+||MAX_PROGRAM_NATIVE_ADDRESS_REGISTERS_ARB  || Z+ || GetProgramivARB|| -  || maximum program native address registers	||

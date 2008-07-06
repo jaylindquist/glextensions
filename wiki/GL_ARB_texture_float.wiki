@@ -1,0 +1,92 @@
+#summary GL_ARB_texture_float
+
+== Contents ==
+
+  * [GL_ARB_texture_float#Dependencies Dependencies]
+  * [GL_ARB_texture_float#Overview Overview]
+  * [GL_ARB_texture_float#New_Procedures_and_Functions New Procedures and Functions]
+  * [GL_ARB_texture_float#New_Tokens New Tokens]
+  * [GL_ARB_texture_float#Errors Errors]
+  * [GL_ARB_texture_float#New_State New State]
+  * [GL_ARB_texture_float#New_Implementation_Dependent_State New Implementation Dependent State]
+
+== Dependencies ==
+
+This extension is written against the OpenGL 2.0 Specification
+but will work with the OpenGL 1.5 Specification.
+
+OpenGL 1.1 or [GL_EXT_texture] is required.
+
+This extension interacts with [GL_ARB_color_buffer_float].
+
+
+== Overview ==
+
+This extension adds texture internal formats with 16- and 32-bit
+floating-point components.  The 32-bit floating-point components
+are in the standard IEEE float format.  The 16-bit floating-point
+components have 1 sign bit, 5 exponent bits, and 10 mantissa bits.
+Floating-point components are clamped to the limits of the range
+representable by their format.
+
+
+
+== New Procedures and Functions ==
+
+None
+
+
+== New Tokens ==
+
+Accepted by the <value> parameter of !GetTexLevelParameter:
+
+||TEXTURE_RED_TYPE_ARB             ||0x8C10||
+||TEXTURE_GREEN_TYPE_ARB           ||0x8C11||
+||TEXTURE_BLUE_TYPE_ARB            ||0x8C12||
+||TEXTURE_ALPHA_TYPE_ARB           ||0x8C13||
+||TEXTURE_LUMINANCE_TYPE_ARB       ||0x8C14||
+||TEXTURE_INTENSITY_TYPE_ARB       ||0x8C15||
+||TEXTURE_DEPTH_TYPE_ARB           ||0x8C16||
+
+Returned by the <params> parameter of !GetTexLevelParameter:
+
+||UNSIGNED_NORMALIZED_ARB     ||     0x8C17||
+
+Accepted by the <internalFormat> parameter of TexImage1D,
+TexImage2D, and TexImage3D:
+
+||RGBA32F_ARB                  ||    0x8814||
+||RGB32F_ARB                   ||    0x8815||
+||ALPHA32F_ARB                 ||    0x8816||
+||INTENSITY32F_ARB             ||    0x8817||
+||LUMINANCE32F_ARB             ||    0x8818||
+||LUMINANCE_ALPHA32F_ARB       ||    0x8819||
+||RGBA16F_ARB                  ||    0x881A||
+||RGB16F_ARB                   ||    0x881B||
+||ALPHA16F_ARB                 ||    0x881C||
+||INTENSITY16F_ARB             ||    0x881D||
+||LUMINANCE16F_ARB             ||    0x881E||
+||LUMINANCE_ALPHA16F_ARB       ||    0x881F||
+
+
+== Errors ==
+
+None
+
+
+== New State ==
+
+|| *Get Value*   || *Type* || *Get Command* || *Minimum Value* || *Description* ||
+||TEXTURE_RED_TYPE_ARB||  Z3  || GetTexLevelParameter||-||      storage type||
+||TEXTURE_GREEN_TYPE_ARB||  Z3  || GetTexLevelParameter||- ||      storage type||
+||TEXTURE_BLUE_TYPE_ARB  ||  Z3  || GetTexLevelParameter||-||      storage type||
+||TEXTURE_ALPHA_TYPE_ARB ||  Z3  || GetTexLevelParameter||-   ||      storage type||
+||TEXTURE_LUMINANCE_TYPE_ARB ||  Z3  || GetTexLevelParameter||-||      storage type||
+||TEXTURE_INTENSITY_TYPE_ARB||  Z3  || GetTexLevelParameter||- ||      storage type||
+||TEXTURE_DEPTH_TYPE_ARB  ||  Z3  || GetTexLevelParameter||- ||      storage type||
+
+
+== New Implementation Dependent State ==
+
+None
+

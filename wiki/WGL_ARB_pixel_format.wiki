@@ -27,9 +27,9 @@ Attribute names are defined which correspond to all of the values in
 the PIXELFORMATDESCRIPTOR and LAYERPLANEDESCRIPTOR data structures.
 Additionally this interface allows pixel formats to be supported
 which have attributes that cannot be represented using the standard
-pixel format functions, i.e. DescribePixelFormat,
-DescribeLayerPlane, ChoosePixelFormat, SetPixelFormat, and
-GetPixelFormat.
+pixel format functions, i.e. !DescribePixelFormat,
+!DescribeLayerPlane, !ChoosePixelFormat, !SetPixelFormat, and
+!GetPixelFormat.
 
 
 == New Procedures and Functions ==
@@ -128,4 +128,3 @@ None
 == New Implementation Dependent State ==
 
 None
-

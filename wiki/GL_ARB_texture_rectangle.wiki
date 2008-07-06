@@ -1,0 +1,194 @@
+#summary GL_ARB_texture_rectangle
+
+== Contents ==
+
+  * [GL_ARB_texture_rectangle#Dependencies Dependencies]
+  * [GL_ARB_texture_rectangle#Overview Overview]
+  * [GL_ARB_texture_rectangle#New_Procedures_and_Functions New Procedures and Functions]
+  * [GL_ARB_texture_rectangle#New_Tokens New Tokens]
+  * [GL_ARB_texture_rectangle#Errors Errors]
+  * [GL_ARB_texture_rectangle#New_State New State]
+  * [GL_ARB_texture_rectangle#New_Implementation_Dependent_State New Implementation Dependent State]
+  * [GL_ARB_texture_rectangle#Backwards_Compatibility Backwards Compatibility]
+
+== Dependencies ==
+
+OpenGL 1.1 is required
+
+OpenGL 1.4 (or [GL_ARB_texture_mirrored_repeat]) affects the definition
+of this extension.
+
+[GL_ARB_texture_non_power_of_two] trivially affects the definition of
+this extension.
+
+[GL_ATI_texture_mirror_once] affects the definition of this extension.
+
+[GL_EXT_paletted_texture] affects the definition of this extension.
+
+[GL_EXT_texture_compression_s3tc] affects the definition of this
+extension.
+
+[GL_EXT_texture_mirror_clamp] affects the definition of this extension.
+
+The OpenGL Shading Language specification (provided by OpenGL 2.0
+and/or [GL_ARB_shader_objects]) interacts with this extension.
+
+This extension is written against the OpenGL 2.0 specification.
+
+
+== Overview ==
+
+OpenGL texturing is limited to images with power-of-two dimensions
+and an optional 1-texel border.  The [GL_ARB_texture_rectangle] extension
+adds a new texture target that supports 2D textures without requiring
+power-of-two dimensions.
+
+Non-power-of-two sized (NPOTS) textures are useful for storing video
+images that do not have power-of-two sized (POTS).  Re-sampling
+artifacts are avoided and less texture memory may be required by
+using non-power-of-two sized textures.  Non-power-of-two sized
+textures are also useful for shadow maps and window-space texturing.
+
+However, non-power-of-two sized textures have limitations that
+do not apply to power-of-two sized textures.  NPOTS textures may
+not use mipmap filtering; POTS textures support both mipmapped
+and non-mipmapped filtering.  NPOTS textures support only the
+GL_CLAMP, GL_CLAMP_TO_EDGE, and GL_CLAMP_TO_BORDER wrap modes;
+POTS textures support GL_CLAMP_TO_EDGE, GL_REPEAT, GL_CLAMP,
+GL_MIRRORED_REPEAT, and GL_CLAMP_TO_BORDER (and GL_MIRROR_CLAMP_ATI
+and GL_MIRROR_CLAMP_TO_EDGE_ATI if [GL_ATI_texture_mirror_once] is
+supported) .  NPOTS textures do not support an optional 1-texel
+border; POTS textures do support an optional 1-texel border.
+
+NPOTS textures are accessed by dimension-dependent (aka
+non-normalized) texture coordinates.  So instead of thinking of
+the texture image lying in a `[0..1]x[0..1]` range, the NPOTS texture
+image lies in a `[0..w]x[0..h]` range.
+
+This extension adds a new texture target and related state (proxy,
+binding, max texture size).
+
+
+== New Procedures and Functions ==
+
+None
+
+
+== New Tokens ==
+
+Accepted by the <cap> parameter of Enable, Disable and !IsEnabled;
+by the <pname> parameter of !GetBooleanv, !GetIntegerv, !GetFloatv
+and GetDoublev; and by the <target> parameter of !BindTexture,
+!GetTexParameterfv, !GetTexParameteriv, !TexParameterf, !TexParameteri,
+!TexParameterfv and !TexParameteriv:
+
+||TEXTURE_RECTANGLE_ARB    ||        0x84F5||
+
+Accepted by the <pname> parameter of !GetBooleanv, !GetIntegerv,
+!GetFloatv and !GetDoublev:
+
+||TEXTURE_BINDING_RECTANGLE_ARB ||   0x84F6||
+
+Accepted by the <target> parameter of !GetTexLevelParameteriv,
+!GetTexLevelParameterfv, !GetTexParameteriv and TexImage2D:
+
+||PROXY_TEXTURE_RECTANGLE_ARB   ||   0x84F7||
+
+Accepted by the <pname> parameter of !GetBooleanv, !GetDoublev,
+!GetIntegerv and !GetFloatv:
+
+||MAX_RECTANGLE_TEXTURE_SIZE_ARB  || 0x84F8||
+
+Accepted by the <target> parameter of !GetTexImage,
+!GetTexLevelParameteriv, !GetTexLevelParameterfv, TexImage2D,
+CopyTexImage2D, TexSubImage2D and CopySubTexImage2D:
+
+||TEXTURE_RECTANGLE_ARB||
+
+Returned by <type> parameter of !GetActiveUniform when the location
+<index> for program object <program> is of type sampler2DRect:
+
+||SAMPLER_2D_RECT_ARB    ||          0x8B63||
+
+Returned by <type> parameter of !GetActiveUniform when the location
+<index> for program object <program> is of type sampler2DRectShadow:
+
+||SAMPLER_2D_RECT_SHADOW_ARB   ||    0x8B64||
+
+
+== Errors ==
+
+INVALID_ENUM is generated when !ColorTable (or ColorTableEXT or the
+various !ColorTable and ColorTableEXT alternative commands) is called
+and the target is TEXTURE_RECTANGLE_ARB or
+PROXY_TEXTURE_RECTANGLE_ARB.
+
+INVALID_ENUM is generated when TexImage2D is called and the target
+is TEXTURE_RECTANGLE_ARB or PROXY_TEXTURE_RECTANGLE_ARB and the
+format is COLOR_INDEX or the internalformat is COLOR_INDEX or one of
+the COLOR_INDEX<n>_EXT internal formats.
+
+INVALID_VALUE is generated when TexImage2D is called when the target
+is TEXTURE_RECTANGLE_ARB if border is any value other than zero or
+the level is any value other than zero.
+
+INVALID_VALUE is generated when TexImage2D is called when the target
+is TEXTURE_RECTANGLE_ARB if the width is less than zero or the
+height is less than zero.
+
+INVALID_VALUE is generated when TexSubImage2D or CopyTexSubImage2D
+is called when the target is TEXTURE_RECTANGLE_ARB if the level is
+any value other than zero.
+
+INVALID_ENUM is generated when one of the !CompressedTexImage<n>D
+commands is called when the target parameter is
+TEXTURE_RECTANGLE_ARB or PROXY_TEXTURE_RECTANGLE_ARB.
+
+INVALID_ENUM is generated when one of the !CompressedTexSubImage<n>D
+commands is called when the target parameter is TEXTURE_RECTANGLE_ARB
+or PROXY_TEXTURE_RECTANGLE_ARB.
+
+INVALID_ENUM is generated when !TexParameter is called with a target
+of TEXTURE_RECTANGLE_ARB and the TEXTURE_WRAP_S, TEXTURE_WRAP_T,
+or TEXTURE_WRAP_R parameter is set to REPEAT, MIRRORED_REPEAT,
+MIRROR_CLAMP_ATI, or MIRROR_CLAMP_TO_EDGE_ATI.
+
+INVALID_ENUM is generated when !TexParameter is called with a target
+of TEXTURE_RECTANGLE_ARB and the TEXTURE_MIN_FILTER is set to a
+value other than NEAREST or LINEAR.
+
+INVALID_VALUE is generated when !TexParameter is called with a target
+of TEXTURE_RECTANGLE_ARB and the TEXTURE_BASE_LEVEL is set to any
+value other than zero.
+
+INVALID_VALUE is generated when !GetTexImage is called with a lod not
+zero when the tex is TEXTURE_RECTANGLE_ARB.
+
+
+== New State ==
+|| *Get Value* || *Type* || *Get Command* || *Initial Value* || *Description* ||
+||TEXTURE_RECTANGLE_ARB||2* x B||!IsEnabled ||False||True if rectangular texturing is enabled||
+||TEXTURE_BINDING_RECTANGLE_ARB ||2* x Z+||!GetIntegerv|| 0||Texture object for texture rectangle||
+||TEXTURE_RECTANGLE_ARB|| n x I|| !GetTexImage||see 3.8 ||rectangular texture image for lod 0||
+
+
+|| *Get Value* || *Type* || *Get Command* || *Initial Value* || *Description* ||
+||TEXTURE_MIN_FILTER||n x Z6||!GetTexParameter || See 3.8 except for rectangular which is LINEAR || Texture minification function||
+||TEXTURE_WRAP_S ||n x Z5||!GetTexParameter||REPEAT except for rectangular which is CLAMP_TO_EDGE  ||Texture wrap mode S  ||
+||TEXTURE_WRAP_T ||n x Z5||!GetTexParameter||REPEAT except for rectangular which is CLAMP_TO_EDGE ||Texture wrap mode T (2D, 3D, cubemap, rectangle textures only) ||
+||TEXTURE_WRAP_R|| n x Z5||!GetTexParameter || REPEAT except for rectangular which is CLAMP_TO_EDGE    ||Texture wrap mode R  (3D textures only) ||
+
+
+
+== New Implementation Dependent State ==
+
+|| *Get Value* || *Type* || *Get Command* || *Minimum Value* || *Description* ||
+||MAX_RECTANGLE_TEXTURE_SIZE_ARB||Z+||!GetIntegerv||64||Maximum rectangular texture image dimension||
+
+
+== Backwards Compatibility ==
+
+This extension is semantically equivalent to [GL_EXT_texture_rectangle]
+and [GL_NV_texture_rectangle].  The tokens, and name strings now refer
+to ARB instead of EXT or NV.  Enumerant values are unchanged.
+

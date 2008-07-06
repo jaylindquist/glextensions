@@ -1,0 +1,92 @@
+#summary WGL_ARB_buffer_region
+
+== Contents ==
+
+  * [WGL_ARB_buffer_region#Dependencies Dependencies]
+  * [WGL_ARB_buffer_region#Overview Overview]
+  * [WGL_ARB_buffer_region#New_Procedures_and_Functions New Procedures and Functions]
+  * [WGL_ARB_buffer_region#New_Tokens New Tokens]
+  * [WGL_ARB_buffer_region#Errors Errors]
+  * [WGL_ARB_buffer_region#New_State New State]
+  * [WGL_ARB_buffer_region#New_Implementation_Dependent_State New Implementation Dependent State]
+
+== Dependencies ==
+
+The extension is written against the OpenGL 1.2.1 Specification
+although it should work on any previous OpenGL specification.
+
+The [WGL_EXT_extensions_string] extension is required.
+
+
+== Overview ==
+
+The buffer region extension is a mechanism that allows an area of
+an OpenGL window to be saved in off-screen memory for quick
+restores.  The off-screen memory can either be frame buffer memory
+or system memory, although frame buffer memory might offer optimal
+performance.
+
+A buffer region can be created for the front color, back color,
+depth, and/or stencil buffer.  Multiple buffer regions for the same
+buffer type can exist.
+
+
+== New Procedures and Functions ==
+{{{
+HANDLE wglCreateBufferRegionARB(HDC hDC,
+                                int iLayerPlane,
+                                UINT uType)
+
+VOID wglDeleteBufferRegionARB(HANDLE hRegion)
+
+BOOL wglSaveBufferRegionARB(HANDLE hRegion,
+                            int x,
+                            int y,
+                            int width,
+                            int height)
+
+BOOL wglRestoreBufferRegionARB(HANDLE hRegion,
+                               int x,
+                               int y,
+                               int width,
+                               int height,
+                               int xSrc,
+                               int ySrc)
+}}}
+
+
+== New Tokens ==
+
+Accepted by the <uType> parameter of wglCreateBufferRegionARB is the
+bitwise OR of any of the following values:
+
+||WGL_FRONT_COLOR_BUFFER_BIT_ARB     ||     0x00000001||
+||WGL_BACK_COLOR_BUFFER_BIT_ARB      ||     0x00000002||
+||WGL_DEPTH_BUFFER_BIT_ARB           ||     0x00000004||
+||WGL_STENCIL_BUFFER_BIT_ARB         ||     0x00000008||
+
+
+
+== Errors ==
+
+ERROR_NO_SYSTEM_RESOURCES is generated if memory cannot be
+allocated for storing the saved data.
+
+ERROR_INVALID_HANDLE is generated if <hRegion> is not a valid
+handle that was previously returned by wglCreateBufferRegionARB.
+
+ERROR_INVALID_DATA is generated if <uType> is zero or includes
+an undefined bit.
+
+ERROR_INVALID_DATA is generated if <width> or <height> is negative.
+
+
+== New State ==
+
+None
+
+
+== New Implementation Dependent State ==
+
+None
+

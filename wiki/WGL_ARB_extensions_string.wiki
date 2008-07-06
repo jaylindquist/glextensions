@@ -1,0 +1,42 @@
+#summary WGL_ARB_extensions_string
+
+== Contents ==
+
+  * [WGL_ARB_extensions_string#Dependencies Dependencies]
+  * [WGL_ARB_extensions_string#Overview Overview]
+  * [WGL_ARB_extensions_string#New_Procedures_and_Functions New Procedures and Functions]
+  * [WGL_ARB_extensions_string#New_Tokens New Tokens]
+  * [WGL_ARB_extensions_string#New_State New State]
+  * [WGL_ARB_extensions_string#New_Implementation_Dependent_State New Implementation Dependent State]
+
+== Dependencies ==
+
+None
+
+
+== Overview ==
+
+This extension provides a way for applications to determine which
+WGL extensions are supported by a device. This is the foundation
+upon which other WGL extensions are built.
+
+
+== New Procedures and Functions ==
+{{{
+const char *wglGetExtensionsStringARB(HDC hdc);
+}}}
+
+== New Tokens ==
+
+None
+
+
+== New State ==
+
+None
+
+
+== New Implementation Dependent State ==
+
+None
+

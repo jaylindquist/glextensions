@@ -1,0 +1,383 @@
+#summary GL_ARB_fragment_program
+
+== Contents ==
+
+  * [GL_ARB_fragment_program#Dependencies Dependencies]
+  * [GL_ARB_fragment_program#Overview Overview]
+  * [GL_ARB_fragment_program#New_Procedures_and_Functions New Procedures and Functions]
+  * [GL_ARB_fragment_program#New_Tokens New Tokens]
+  * [GL_ARB_fragment_program#Errors Errors]
+  * [GL_ARB_fragment_program#New_State New State]
+  * [GL_ARB_fragment_program#New_Implementation_Dependent_State New Implementation Dependent State]
+
+== Dependencies ==
+
+The extension is written against the OpenGL 1.3 Specification.
+
+OpenGL 1.3 is required.
+
+[GL_EXT_texture_lod_bias] or OpenGL 1.4 is required.
+
+OpenGL 1.4 affects the definition of this extension.
+
+[GL_ARB_vertex_blend] and [GL_EXT_vertex_weighting] affect the definition of
+this extension.
+
+[GL_ARB_matrix_palette] affects the definition of this extension.
+
+[GL_ARB_transpose_matrix] affects the definition of this extension.
+
+[GL_EXT_fog_coord] affects the definition of this extension.
+
+[GL_EXT_texture_rectangle] affects the definition of this extension.
+
+[GL_ARB_shadow] interacts with this extension.
+
+[GL_ARB_vertex_program] interacts with this extension.
+
+[GL_ATI_fragment_shader] interacts with this extension.
+
+[GL_NV_fragment_program] interacts with this extension.
+
+
+
+== Overview ==
+
+Unextended OpenGL mandates a certain set of configurable per-fragment computations defining texture application, texture
+environment, color sum, and fog operations.  Several extensions have
+added further per-fragment computations to OpenGL.  For example,
+extensions have defined new texture environment capabilities
+([GL_ARB_texture_env_add], [GL_ARB_texture_env_combine], [GL_ARB_texture_env_dot3],
+[GL_ARB_texture_env_crossbar]), per-fragment depth comparisons
+([GL_ARB_depth_texture], [GL_ARB_shadow], [GL_ARB_shadow_ambient],
+[GL_EXT_shadow_funcs]), per-fragment lighting ([GL_EXT_fragment_lighting],
+[GL_EXT_light_texture]), and environment mapped bump mapping
+([GL_ATI_envmap_bumpmap]).
+
+Each such extension adds a small set of relatively inflexible per-
+fragment computations.
+
+This inflexibility is in contrast to the typical flexibility
+provided by the underlying programmable floating point engines
+(whether micro-coded fragment engines, DSPs, or CPUs) that are
+traditionally used to implement OpenGL's texturing computations.
+The purpose of this extension is to expose to the OpenGL application
+writer a significant degree of per-fragment programmability for
+computing fragment parameters.
+
+For the purposes of discussing this extension, a fragment program is
+a sequence of floating-point 4-component vector operations that
+determines how a set of program parameters (not specific to an
+individual fragment) and an input set of per-fragment parameters are
+transformed to a set of per-fragment result parameters.
+
+The per-fragment computations for standard OpenGL given a particular
+set of texture and fog application modes (along with any state for
+extensions defining per-fragment computations) is, in essence, a
+fragment program.  However, the sequence of operations is defined
+implicitly by the current OpenGL state settings rather than defined
+explicitly as a sequence of instructions.
+
+This extension provides an explicit mechanism for defining fragment
+program instruction sequences for application-defined fragment
+programs.  In order to define such fragment programs, this extension
+defines a fragment programming model including a floating-point
+4-component vector instruction set and a relatively large set of
+floating-point 4-component registers.
+
+The extension's fragment programming model is designed for efficient
+hardware implementation and to support a wide variety of fragment
+programs.  By design, the entire set of existing fragment programs
+defined by existing OpenGL per-fragment computation extensions can
+be implemented using the extension's fragment programming model.
+
+
+== New Procedures and Functions ==
+{{{
+void ProgramStringARB(enum target, enum format, sizei len,
+                      const void *string);
+
+void BindProgramARB(enum target, uint program);
+
+void DeleteProgramsARB(sizei n, const uint *programs);
+
+void GenProgramsARB(sizei n, uint *programs);
+
+void ProgramEnvParameter4dARB(enum target, uint index,
+                              double x, double y, 
+                              double z, double w);
+void ProgramEnvParameter4dvARB(enum target, uint index,
+                               const double *params);
+void ProgramEnvParameter4fARB(enum target, uint index,
+                              float x, float y, 
+                              float z, float w);
+void ProgramEnvParameter4fvARB(enum target, uint index,
+                               const float *params);
+
+void ProgramLocalParameter4dARB(enum target, uint index,
+                                double x, double y, 
+                                double z, double w);
+void ProgramLocalParameter4dvARB(enum target, uint index,
+                                 const double *params);
+void ProgramLocalParameter4fARB(enum target, uint index,
+                                float x, float y, 
+                                float z, float w);
+void ProgramLocalParameter4fvARB(enum target, uint index,
+                                 const float *params);
+
+void GetProgramEnvParameterdvARB(enum target, uint index,
+                                 double *params);
+void GetProgramEnvParameterfvARB(enum target, uint index,
+                                 float *params);
+
+void GetProgramLocalParameterdvARB(enum target, uint index,
+                                   double *params);
+void GetProgramLocalParameterfvARB(enum target, uint index,
+                                   float *params);
+
+void GetProgramivARB(enum target, enum pname, int *params);
+
+void GetProgramStringARB(enum target, enum pname, void *string);
+
+boolean IsProgramARB(uint program);
+}}}
+
+
+== New Tokens ==
+
+Accepted by the <cap> parameter of Disable, Enable, and !IsEnabled,
+by the <pname> parameter of !GetBooleanv, !GetIntegerv, !GetFloatv,
+and !GetDoublev, and by the <target> parameter of ProgramStringARB,
+BindProgramARB, !ProgramEnvParameter4`[`df`][`v`]`ARB,
+!ProgramLocalParameter4`[`df`][`v`]`ARB, !GetProgramEnvParameter`[`df`]`vARB,
+!GetProgramLocalParameter`[`df`]`vARB, GetProgramivARB and
+GetProgramStringARB.
+
+||FRAGMENT_PROGRAM_ARB                   ||         0x8804||
+
+Accepted by the <format> parameter of ProgramStringARB:
+
+||PROGRAM_FORMAT_ASCII_ARB               ||         0x8875||
+
+Accepted by the <pname> parameter of GetProgramivARB:
+
+||PROGRAM_LENGTH_ARB                         ||     0x8627||
+||PROGRAM_FORMAT_ARB                         ||     0x8876||
+||PROGRAM_BINDING_ARB                        ||     0x8677||
+||PROGRAM_INSTRUCTIONS_ARB                   ||     0x88A0||
+||MAX_PROGRAM_INSTRUCTIONS_ARB               ||     0x88A1||
+||PROGRAM_NATIVE_INSTRUCTIONS_ARB            ||     0x88A2||
+||MAX_PROGRAM_NATIVE_INSTRUCTIONS_ARB        ||     0x88A3||
+||PROGRAM_TEMPORARIES_ARB                    ||     0x88A4||
+||MAX_PROGRAM_TEMPORARIES_ARB                ||     0x88A5||
+||PROGRAM_NATIVE_TEMPORARIES_ARB             ||     0x88A6||
+||MAX_PROGRAM_NATIVE_TEMPORARIES_ARB         ||     0x88A7||
+||PROGRAM_PARAMETERS_ARB                     ||     0x88A8||
+||MAX_PROGRAM_PARAMETERS_ARB                 ||     0x88A9||
+||PROGRAM_NATIVE_PARAMETERS_ARB              ||     0x88AA||
+||MAX_PROGRAM_NATIVE_PARAMETERS_ARB          ||     0x88AB||
+||PROGRAM_ATTRIBS_ARB                        ||     0x88AC||
+||MAX_PROGRAM_ATTRIBS_ARB                    ||     0x88AD||
+||PROGRAM_NATIVE_ATTRIBS_ARB                 ||     0x88AE||
+||MAX_PROGRAM_NATIVE_ATTRIBS_ARB             ||     0x88AF||
+||MAX_PROGRAM_LOCAL_PARAMETERS_ARB           ||     0x88B4||
+||MAX_PROGRAM_ENV_PARAMETERS_ARB             ||     0x88B5||
+||PROGRAM_UNDER_NATIVE_LIMITS_ARB            ||     0x88B6||
+||PROGRAM_ALU_INSTRUCTIONS_ARB               ||     0x8805||
+||PROGRAM_TEX_INSTRUCTIONS_ARB               ||     0x8806||
+||PROGRAM_TEX_INDIRECTIONS_ARB               ||     0x8807||
+||PROGRAM_NATIVE_ALU_INSTRUCTIONS_ARB        ||     0x8808||
+||PROGRAM_NATIVE_TEX_INSTRUCTIONS_ARB        ||     0x8809||
+||PROGRAM_NATIVE_TEX_INDIRECTIONS_ARB        ||     0x880A||
+||MAX_PROGRAM_ALU_INSTRUCTIONS_ARB           ||     0x880B||
+||MAX_PROGRAM_TEX_INSTRUCTIONS_ARB           ||     0x880C||
+||MAX_PROGRAM_TEX_INDIRECTIONS_ARB           ||     0x880D||
+||MAX_PROGRAM_NATIVE_ALU_INSTRUCTIONS_ARB    ||     0x880E||
+||MAX_PROGRAM_NATIVE_TEX_INSTRUCTIONS_ARB    ||     0x880F||
+||MAX_PROGRAM_NATIVE_TEX_INDIRECTIONS_ARB    ||     0x8810||
+
+Accepted by the <pname> parameter of GetProgramStringARB:
+
+||PROGRAM_STRING_ARB               ||               0x8628||
+
+Accepted by the <pname> parameter of !GetBooleanv, !GetIntegerv,
+!GetFloatv, and !GetDoublev:
+
+||PROGRAM_ERROR_POSITION_ARB                ||      0x864B||
+||CURRENT_MATRIX_ARB                        ||      0x8641||
+||TRANSPOSE_CURRENT_MATRIX_ARB              ||      0x88B7||
+||CURRENT_MATRIX_STACK_DEPTH_ARB            ||      0x8640||
+||MAX_PROGRAM_MATRICES_ARB                  ||      0x862F||
+||MAX_PROGRAM_MATRIX_STACK_DEPTH_ARB        ||      0x862E||
+||MAX_TEXTURE_COORDS_ARB                    ||      0x8871||
+||MAX_TEXTURE_IMAGE_UNITS_ARB               ||      0x8872||
+
+Accepted by the <name> parameter of !GetString:
+
+||PROGRAM_ERROR_STRING_ARB           ||             0x8874||
+
+Accepted by the <mode> parameter of !MatrixMode:
+
+||MATRIX0_ARB                        ||             0x88C0||
+||MATRIX1_ARB                        ||             0x88C1||
+||MATRIX2_ARB                        ||             0x88C2||
+||MATRIX3_ARB                        ||             0x88C3||
+||MATRIX4_ARB                        ||             0x88C4||
+||MATRIX5_ARB                        ||             0x88C5||
+||MATRIX6_ARB                        ||             0x88C6||
+||MATRIX7_ARB                        ||             0x88C7||
+||MATRIX8_ARB                        ||             0x88C8||
+||MATRIX9_ARB                        ||             0x88C9||
+||MATRIX10_ARB                       ||             0x88CA||
+||MATRIX11_ARB                       ||             0x88CB||
+||MATRIX12_ARB                       ||             0x88CC||
+||MATRIX13_ARB                       ||             0x88CD||
+||MATRIX14_ARB                       ||             0x88CE||
+||MATRIX15_ARB                       ||             0x88CF||
+||MATRIX16_ARB                       ||             0x88D0||
+||MATRIX17_ARB                       ||             0x88D1||
+||MATRIX18_ARB                       ||             0x88D2||
+||MATRIX19_ARB                       ||             0x88D3||
+||MATRIX20_ARB                       ||             0x88D4||
+||MATRIX21_ARB                       ||             0x88D5||
+||MATRIX22_ARB                       ||             0x88D6||
+||MATRIX23_ARB                       ||             0x88D7||
+||MATRIX24_ARB                       ||             0x88D8||
+||MATRIX25_ARB                       ||             0x88D9||
+||MATRIX26_ARB                       ||             0x88DA||
+||MATRIX27_ARB                       ||             0x88DB||
+||MATRIX28_ARB                       ||             0x88DC||
+||MATRIX29_ARB                       ||             0x88DD||
+||MATRIX30_ARB                       ||             0x88DE||
+||MATRIX31_ARB                       ||             0x88DF||
+
+
+
+== Errors ==
+
+The error INVALID_OPERATION is generated by ProgramStringARB if the
+program string <string> is syntactically incorrect or violates any
+semantic restriction of the execution environment of the specified
+program target <target>.  The error INVALID_OPERATION may also be
+generated by ProgramStringARB if the specified program would exceed
+native resource limits of the implementation.
+
+The error INVALID_OPERATION is generated by BindProgramARB if
+<program> is the name of a program whose target does not match
+<target>.
+
+The error INVALID_VALUE is generated by commands
+!ProgramEnvParameter{fd}ARB, !ProgramEnvParameter{fd}vARB, and
+!GetProgramEnvParameter{fd}vARB if <index> is greater than or equal
+to the value of MAX_PROGRAM_ENV_PARAMETERS_ARB corresponding to the
+program target <target>.
+
+The error INVALID_VALUE is generated by commands
+!ProgramLocalParameter4{fd}ARB, !ProgramLocalParameter4{fd}vARB, and
+!GetProgramLocalParameter{fd}vARB if <index> is greater than or equal
+to the value of MAX_PROGRAM_LOCAL_PARAMETERS_ARB corresponding to
+the program target <target>.
+
+The error INVALID_OPERATION is generated if Begin, !RasterPos, or any
+command that performs an explicit Begin is called when fragment
+program mode is enabled and the currently bound fragment program
+object does not contain a valid fragment program.
+
+The error INVALID_OPERATION is generated by any command accessing
+texture coordinate processing state if the texture unit number
+corresponding to the current value of ACTIVE_TEXTURE is greater than
+or equal to the implementation-dependent constant
+MAX_TEXTURE_COORDS_ARB.  Such commands include: !GetTexGen{if}v;
+!TexGen{ifd}, !TexGen{ifd}v; Disable, Enable, !IsEnabled with argument
+TEXTURE_GEN`_`{STRQ}; Get with argument CURRENT_TEXTURE_COORDS,
+CURRENT_RASTER_TEXTURE_COORDS, TEXTURE_STACK_DEPTH, TEXTURE_MATRIX,
+TRANSPOSE_TEXTURE_MATRIX; when the current matrix mode is TEXTURE,
+Frustum, !LoadIdentity, !LoadMatrix{fd}, !LoadTransposeMatrix{fd},
+!MultMatrix{fd}, !MultTransposeMatrix{fd}, Ortho, !PopMatrix,
+!PushMatrix, Rotate{fd}, Scale{fd}, Translate{fd}.
+
+The error INVALID_OPERATION is generated by any command accessing
+texture image processing state if the texture unit number
+corresponding to the current value of ACTIVE_TEXTURE is greater than
+or equal to the implementation-dependent constant
+MAX_TEXTURE_IMAGE_UNITS_ARB.  Such commands include: !BindTexture;
+!GetCompressedTexImage, !GetTexEnv{if}v, !GetTexImage,
+!GetTexLevelParameter{if}v, !GetTexParameter{if}v; !TexEnv{if},
+!TexEnv{if}v, !TexParameter{if}, !TexParameter{if}v; Disable, Enable,
+!IsEnabled with argument TEXTURE`_`{123}D, TEXTURE_CUBE_MAP; Get with
+argument TEXTURE_BINDING`_`{123}D, TEXTURE_BINDING_CUBE_MAP;
+!CompressedTexImage{123}D, !CompressedTexSubImage{123}D,
+!CopyTexImage{12}D, !CopyTexSubImage{123}D, !TexImage{123}D,
+!TexSubImage{123}D.
+
+
+
+== New State ==
+
+
+|| *Get Value* || *Type* || *Get Command* || *Initial Value* || *Description* ||
+||FRAGMENT_PROGRAM_ARB||B||!IsEnabled||False||fragment program enable||
+||- ||24+xR4  ||GetProgramEnvParameterARB||(0,0,0,0)|| program environment parameters||
+||PROGRAM_ERROR_POSITION_ARB||Z||!GetIntegerv||-1||last program error position||
+||PROGRAM_ERROR_STRING_ARB||0+xub||!GetString|| ""||last program error string||
+
+
+
+|| *Get Value* || *Type* || *Get Command* || *Initial Value* || *Description* ||
+||PROGRAM_BINDING_ARB||Z+||GetProgramivARB||object-specific||bound program name||
+||PROGRAM_LENGTH_ARB ||Z+||GetProgramivARB ||0||bound program length||
+||PROGRAM_FORMAT_ARB ||Z1||GetProgramivARB||PROGRAM_FORMAT_ASCII_ARB||bound program format||
+||PROGRAM_STRING_ARB ||ubxn||GetProgramStringARB ||(empty)|| bound program string||
+||PROGRAM_INSTRUCTIONS_ARB||Z+||GetProgramivARB|| 0||bound program total instructions||
+||PROGRAM_ALU_INSTRUCTIONS_ARB||Z+||GetProgramivARB||0||bound program ALU instructions||
+||PROGRAM_TEX_INSTRUCTIONS_ARB ||Z+|| GetProgramivARB||0||bound program texture instructions||
+||PROGRAM_TEX_INDIRECTIONS_ARB||Z+||GetProgramivARB||0||bound program texture indirections||
+||PROGRAM_TEMPORARIES_ARB||Z+||GetProgramivARB||0||bound program temporaries||
+||PROGRAM_PARAMETERS_ARB||Z+||GetProgramivARB ||0||bound program parameter bindings||
+||PROGRAM_ATTRIBS_ARB||Z+||GetProgramivARB||0||bound program attribute bindings||
+||PROGRAM_NATIVE_INSTRUCTIONS_ARB||Z+||GetProgramivARB||0||bound program native instructions||
+||PROGRAM_NATIVE_ALU_INSTRUCTIONS_ARB||Z+||GetProgramivARB||0||bound program native ALU instructions||
+||PROGRAM_NATIVE_TEX_INSTRUCTIONS_ARB||Z+||GetProgramivARB|| 0||bound program native texture instructions||
+||PROGRAM_NATIVE_TEX_INDIRECTIONS_ARB||Z+||GetProgramivARB||0 ||bound program native texture indirections||
+||PROGRAM_NATIVE_TEMPORARIES_ARB||Z+||GetProgramivARB||0 ||bound program native temporaries||
+||PROGRAM_NATIVE_PARAMETERS_ARB ||Z+||GetProgramivARB||0|| bound program native parameter bindings||
+||PROGRAM_NATIVE_ATTRIBS_ARB|| Z+||GetProgramivARB||0||bound program native attribute bindings||
+||PROGRAM_UNDER_NATIVE_LIMITS_ARB||B||GetProgramivARB||0|| bound program under  native resource limits||
+||- ||24+xR4||GetProgramLocalParameterARB||(0,0,0,0)||bound program local parameter value||
+
+
+
+
+|| *Get Value* || *Type* || *Get Command* || *Initial Value* || *Description* ||
+||- ||16+xR4||  -  || undefined ||temporary registers||
+||-||2xR4 ||   -    ||undefined||fragment result registers||
+
+
+
+|| *Get Value* || *Type* || *Get Command* || *Initial Value* || *Description* ||
+||CURRENT_MATRIX_ARB||m*n*xM^4||!GetFloatv||Identity||current matrix||
+||CURRENT_MATRIX_STACK_DEPTH_ARB||m*Z+||!GetIntegerv||1||current stack depth||
+
+
+== New Implementation Dependent State ==
+|| *Get Value* || *Type* || *Get Command* || *Minimum Value* || *Description* ||
+||MAX_TEXTURE_COORDS_ARB                   ||Z+    ||!GetIntegerv      ||2          ||number of texture coordinate sets||
+||MAX_TEXTURE_IMAGE_UNITS_ARB              ||Z+    ||!GetIntegerv      ||2          ||number of texture image units||
+||MAX_PROGRAM_ENV_PARAMETERS_ARB           ||Z+    ||GetProgramivARB  ||24         ||maximum program env parameters ||
+||MAX_PROGRAM_LOCAL_PARAMETERS_ARB         ||Z+    ||GetProgramivARB  ||24         ||maximum program local parameters||
+||MAX_PROGRAM_MATRICES_ARB                 ||Z+    ||!GetIntegerv      ||8 ||(not to  maximum number of exceed 32) program matrices||
+||MAX_PROGRAM_MATRIX_STACK_DEPTH_ARB       ||Z+    ||!GetIntegerv      ||1          ||maximum program matrix stack depth||
+||MAX_PROGRAM_INSTRUCTIONS_ARB             ||Z+    ||GetProgramivARB  ||72         ||maximum program total instructions        ||
+||MAX_PROGRAM_ALU_INSTRUCTIONS_ARB         ||Z+    ||GetProgramivARB  ||48         ||number of frag. prg. ALU instructions   ||
+||MAX_PROGRAM_TEX_INSTRUCTIONS_ARB         ||Z+    ||GetProgramivARB  ||24         ||number of frag. prg. texture instructions   ||
+||MAX_PROGRAM_TEX_INDIRECTIONS_ARB         ||Z+    ||GetProgramivARB  ||4          ||number of frag. prg. texture indirections   ||
+||MAX_PROGRAM_TEMPORARIES_ARB              ||Z+    ||GetProgramivARB  ||16         ||maximum program temporaries        ||
+||MAX_PROGRAM_PARAMETERS_ARB               ||Z+    ||GetProgramivARB  ||24         ||maximum program parameter bindings        ||
+||MAX_PROGRAM_ATTRIBS_ARB                  ||Z+    ||GetProgramivARB  ||10         ||maximum program attribute bindings        ||
+||MAX_PROGRAM_NATIVE_INSTRUCTIONS_ARB      ||Z+    ||GetProgramivARB  ||-          ||maximum program native total instructions ||
+||MAX_PROGRAM_NATIVE_ALU_INSTRUCTIONS_ARB  ||Z+    ||GetProgramivARB  ||-          ||maximum program native ALU instructions ||
+||MAX_PROGRAM_NATIVE_TEX_INSTRUCTIONS_ARB  ||Z+    ||GetProgramivARB  ||-          ||maximum program native texture instructions ||
+||MAX_PROGRAM_NATIVE_TEX_INDIRECTIONS_ARB  ||Z+    ||GetProgramivARB  ||-          ||maximum program native texture indirections ||
+||MAX_PROGRAM_NATIVE_TEMPORARIES_ARB       ||Z+    ||GetProgramivARB  ||-          ||maximum program native temporaries ||
+||MAX_PROGRAM_NATIVE_PARAMETERS_ARB        ||Z+    ||GetProgramivARB  ||-          ||maximum program native parameter bindings ||
+||MAX_PROGRAM_NATIVE_ATTRIBS_ARB           ||Z+    ||GetProgramivARB  ||-          ||maximum program native attribute bindings ||

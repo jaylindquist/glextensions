@@ -1,0 +1,49 @@
+#summary WGL_ARB_make_current_read
+
+== Contents ==
+
+  * [WGL_ARB_make_current_read#Dependencies Dependencies]
+  * [WGL_ARB_make_current_read#Overview Overview]
+  * [WGL_ARB_make_current_read#New_Procedures_and_Functions New Procedures and Functions]
+  * [WGL_ARB_make_current_read#New_Tokens New Tokens]
+  * [WGL_ARB_make_current_read#New_State New State]
+  * [WGL_ARB_make_current_read#New_Implementation_Dependent_State New Implementation Dependent State]
+
+== Dependencies ==
+
+[WGL_ARB_extensions_string] is required.
+
+
+== Overview ==
+
+The association of a separate "read" and "draw" DC with the current
+context allows for preprocessing of image data in an "off screen"
+DC which is then read into a visible DC for final display.
+
+
+== New Procedures and Functions ==
+{{{
+BOOL wglMakeContextCurrentARB(HDC hDrawDC,
+                              HDC hReadDC,
+                              HGLRC hglrc);
+
+HDC wglGetCurrentReadDCARB(VOID);
+}}}
+
+== New Tokens ==
+
+New errors returned by !GetLastError:
+
+||ERROR_INVALID_PIXEL_TYPE_ARB    ||          0x2043||
+||ERROR_INCOMPATIBLE_DEVICE_CONTEXTS_ARB ||   0x2054||
+
+
+== New State ==
+
+None
+
+
+== New Implementation Dependent State ==
+
+None
+

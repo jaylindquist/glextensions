@@ -52,9 +52,9 @@ Accepted by the <pname> parameter of !TexBumpParameter`[`i|f`]`vATI
 Accepted by the <pname> parameter of !GetTexBumpParameter`[`i|f`]`vATI
 
 ||BUMP_ROT_MATRIX_ATI|| ||
-||BUMP_ROT_MATRIX_SIZE_ATI       0x8776||
-||BUMP_NUM_TEX_UNITS_ATI         0x8777||
-||BUMP_TEX_UNITS_ATI             0x8778||
+||BUMP_ROT_MATRIX_SIZE_ATI  ||     0x8776||
+||BUMP_NUM_TEX_UNITS_ATI    ||     0x8777||
+||BUMP_TEX_UNITS_ATI        ||     0x8778||
 
 Accepted by the <format> parameter of !GetTexImage and TexImage2D
 
@@ -139,5 +139,3 @@ queried with BUMP_TEX_UNITS_ATI.
 == New Implementation Dependent State ==
 
 None
-
-

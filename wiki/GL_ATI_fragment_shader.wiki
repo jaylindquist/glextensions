@@ -172,7 +172,7 @@ PassTexCoordATI:
 
 Accepted by the <dstMask> parameter of !ColorFragmentOp`[1..3]`ATI:
 
-||NONE ||
+||NONE || ||
 ||RED_BIT_ATI                    ||       0x00000001||
 ||GREEN_BIT_ATI                  ||       0x00000002||
 ||BLUE_BIT_ATI                   ||       0x00000004||
@@ -298,5 +298,3 @@ SATURATE_BIT_ATI.
 == New Implementation Dependent State ==
 
 None
-
-

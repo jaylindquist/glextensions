@@ -1,0 +1,302 @@
+#summary GL_ATI_fragment_shader
+
+== Contents ==
+
+  * [GL_ATI_fragment_shader#Dependencies Dependencies]
+  * [GL_ATI_fragment_shader#Overview Overview]
+  * [GL_ATI_fragment_shader#New_Procedures_and_Functions New Procedures and Functions]
+  * [GL_ATI_fragment_shader#New_Tokens New Tokens]
+  * [GL_ATI_fragment_shader#Errors Errors]
+  * [GL_ATI_fragment_shader#New_State New State]
+  * [GL_ATI_fragment_shader#New_Implementation_Dependent_State New Implementation Dependent State]
+
+== Dependencies ==
+
+[GL_ARB_multitexture] is required by this extension.
+[GL_ARB_shadow interacts] with this extension.
+The extension is written against the OpenGL 1.2.1 Specification.
+
+
+== Overview ==
+
+This extension exposes a powerful fragment shading model which
+provides a very general means of expressing fragment color blending
+and dependent texture address modification.  The programming is
+a register-based model in which there is a fixed number of
+instructions, texture lookups, read/write registers, and constants.
+
+The fragment shader extension provides a unified instruction set
+for operating on address or color data and eliminates the
+distinction between the two.  This extension provides all the
+interfaces necessary to fully expose this programmable fragment
+shader in GL.
+
+Although conceived as a device-independent extension which would
+expose the capabilities of future generations of hardware, changing
+trends in programmable hardware have affected the lifespan of this
+extension.  For this reason you will now find a fixed set of
+features and resources exposed, and the queries to determine this
+set have been deprecated.
+
+
+== New Procedures and Functions ==
+{{{
+uint GenFragmentShadersATI (uint range);
+
+void BindFragmentShaderATI (uint id);
+
+void DeleteFragmentShaderATI (uint id);
+
+void BeginFragmentShaderATI (void);
+
+void EndFragmentShaderATI (void);
+
+void PassTexCoordATI (uint dst, uint coord, enum swizzle);
+
+void SampleMapATI (uint dst, uint interp, enum swizzle);
+
+void ColorFragmentOp1ATI (enum op, uint dst, uint dstMask,
+uint dstMod, uint arg1, uint arg1Rep,
+uint arg1Mod);
+
+void ColorFragmentOp2ATI (enum op, uint dst, uint dstMask,
+uint dstMod, uint arg1, uint arg1Rep,
+uint arg1Mod, uint arg2, uint arg2Rep,
+uint arg2Mod);
+
+void ColorFragmentOp3ATI (enum op, uint dst, uint dstMask,
+uint dstMod, uint arg1, uint arg1Rep,
+uint arg1Mod, uint arg2, uint arg2Rep,
+uint arg2Mod, uint arg3, uint arg3Rep,
+uint arg3Mod);
+
+void AlphaFragmentOp1ATI (enum op, uint dst, uint dstMod,
+uint arg1, uint arg1Rep, uint arg1Mod);
+
+void AlphaFragmentOp2ATI (enum op, uint dst, uint dstMod,
+uint arg1, uint arg1Rep, uint arg1Mod,
+uint arg2, uint arg2Rep, uint arg2Mod);
+
+void AlphaFragmentOp3ATI (enum op, uint dst, uint dstMod,
+uint arg1, uint arg1Rep, uint arg1Mod,
+uint arg2, uint arg2Rep, uint arg2Mod,
+uint arg3, uint arg3Rep, uint arg3Mod);
+
+void SetFragmentShaderConstantATI (uint dst, const float *value);
+
+}}}
+
+== New Tokens ==
+
+Accepted by the <cap> parameter of Enable, Disable, and !IsEnabled,
+and by the <pname> parameter of !GetBooleanv, !GetIntegerv, !GetFloatv,
+and !GetDoublev:
+
+||FRAGMENT_SHADER_ATI       ||            0x8920||
+
+Accepted by the <dst> and <argN> parameters of
+!ColorFragmentOp`[1..3]`ATI and !AlphaFragmentOp`[1..3]`ATI, and by the
+<dst> and <coord> parameters of PassTexCoordATI, and by the <dst>
+and <interp> parameters of SampleMapATI:
+
+||REG_0_ATI             ||                0x8921||
+||REG_1_ATI              ||               0x8922||
+||REG_2_ATI              ||               0x8923||
+||REG_3_ATI              ||               0x8924||
+||REG_4_ATI              ||               0x8925||
+||REG_5_ATI              ||               0x8926||
+
+Accepted by the <dst> parameter of SetFragmentShaderConstantATI and
+the <argN> parameter of !ColorFragmentOp`[1..3]`ATI and
+!AlphaFragmentOp`[1..3]`ATI:
+
+||CON_0_ATI           ||                  0x8941||
+||CON_1_ATI          ||                   0x8942||
+||CON_2_ATI           ||                  0x8943||
+||CON_3_ATI          ||                   0x8944||
+||CON_4_ATI          ||                   0x8945||
+||CON_5_ATI           ||                  0x8946||
+||CON_6_ATI          ||                   0x8947||
+||CON_7_ATI          ||                   0x8948||
+
+Accepted by the <op> parameter of ColorFragmentOp1ATI and
+AlphaFragmentOp1ATI:
+
+||MOV_ATI                ||              0x8961||
+
+Accepted by the <op> parameter of ColorFragmentOp2ATI and
+AlphaFragmentOp2ATI:
+
+||ADD_ATI             ||                  0x8963||
+||MUL_ATI             ||                  0x8964||
+||SUB_ATI             ||                  0x8965||
+||DOT3_ATI            ||                  0x8966||
+||DOT4_ATI             ||                 0x8967||
+
+Accepted by the <op> parameter of ColorFragmentOp3ATI and
+AlphaFragmentOp3ATI:
+
+||MAD_ATI                  ||             0x8968||
+||LERP_ATI                ||              0x8969||
+||CND_ATI                  ||             0x896A||
+||CND0_ATI                 ||             0x896B||
+||DOT2_ADD_ATI             ||             0x896C||
+
+Accepted by the <argN> parameter of !ColorFragmentOp`[1..3]`ATI and
+!AlphaFragmentOp`[1..3]`ATI:
+
+||ZERO || ||
+||ONE || ||
+||PRIMARY_COLOR_ARB|| ||
+||SECONDARY_INTERPOLATOR_ATI     ||       0x896D||
+
+Accepted by the <interp> parameter of SampleMapATI and the <coord>
+parameter of PassTexCoordATI:
+
+||TEXTURE0_ARB||
+||TEXTURE1_ARB||
+||TEXTURE2_ARB||
+||TEXTURE3_ARB||
+||TEXTURE4_ARB||
+||TEXTURE5_ARB||
+||TEXTURE6_ARB||
+||TEXTURE7_ARB||
+
+Accepted by the <swizzle> parameter of SampleMapATI and
+PassTexCoordATI:
+
+||SWIZZLE_STR_ATI            ||           0x8976||
+||SWIZZLE_STQ_ATI            ||           0x8977||
+||SWIZZLE_STR_DR_ATI         ||           0x8978||
+||SWIZZLE_STQ_DQ_ATI         ||           0x8979||
+
+Accepted by the <dstMask> parameter of !ColorFragmentOp`[1..3]`ATI:
+
+||NONE ||
+||RED_BIT_ATI                    ||       0x00000001||
+||GREEN_BIT_ATI                  ||       0x00000002||
+||BLUE_BIT_ATI                   ||       0x00000004||
+
+Accepted by the <argNRep> parameter of !ColorFragmentOp`[1..3]`ATI and
+!AlphaFragmentOp`[1..3]`ATI:
+
+||NONE||
+||RED||
+||GREEN||
+||BLUE||
+||ALPHA||
+
+Accepted by the <dstMod> parameter of !ColorFragmentOp`[1..3]`ATI and
+!AlphaFragmentOp`[1..3]`ATI:
+
+||NONE|| ||
+||2X_BIT_ATI                    ||        0x00000001||
+||4X_BIT_ATI                    ||        0x00000002||
+||8X_BIT_ATI                    ||        0x00000004||
+||HALF_BIT_ATI                  ||        0x00000008||
+||QUARTER_BIT_ATI               ||        0x00000010||
+||EIGHTH_BIT_ATI                ||        0x00000020||
+||SATURATE_BIT_ATI              ||        0x00000040||
+
+
+Accepted by the <argNMod> parameter of !ColorFragmentOp`[1..3]`ATI and
+!AlphaFragmentOp`[1..3]`ATI:
+
+||2X_BIT_ATI          ||                  0x00000001||
+||COMP_BIT_ATI        ||                  0x00000002||
+||NEGATE_BIT_ATI      ||                  0x00000004||
+||BIAS_BIT_ATI        ||                  0x00000008||
+
+== Errors ==
+
+The error INVALID_VALUE is generated if GenFragmentShadersATI is
+called where <range> is zero.
+
+The error INVALID_OPERATION is generated if GenFragmentShadersATI,
+BindFragmentShaderATI, DeleteFragmentShaderATI, or
+BeginFragmentShaderATI are specified inside a
+Begin/EndFragmentShaderATI pair.
+
+The error INVALID_OPERATION is generated if EndFragmentShaderATI,
+PassTexCoordATI, SampleMapATI, !ColorFragmentOp`[1..3]`ATI, or
+@AlphaFragmentOp`[1..3]`ATI is specified outside a
+Begin/EndFragmentShaderATI pair.
+
+The error INVALID_OPERATION is generated by EndFragmentShaderATI if
+<argN> passed to !ColorFragmentOp`[1..3]`ATI or
+!AlphaFragmentOp`[1..3]`ATI is PRIMARY_COLOR_ARB or
+SECONDARY_INTERPOLATOR_ATI on the first pass of a two-pass shader,
+or if the shader cannot be compiled due to some other
+implementation-dependent limitation.  EndFragmentShaderATI will
+still have a side-effect if this error is encountered: the
+Begin/EndFragmentShaderATI pair will be closed, and the current
+shader will be undefined.
+
+The error INVALID_OPERATION is generated by PassTexCoordATI or
+SampleMapATI if two shader passes have already been specified, or if
+the same <dst> register is specified twice in the same pass.
+
+The error INVALID_OPERATION is generated by PassTexCoordATI or
+SampleMapATI if <coord> passed to PassTexCoordATI or <interp> passed
+to SampleMapATI is a register in the first pass, or a register with
+SWIZZLE_STQ_ATI or SWIZZLE_STQ_DQ_ATI <swizzle> in the second pass,
+or if different <swizzle> parameters are specified for the same
+<coord> or <interp> in the same pass.
+
+The error INVALID_OPERATION is generated by !ColorFragmentOp`[1..3]`ATI
+or !AlphaFragmentOp`[1..3]`ATI if more than 8 instructions have been
+specified for a shader pass.
+
+The error INVALID_OPERATION is generated by !ColorFragmentOp`[1..3]`ATI
+if <argN> is SECONDARY_INTERPOLATOR_ATI and <argNRep> is ALPHA, or
+by !AlphaFragmentOp`[1..3]`ATI if <argN> is SECONDARY_INTERPOLATOR_ATI
+and <argNRep> is ALPHA or NONE, or by ColorFragmentOp2ATI if <op> is
+DOT4_ATI and <argN> is SECONDARY_INTERPOLATOR_ATI and <argNRep> is
+ALPHA or NONE.
+
+The error INVALID_OPERATION is generated by ColorFragmentOp3ATI or
+AlphaFragmentOp3ATI if all three <argN> parameters are constants,
+and all three are different.
+
+The error INVALID_OPERATION is generated by !AlphaFragmentOp`[2..3]`ATI
+if <op> is DOT3_ATI, DOT4_ATI, or DOT2_ADD_ATI and there was no
+matching !ColorFragmentOp`[2..3]`ATI immediately preceding, or if <op>
+is not DOT4_ATI and the immediately preceding ColorFragmentOp2ATI
+specifies an <op> of DOT4_ATI.
+
+The error INVALID_ENUM is generated if <dst> passed to
+PassTexCoordATI, SampleMapATI, !ColorFragmentOp`[1..3]`ATI, or
+!AlphaFragmentOp`[1..3]`ATI is not a valid register or is greater than
+the number of texture units available on the implementation.
+
+The error INVALID_ENUM is generated if <coord> passed to
+PassTexCoordATI or <interp> passed to SampleMapATI is not a valid
+register or texture unit, or the register or texture unit is greater
+than the number of texture units available on the implementation.
+
+The error INVALID_ENUM is generated if <argN> passed to
+!ColorFragmentOp`[1..3]`ATI or !AlphaFragmentOp`[1..3]`ATI is not a valid
+constant, interpolator, or register.
+
+The error INVALID_ENUM is generated if <dstMod> passed to
+QColorFragmentOp`[1..3]`ATI or !AlphaFragmentOp`[1..3]`ATI contains
+multiple mutually exclusive modifier bits, not counting
+SATURATE_BIT_ATI.
+
+
+
+== New State ==
+
+|| *Get Value* || *Type* || *Get Command* || *Initial Value* || *Description* ||
+||FRAGMENT_SHADER_ATI|| B||!IsEnabled||False ||Fragment shader enable ||
+
+|| *Get Value* || *Type* || *Get Command* || *Initial Value* || *Description* ||
+||-      ||      6xR4||    -           ||  undefined    ||  temporary registers ||
+
+
+
+== New Implementation Dependent State ==
+
+None
+
+

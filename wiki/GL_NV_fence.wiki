@@ -1,0 +1,110 @@
+#summary GL_NV_fence
+
+== Contents ==
+
+  * [GL_NV_fence#Dependencies Dependencies]
+  * [GL_NV_fence#Overview Overview]
+  * [GL_NV_fence#New_Procedures_and_Functions New Procedures and Functions]
+  * [GL_NV_fence#New_Tokens New Tokens]
+  * [GL_NV_fence#Errors Errors]
+  * [GL_NV_fence#New_State New State]
+  * [GL_NV_fence#New_Implementation_Dependent_State New Implementation Dependent State]
+
+== Dependencies ==
+
+None
+
+
+== Overview ==
+
+The goal of this extension is provide a finer granularity of
+synchronizing GL command completion than offered by standard OpenGL,
+which offers only two mechanisms for synchronization: Flush and Finish.
+Since Flush merely assures the user that the commands complete in a
+finite (though undetermined) amount of time, it is, thus, of only
+modest utility.  Finish, on the other hand, stalls CPU execution
+until all pending GL commands have completed.  This extension offers
+a middle ground - the ability to "finish" a subset of the command
+stream, and the ability to determine whether a given command has
+completed or not.
+
+This extension introduces the concept of a "fence" to the OpenGL
+command stream.  Once the fence is inserted into the command stream, it
+can be queried for a given condition - typically, its completion.
+Moreover, the application may also request a partial Finish -- that is,
+all commands prior to the fence will be forced to complete until control
+is returned to the calling process.  These new mechanisms allow for
+synchronization between the host CPU and the GPU, which may be accessing
+the same resources (typically memory).
+
+This extension is useful in conjunction with NV_vertex_array_range
+to determine when vertex information has been pulled from the
+vertex array range.  Once a fence has been tested TRUE or finished,
+all vertex indices issued before the fence must have been pulled.
+This ensures that the vertex data memory corresponding to the issued
+vertex indices can be safely modified (assuming no other outstanding
+vertex indices are issued subsequent to the fence).
+
+
+== New Procedures and Functions ==
+{{{
+void GenFencesNV(sizei n, uint *fences);
+
+void DeleteFencesNV(sizei n, const uint *fences);
+
+void SetFenceNV(uint fence, enum condition);
+
+boolean TestFenceNV(uint fence);
+
+void FinishFenceNV(uint fence);
+
+boolean IsFenceNV(uint fence);
+
+void GetFenceivNV(uint fence, enum pname, int *params);
+}}}
+
+== New Tokens ==
+
+Accepted by the <condition> parameter of SetFenceNV:
+
+||ALL_COMPLETED_NV      ||             0x84F2||
+
+Accepted by the <pname> parameter of GetFenceivNV:
+
+||FENCE_STATUS_NV           ||         0x84F3||
+||FENCE_CONDITION_NV        ||         0x84F4||
+
+
+== Errors ==
+
+INVALID_VALUE is generated if GenFencesNV parameter <n> is negative.
+
+INVALID_VALUE is generated if DeleteFencesNV parameter <n> is negative.
+
+INVALID_OPERATION is generated if the fence used in TestFenceNV or
+FinishFenceNV is not the name of a fence.
+
+INVALID_ENUM is generated if the condition used in SetFenceNV
+is not ALL_COMPLETED_NV.
+
+INVALID_OPERATION is generated if any of the commands defined in
+this extension is executed between the execution of Begin and the
+corresponding execution of End.
+
+INVALID_OPERATION is generated if the named fence in GetFenceivNV
+does not exist.
+
+INVALID_VALUE is generated if DeleteFencesNV or GenFencesNV are
+called where n is negative.
+
+
+== New State ==
+
+|| *Get value* || *Type* || *Get command* || *Initial value* || *Description* ||
+||FENCE_STATUS_NV||B||GetFenceivNV||determined by 1st SetFenceNV||Fence status||
+||FENCE_CONDITION_NV||Z1||GetFenceivNV||determined by 1st SetFenceNV||Fence condition||
+
+== New Implementation Dependent State ==
+
+None
+

@@ -305,14 +305,14 @@ the corresponding execution of End.
 ||CONVOLUTION_1D_EXT ||!IsEnabled ||B ||False ||
 ||CONVOLUTION_2D_EXT ||!IsEnabled ||B ||False ||
 ||SEPARABLE_2D_EXT ||!IsEnabled ||B ||False ||
-||CONVOLUTION_FILTER_SCALE_EXT ||!GetConvolutionParameterivEXT || 3 x R4 || (1,1,1,1) ||
-||CONVOLUTION_FILTER_BIAS_EXT ||!GetConvolutionParameterivEXT || 3 x R4 || (0,0,0,0) ||
-||CONVOLUTION_BORDER_MODE_EXT ||!GetConvolutionParameterivEXT || 3 x Z1 || REDUCE_EXT ||
-||CONVOLUTION_xD (x is 1 or 2) ||GetConvolutionFilterEXT ||2 x I ||empty ||
-||SEPARABLE_2D || GetSeparableFilterEXT || 1 x I ||empty ||
-||CONVOLUTION_FORMAT_EXT || GetConvolutionParameterivEXT || 3 x Z8 ||RGBA ||
-||CONVOLUTION_WIDTH_EXT || GetConvolutionParameterivEXT || 3 x Z+ ||0 ||
-||CONVOLUTION_HEIGHT_EXT || GetConvolutionParameterivEXT || 2 x Z+ ||0 ||
+||CONVOLUTION_FILTER_SCALE_EXT ||!GetConvolutionParameterivEXT || 3xR4 || (1,1,1,1) ||
+||CONVOLUTION_FILTER_BIAS_EXT ||!GetConvolutionParameterivEXT || 3xR4 || (0,0,0,0) ||
+||CONVOLUTION_BORDER_MODE_EXT ||!GetConvolutionParameterivEXT || 3xZ1 || REDUCE_EXT ||
+||CONVOLUTION_xD (x is 1 or 2) ||GetConvolutionFilterEXT ||2xI ||empty ||
+||SEPARABLE_2D || GetSeparableFilterEXT || 1xI ||empty ||
+||CONVOLUTION_FORMAT_EXT || GetConvolutionParameterivEXT || 3xZ8 ||RGBA ||
+||CONVOLUTION_WIDTH_EXT || GetConvolutionParameterivEXT || 3xZ+ ||0 ||
+||CONVOLUTION_HEIGHT_EXT || GetConvolutionParameterivEXT || 2xZ+ ||0 ||
 ||POST_CONVOLUTION_RED_SCALE_EXT ||!GetFloatv ||R ||1 ||
 ||POST_CONVOLUTION_GREEN_SCALE_EXT ||!GetFloatv ||R ||1 ||
 ||POST_CONVOLUTION_BLUE_SCALE_EXT ||!GetFloatv ||R ||1 ||
@@ -326,5 +326,5 @@ the corresponding execution of End.
 == New Implementation Dependent State ==
 
 || *Get Value* || *Get Command* || *Type* || *Minimum Value* ||
-||MAX_CONVOLUTION_WIDTH_EXT || GetConvolutionParameterivEXT || 3 x Z+ ||
-||MAX_CONVOLUTION_HEIGHT_EXT || GetConvolutionParameterivEXT || 2 x Z+ ||
+||MAX_CONVOLUTION_WIDTH_EXT || GetConvolutionParameterivEXT || 3 x Z+ ||3||
+||MAX_CONVOLUTION_HEIGHT_EXT || GetConvolutionParameterivEXT || 2 x Z+ ||3||

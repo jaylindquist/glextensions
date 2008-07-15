@@ -210,6 +210,7 @@ List of OpenGL Extensions by manufacturer
   * [GL_NV_vertex_program2]
   * [GL_NV_vertex_program2_option]
   * [GL_NV_vertex_program3]
+  * [GL_NV_vertex_shader4]
   * [GL_NVX_conditional_render]
   * [WGL_NV_float_buffer]
   * [WGL_NV_multisample_coverage]

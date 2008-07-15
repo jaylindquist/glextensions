@@ -1,0 +1,330 @@
+#summary GL_EXT_convolution
+
+== Contents ==
+
+  * [GL_EXT_convolution#Dependencies Dependencies]
+  * [GL_EXT_convolution#Overview Overview]
+  * [GL_EXT_convolution#New_Procedures_and_Functions New Procedures and Functions]
+  * [GL_EXT_convolution#New_Tokens New Tokens]
+  * [GL_EXT_convolution#Errors Errors]
+  * [GL_EXT_convolution#New_State New State]
+  * [GL_EXT_convolution#New_Implementation_Dependent_State New Implementation Dependent State]
+
+== Dependencies ==
+
+[GL_EXT_abgr] affects the definition of this extension
+
+[GL_EXT_texture] is required
+
+[GL_EXT_copy_texture] affects the definition of this extension
+
+
+== Overview ==
+
+This extension defines 1 and 2 dimensional convolution operations
+at a fixed location in the pixel transfer process.  Thus pixel drawing,
+reading, and copying, as well as texture image definition, are all
+candidates for convolution.  The convolution kernels are themselves
+treated as 1 and 2 dimensional images, which can be loaded from
+application memory or from the framebuffer.
+
+This extension is designed to accommodate 3D convolution, but the
+API is left for a future extension.
+
+
+== New Procedures and Functions ==
+{{{
+void ConvolutionFilter1DEXT(enum target,
+                            enum internalformat,
+                            sizei width,
+                            enum format,
+                            enum type,
+                            const void* image);
+
+void ConvolutionFilter2DEXT(enum target,
+                            enum internalformat,
+                            sizei width,
+                            sizei height,
+                            enum format,
+                            enum type,
+                            const void* image);
+
+void CopyConvolutionFilter1DEXT(enum target,
+                                enum internalformat,
+                                int x,
+                                int y,
+                                sizei width);
+
+void CopyConvolutionFilter2DEXT(enum target,
+                                enum internalformat,
+                                int x,
+                                int y,
+                                sizei width,
+                                sizei height);
+
+void GetConvolutionFilterEXT(enum target,
+                             enum format,
+                             enum type,
+                             void* image);
+
+void SeparableFilter2DEXT(enum target,
+                          enum internalformat,
+                          sizei width,
+                          sizei height,
+                          enum format,
+                          enum type,
+                          const void* row,
+                          const void* column);
+
+void GetSeparableFilterEXT(enum target,
+                           enum format,
+                           enum type,
+                           void* row,
+                           void* column,
+                           void* span);
+
+void ConvolutionParameteriEXT(enum target,
+                              enum pname,
+                              int param);
+
+void ConvolutionParameterivEXT(enum target,
+                               enum pname,
+                               const int* params);
+
+void ConvolutionParameterfEXT(enum target,
+                              enum pname,
+                              float param);
+
+void ConvolutionParameterfvEXT(enum target,
+                               enum pname,
+                               const float* params);
+
+void GetConvolutionParameterivEXT(enum target,
+                                  enum pname,
+                                  int* params);
+
+void GetConvolutionParameterfvEXT(enum target,
+                                  enum pname,
+                                  float* params);
+}}}
+
+== New Tokens ==
+
+Accepted by the <cap> parameter of Enable, Disable, and !IsEnabled, by
+the <pname> parameter of !GetBooleanv, !GetIntegerv, !GetFloatv, and
+!GetDoublev, and by the <target> parameter of ConvolutionFilter1DEXT,
+CopyConvolutionFilter1DEXT, GetConvolutionFilterEXT,
+ConvolutionParameteriEXT, ConvolutionParameterfEXT,
+ConvolutionParameterivEXT, ConvolutionParameterfvEXT,
+GetConvolutionParameterivEXT, and GetConvolutionParameterfvEXT:
+
+||CONVOLUTION_1D_EXT   ||            0x8010||
+
+Accepted by the <cap> parameter of Enable, Disable, and !IsEnabled, by
+the <pname> parameter of !GetBooleanv, !GetIntegerv, !GetFloatv, and
+!GetDoublev, and by the <target> parameter of ConvolutionFilter2DEXT,
+CopyConvolutionFilter2DEXT, GetConvolutionFilterEXT,
+ConvolutionParameteriEXT, ConvolutionParameterfEXT,
+ConvolutionParameterivEXT, ConvolutionParameterfvEXT,
+GetConvolutionParameterivEXT, and GetConvolutionParameterfvEXT:
+
+||CONVOLUTION_2D_EXT        ||       0x8011||
+
+Accepted by the <cap> parameter of Enable, Disable, and !IsEnabled, by
+the <pname> parameter of !GetBooleanv, !GetIntegerv, !GetFloatv, and
+!GetDoublev, and by the <target> parameter of SeparableFilter2DEXT,
+SeparableFilter2DEXT, GetSeparableFilterEXT,
+ConvolutionParameteriEXT, ConvolutionParameterfEXT,
+ConvolutionParameterivEXT, ConvolutionParameterfvEXT,
+GetConvolutionParameterivEXT, and GetConvolutionParameterfvEXT:
+
+||SEPARABLE_2D_EXT           ||      0x8012||
+
+Accepted by the <pname> parameter of ConvolutionParameteriEXT,
+ConvolutionParameterfEXT, ConvolutionParameterivEXT,
+ConvolutionParameterfvEXT, GetConvolutionParameterivEXT, and
+GetConvolutionParameterfvEXT:
+
+||CONVOLUTION_BORDER_MODE_EXT  ||    0x8013||
+
+Accepted by the <pname> parameter of ConvolutionParameterivEXT,
+ConvolutionParameterfvEXT, GetConvolutionParameterivEXT, and
+GetConvolutionParameterfvEXT:
+
+||CONVOLUTION_FILTER_SCALE_EXT ||    0x8014||
+||CONVOLUTION_FILTER_BIAS_EXT  ||    0x8015||
+
+Accepted by the <param> parameter of ConvolutionParameteriEXT,
+and ConvolutionParameterfEXT, and by the <params> parameter of
+ConvolutionParameterivEXT and ConvolutionParameterfvEXT, when the
+<pname> parameter is CONVOLUTION_BORDER_MODE_EXT:
+
+||REDUCE_EXT            ||           0x8016||
+
+Accepted by the <pname> parameter of GetConvolutionParameterivEXT and
+GetConvolutionParameterfvEXT:
+
+||CONVOLUTION_FORMAT_EXT       ||    0x8017||
+||CONVOLUTION_WIDTH_EXT        ||    0x8018||
+||CONVOLUTION_HEIGHT_EXT       ||    0x8019||
+||MAX_CONVOLUTION_WIDTH_EXT    ||    0x801A||
+||MAX_CONVOLUTION_HEIGHT_EXT   ||    0x801B||
+
+Accepted by the <pname> parameter of !PixelTransferi, !PixelTransferf,
+and by the <pname> parameter of !GetBooleanv, !GetIntegerv, !GetFloatv,
+and !GetDoublev:
+
+||POST_CONVOLUTION_RED_SCALE_EXT  || 0x801C||
+||POST_CONVOLUTION_GREEN_SCALE_EXT|| 0x801D||
+||POST_CONVOLUTION_BLUE_SCALE_EXT || 0x801E||
+||POST_CONVOLUTION_ALPHA_SCALE_EXT|| 0x801F||
+||POST_CONVOLUTION_RED_BIAS_EXT   || 0x8020||
+||POST_CONVOLUTION_GREEN_BIAS_EXT || 0x8021||
+||POST_CONVOLUTION_BLUE_BIAS_EXT  || 0x8022||
+||POST_CONVOLUTION_ALPHA_BIAS_EXT || 0x8023||
+
+
+== Errors ==
+
+INVALID_ENUM is generated if ConvolutionFilter1DEXT parameter <target>
+is not CONVOLUTION_1D_EXT.
+
+INVALID_ENUM is generated if ConvolutionFilter2DEXT parameter <target>
+is not CONVOLUTION_2D_EXT.
+
+INVALID_ENUM is generated if CopyConvolutionFilter1DEXT parameter
+<target> is not CONVOLUTION_1D_EXT.
+
+INVALID_ENUM is generated if CopyConvolutionFilter2DEXT parameter
+<target> is not CONVOLUTION_2D_EXT.
+
+INVALID_ENUM is generated if SeparableFilter2DEXT parameter <target>
+is not SEPARABLE_2D_EXT.
+
+INVALID_ENUM is generated if GetConvolutionFilterEXT parameter <target>
+is not CONVOLUTION_1D_EXT or CONVOLUTION_2D_EXT.
+
+INVALID_ENUM is generated if GetSeparableFilterEXT parameter <target>
+is not SEPARABLE_2D_EXT.
+
+INVALID_ENUM is generated if ConvolutionParameteriEXT,
+ConvolutionParameterfEXT, ConvolutionParameterivEXT,
+ConvolutionParameterfvEXT, GetConvolutionParameterivEXT, or
+GetConvolutionParameterfvEXT parameter <target> is not
+CONVOLUTION_1D_EXT, CONVOLUTION_2D_EXT, or SEPARABLE_2D_EXT.
+
+INVALID_ENUM is generated if ConvolutionFilter1DEXT,
+ConvolutionFilter2DEXT, CopyConvolutionFilter1DEXT,
+CopyConvolutionFilter2DEXT, or SeparableFilter2DEXT parameter
+<internalformat> is not ALPHA, LUMINANCE, LUMINANCE_ALPHA, INTENSITY,
+RGB, or RGBA.
+
+INVALID_VALUE is generated if ConvolutionFilter1DEXT parameter <width>
+is less than zero, or greater than MAX_CONVOLUTION_WIDTH_EXT as queried
+using GetConvolutionParameterivEXT with <target> CONVOLUTION_1D_EXT.
+
+INVALID_VALUE is generated if ConvolutionFilter2DEXT parameter <width>
+is less than zero, or greater than MAX_CONVOLUTION_WIDTH_EXT as queried
+using GetConvolutionParameterivEXT with <target> CONVOLUTION_2D_EXT.
+
+INVALID_VALUE is generated if CopyConvolutionFilter1DEXT parameter
+<width> is less than zero, or greater than MAX_CONVOLUTION_WIDTH_EXT
+as queried using GetConvolutionParameterivEXT with <target>
+CONVOLUTION_1D_EXT.
+
+INVALID_VALUE is generated if CopyConvolutionFilter2DEXT parameter
+<width> is less than zero, or greater than MAX_CONVOLUTION_WIDTH_EXT
+as queried using GetConvolutionParameterivEXT with <target>
+CONVOLUTION_2D_EXT.
+
+INVALID_VALUE is generated if SeparableFilter2DEXT parameter <width>
+is less than zero, or greater than MAX_CONVOLUTION_WIDTH_EXT as queried
+using GetConvolutionParameterivEXT with <target> SEPARABLE_2D_EXT.
+
+INVALID_VALUE is generated if ConvolutionFilter2DEXT parameter <height>
+is less than zero, or greater than MAX_CONVOLUTION_HEIGHT_EXT as queried
+using GetConvolutionParameterivEXT with <target> CONVOLUTION_2D_EXT.
+
+INVALID_VALUE is generated if CopyConvolutionFilter2DEXT parameter
+<height> is less than zero, or greater than MAX_CONVOLUTION_HEIGHT_EXT
+as queried using GetConvolutionParameterivEXT with <target>
+CONVOLUTION_2D_EXT.
+
+INVALID_VALUE is generated if SeparableFilter2DEXT parameter <height>
+is less than zero, or greater than MAX_CONVOLUTION_HEIGHT_EXT as queried
+using GetConvolutionParameterivEXT with <target> SEPARABLE_2D_EXT.
+
+INVALID_ENUM is generated if ConvolutionFilter1DEXT,
+ConvolutionFilter2DEXT, GetConvolutionFilterEXT, SeparableFilter2DEXT,
+or GetSeparableFilterEXT parameter <format> is not RED, GREEN, BLUE,
+ALPHA, RGB, RGBA, ABGR_EXT, LUMINANCE, or LUMINANCE_ALPHA.
+
+INVALID_ENUM is generated if ConvolutionFilter1DEXT,
+ConvolutionFilter2DEXT, GetConvolutionFilterEXT, SeparableFilter2DEXT,
+or GetSeparableFilterEXT parameter <type> is not UNSIGNED_BYTE, BYTE,
+UNSIGNED_SHORT, SHORT, UNSIGNED_INT, INT, or FLOAT.
+
+INVALID_ENUM is generated if ConvolutionParameterivEXT or
+ConvolutionParameterfvEXT parameter <pname> is not
+CONVOLUTION_FILTER_SCALE_EXT, CONVOLUTION_FILTER_BIAS_EXT,
+or CONVOLUTION_BORDER_MODE_EXT.
+
+INVALID_ENUM is generated if ConvolutionParameteriEXT or
+ConvolutionParameterfEXT parameter <pname> is not
+CONVOLUTION_BORDER_MODE_EXT.
+
+INVALID_ENUM is generated if ConvolutionParameteriEXT,
+ConvolutionParameterfEXT, ConvolutionParameterivEXT, or
+ConvolutionParameterfvEXT parameter <pname> is
+CONVOLUTION_BORDER_MODE_EXT and parameter <params> is not REDUCE_EXT.
+
+INVALID_ENUM is generated if GetConvolutionParameterivEXT or
+GetConvolutionParameterfvEXT parameter <pname> is not
+CONVOLUTION_FILTER_SCALE_EXT, CONVOLUTION_FILTER_BIAS_EXT,
+CONVOLUTION_BORDER_MODE_EXT, CONVOLUTION_FORMAT_EXT,
+CONVOLUTION_WIDTH_EXT, CONVOLUTION_HEIGHT_EXT, MAX_CONVOLUTION_WIDTH_EXT
+or MAX_CONVOLUTION_HEIGHT_EXT.
+
+INVALID_ENUM is generated if GetConvolutionParameterivEXT or
+GetConvolutionParameterfvEXT parameter <target> is CONVOLUTION_1D_EXT
+and <pname> is CONVOLUTION_HEIGHT_EXT or MAX_CONVOLUTION_HEIGHT_EXT.
+
+INVALID_OPERATION is generated if ConvolutionFilter1DEXT,
+ConvolutionFilter2DEXT, CopyConvolutionFilter1DEXT,
+CopyConvolutionFilter2DEXT, GetConvolutionFilterEXT, SeparableFilter2DEXT,
+GetSeparableFilterEXT, ConvolutionParameteriEXT,
+ConvolutionParameterivEXT, ConvolutionParameterfEXT,
+ConvolutionParameterfvEXT, GetConvolutionParameterivEXT, or
+GetConvolutionParameterfvEXT is executed between execution of Begin and
+the corresponding execution of End.
+
+
+== New State ==
+
+|| *Get Value* || *Get Command* || *Type* || *Initial Value* ||
+||CONVOLUTION_1D_EXT ||!IsEnabled ||B ||False ||
+||CONVOLUTION_2D_EXT ||!IsEnabled ||B ||False ||
+||SEPARABLE_2D_EXT ||!IsEnabled ||B ||False ||
+||CONVOLUTION_FILTER_SCALE_EXT ||!GetConvolutionParameterivEXT || 3 x R4 || (1,1,1,1) ||
+||CONVOLUTION_FILTER_BIAS_EXT ||!GetConvolutionParameterivEXT || 3 x R4 || (0,0,0,0) ||
+||CONVOLUTION_BORDER_MODE_EXT ||!GetConvolutionParameterivEXT || 3 x Z1 || REDUCE_EXT ||
+||CONVOLUTION_xD (x is 1 or 2) ||GetConvolutionFilterEXT ||2 x I ||empty ||
+||SEPARABLE_2D || GetSeparableFilterEXT || 1 x I ||empty ||
+||CONVOLUTION_FORMAT_EXT || GetConvolutionParameterivEXT || 3 x Z8 ||RGBA ||
+||CONVOLUTION_WIDTH_EXT || GetConvolutionParameterivEXT || 3 x Z+ ||0 ||
+||CONVOLUTION_HEIGHT_EXT || GetConvolutionParameterivEXT || 2 x Z+ ||0 ||
+||POST_CONVOLUTION_RED_SCALE_EXT ||!GetFloatv ||R ||1 ||
+||POST_CONVOLUTION_GREEN_SCALE_EXT ||!GetFloatv ||R ||1 ||
+||POST_CONVOLUTION_BLUE_SCALE_EXT ||!GetFloatv ||R ||1 ||
+||POST_CONVOLUTION_ALPHA_SCALE_EXT ||!GetFloatv ||R ||1 ||
+||POST_CONVOLUTION_RED_BIAS_EXT ||!GetFloatv ||R ||0 ||
+||POST_CONVOLUTION_GREEN_BIAS_EXT ||!GetFloatv ||R ||0 ||
+||POST_CONVOLUTION_BLUE_BIAS_EXT ||!GetFloatv ||R ||0 ||
+||POST_CONVOLUTION_ALPHA_BIAS_EXT ||!GetFloatv ||R ||0 ||
+
+
+== New Implementation Dependent State ==
+
+|| *Get Value* || *Get Command* || *Type* || *Minimum Value* ||
+||MAX_CONVOLUTION_WIDTH_EXT || GetConvolutionParameterivEXT || 3 x Z+ ||
+||MAX_CONVOLUTION_HEIGHT_EXT || GetConvolutionParameterivEXT || 2 x Z+ ||

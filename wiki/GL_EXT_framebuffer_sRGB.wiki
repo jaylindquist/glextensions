@@ -105,7 +105,7 @@ Tokens" section.
 Add to table 6.20 (Pixel Operations)
 
 || *Get Value* || *Type* || *Get Command* || *Initial Value* || *Description* ||
-||FRAMEBUFFER_SRGB_EXT||B||!IsEnabled||False||sRGB||update and blending enable||
+||FRAMEBUFFER_SRGB_EXT||B||!IsEnabled||False||sRGB update and blending enable||
 
 
 || *Get Value* || *Type* || *Get Command* || *Initial Value* || *Description* ||
@@ -115,4 +115,3 @@ Add to table 6.20 (Pixel Operations)
 == New Implementation Dependent State ==
 
 None
-

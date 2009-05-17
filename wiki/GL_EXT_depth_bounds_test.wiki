@@ -1,5 +1,7 @@
 #summary GL_EXT_depth_bounds_test
 
+<wiki:toc max_depth="1" />
+
 == Contents ==
 
   * [GL_EXT_depth_bounds_test#Dependencies Dependencies]
@@ -95,4 +97,3 @@ generated.
 == New Implementation Dependent State ==
 
 None
-

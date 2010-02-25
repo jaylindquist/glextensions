@@ -2,13 +2,7 @@
 
 == Contents ==
 
-  * [GL_EXT_compiled_vertex_array#Dependencies Dependencies]
-  * [GL_EXT_compiled_vertex_array#Overview Overview]
-  * [GL_EXT_compiled_vertex_array#New_Procedures_and_Functions New Procedures and Functions]
-  * [GL_EXT_compiled_vertex_array#New_Tokens New Tokens]
-  * [GL_EXT_compiled_vertex_array#Errors Errors]
-  * [GL_EXT_compiled_vertex_array#New_State New State]
-  * [GL_EXT_compiled_vertex_array#New_Implementation_Dependent_State New Implementation Dependent State]
+<wiki:toc max_depth="3" />
 
 == Dependencies ==
 

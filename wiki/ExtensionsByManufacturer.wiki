@@ -1,21 +1,10 @@
 #summary List of OpenGL Extensions by manufacturer
 #labels Featured
 
+
+*Contents*
+
 <wiki:toc max_depth="3" />
-
-== Contents ==
-
-  * [ExtensionsByManufacturer#Architecture_Review_Board Architecture Review Board]
-  * [ExtensionsByManufacturer#ATI ATI]
-  * [ExtensionsByManufacturer#Multiple_Vendors Multiple Vendors]
-  * [ExtensionsByManufacturer#HP HP]
-  * [ExtensionsByManufacturer#IBM IBM]
-  * [ExtensionsByManufacturer#Kinetix Kinetix]
-  * [ExtensionsByManufacturer#NVIDIA NVIDIA]
-  * [ExtensionsByManufacturer#S3 S3]
-  * [ExtensionsByManufacturer#Silicon_Graphics Silicon Graphics]
-  * [ExtensionsByManufacturer#Sun_Microsystems Sun Microsystems]
-  * [ExtensionsByManufacturer#Microsoft Microsoft]
 
 == Introduction ==
 

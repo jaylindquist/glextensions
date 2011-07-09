@@ -1,7 +1,7 @@
 #summary List of OpenGL Extensions by manufacturer
 #labels Featured
 
-<wiki:toc max_depth="1" />
+<wiki:toc max_depth="3" />
 
 == Contents ==
 

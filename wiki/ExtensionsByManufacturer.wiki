@@ -1,6 +1,8 @@
 #summary List of OpenGL Extensions by manufacturer
 #labels Featured
 
+<wiki:toc max_depth="1" />
+
 == Contents ==
 
   * [ExtensionsByManufacturer#Architecture_Review_Board Architecture Review Board]

@@ -1,0 +1,33 @@
+apply plugin:'groovy'
+apply plugin:'eclipse'
+apply plugin:'application'
+
+repositories {
+	mavenCentral()
+}
+
+def springFrameworkVersion = '3.0.6.RELEASE'
+def springBatchVersion = '2.1.7.RELEASE'
+def slf4jVersion = '1.6.4'
+def logbackVersion = '1.0.3'
+
+mainClassName = 'org.springframework.batch.core.launch.support.CommandLineJobRunner'
+run {
+    args = ['classpath:/beans.xml', 'sampleJob']
+}
+
+dependencies {
+	compile gradleApi()
+	groovy localGroovy()
+	
+	compile "org.springframework:spring-jdbc:${springFrameworkVersion}"
+	compile "org.springframework:spring-context:${springFrameworkVersion}"
+	compile "cglib:cglib-nodep:2.2"
+	compile "org.springframework.batch:spring-batch-core:${springBatchVersion}"
+	compile "commons-dbcp:commons-dbcp:1.2.2"
+	compile "hsqldb:hsqldb:1.8.0.7"	
+}
+
+task wrapper(type: Wrapper) {
+	gradleVersion = '1.0-rc-3'
+}

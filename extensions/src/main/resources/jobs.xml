@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://www.springframework.org/schema/batch"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+		http://www.springframework.org/schema/batch http://www.springframework.org/schema/batch/spring-batch-2.1.xsd">
+
+	<job-repository id="jobRepository" />
+	
+	<job id="sampleJob">
+		<step id="readDir">
+			<tasklet>
+				<chunk reader="directoryItemReader" writer="loggingWriter" commit-interval="10"/>
+			</tasklet>
+		</step>
+	</job>
+<!-- 
+	<job id="printFiles">
+		<step id="readExtensions">			
+			<tasklet>
+				<chunk reader="directoryItemReader" processor="processor" writer="systemOutWriter" commit-interval="10" />
+			</tasklet>
+		</step>
+	</job> 
+	
+	<job id="mapFiles">
+		<step id="mapExtensions">			
+			<tasklet>
+				<chunk reader="directoryItemReader" processor="processor" writer="mapWriter" commit-interval="10" />
+			</tasklet>
+		</step>
+	</job> 
+ -->
+</beans:beans>

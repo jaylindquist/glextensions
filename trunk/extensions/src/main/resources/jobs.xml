@@ -10,7 +10,7 @@
 	<job id="sampleJob">
 		<step id="readDir">
 			<tasklet>
-				<chunk reader="directoryItemReader" writer="loggingWriter" commit-interval="10"/>
+				<chunk reader="directoryItemReader" writer="loggingItemWriter" commit-interval="10"/>
 			</tasklet>
 		</step>
 	</job>

@@ -22,34 +22,34 @@ class BatchConfig {
 	private def driverUrl
 
 	@Value('${batch.jdbc.user}')
-	private def driverUsername;
+	private def driverUsername
 
 	@Value('${batch.jdbc.password}')
-	private def driverPassword;
+	private def driverPassword
 
 	@Autowired
 	@Qualifier("jobRepository")
-	def jobRepository;
+	def jobRepository
 
 	@Bean
 	def dataSource() {
-		BasicDataSource dataSource = new BasicDataSource();
-		dataSource.driverClassName = driverClassName;
-		dataSource.url = driverUrl;
-		dataSource.username = driverUsername;
-		dataSource.password = driverPassword;
-		return dataSource;
+		BasicDataSource dataSource = new BasicDataSource()
+		dataSource.driverClassName = driverClassName
+		dataSource.url = driverUrl
+		dataSource.username = driverUsername
+		dataSource.password = driverPassword
+		return dataSource
 	}
 
 	@Bean
 	def jobLauncher() {
-		SimpleJobLauncher jobLauncher = new SimpleJobLauncher();
-		jobLauncher.jobRepository = jobRepository;
-		return jobLauncher;
+		SimpleJobLauncher jobLauncher = new SimpleJobLauncher()
+		jobLauncher.jobRepository = jobRepository
+		return jobLauncher
 	}
 
 	@Bean
 	def transactionManager() {
-		return new DataSourceTransactionManager(dataSource());
+		return new DataSourceTransactionManager(dataSource())
 	}
 }

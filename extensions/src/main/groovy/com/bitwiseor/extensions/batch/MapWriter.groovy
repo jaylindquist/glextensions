@@ -3,9 +3,11 @@ package com.bitwiseor.extensions.batch
 import java.util.List;
 
 import org.springframework.batch.item.ItemWriter
+import org.springframework.stereotype.Component;
 
 import com.bitwiseor.extensions.dsl.ExtensionFile
 
+@Component
 class MapWriter implements ItemWriter<ExtensionFile> {
 	def map = [:]
 	

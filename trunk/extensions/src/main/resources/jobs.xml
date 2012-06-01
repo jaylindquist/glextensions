@@ -10,25 +10,8 @@
 	<job id="sampleJob">
 		<step id="readDir">
 			<tasklet>
-				<chunk reader="directoryItemReader" writer="loggingItemWriter" commit-interval="10"/>
+				<chunk reader="directoryItemReader" processor="fileToExtensionProcessor" writer="loggingItemWriter" commit-interval="10"/>
 			</tasklet>
 		</step>
 	</job>
-<!-- 
-	<job id="printFiles">
-		<step id="readExtensions">			
-			<tasklet>
-				<chunk reader="directoryItemReader" processor="processor" writer="systemOutWriter" commit-interval="10" />
-			</tasklet>
-		</step>
-	</job> 
-	
-	<job id="mapFiles">
-		<step id="mapExtensions">			
-			<tasklet>
-				<chunk reader="directoryItemReader" processor="processor" writer="mapWriter" commit-interval="10" />
-			</tasklet>
-		</step>
-	</job> 
- -->
 </beans:beans>

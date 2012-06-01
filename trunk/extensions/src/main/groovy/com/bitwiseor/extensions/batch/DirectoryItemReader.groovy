@@ -14,7 +14,7 @@ class DirectoryItemReader implements ItemReader<File>, InitializingBean {
 	@Override
 	public void afterPropertiesSet() throws Exception {
 		assert directory.isDirectory()
-		this.iterator = Arrays.asList(directory.listFiles()).iterator()
+		this.iterator = directory.listFiles().findAll { it.name.startsWith('c') }.iterator()
 	}
 	
 	@Override

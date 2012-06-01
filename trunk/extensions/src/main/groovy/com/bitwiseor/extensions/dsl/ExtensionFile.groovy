@@ -1,5 +1,8 @@
 package com.bitwiseor.extensions.dsl
 
+import groovy.util.logging.Slf4j
+
+@Slf4j
 class ExtensionFile {
 	File file
 	def sections = []
@@ -9,26 +12,55 @@ class ExtensionFile {
 		def section = null
 		
 		this.file.eachLine { line ->
-			if(!section && line =~ /^[^\w]/) {
-				// if a section has not started and the line does not start
-				// with a char, then we are at the header and can skip
-			} else if(!section || line =~ /^[A-Z]/) {
-				// if we don't have a section or the line begins with a 
-				// char, then we need to start a new section
-				// note that lines beginning with numbers will be part of 
-				// previous section
-				section = new ExtensionSection()
-				this.sections << section
-				section.title = line.trim()
+			if(isPreamble(line, section)) {
+				// skip
+			} else if(isSectionName(line, section)) {
+				if(section?.title && !section?.contents) { // section title wrapped to next line
+					section.title += " ${line.trim()}"
+				} else {
+					section = new ExtensionSection()
+					this.sections << section
+					section.title = line.trim()
+					section.contents = ''
+				}
 			} else {
-				// this line is a part of the previous section
-				section.contents << line << System.properties['line.separator']
+				section.contents += "${line}${System.properties['line.separator']}"
 			}
+		}
+	}
+	
+	boolean isPreamble(String line, def section) {
+		if(section) return false
+		switch(line) {
+			case ~/^$/:
+			case ~/^[^\w].*$/:
+			case ~/^.*XXX - Not complete yet!!!.*$/:
+				return true
+			default:
+				return false
+		}
+	}
+	
+	boolean isSectionName(String line, def section) {
+		if(!section) return true
+		switch(line) {
+			case ~/^.*\w+  +\w+.*$/: // table columns
+				return false
+			case ~/^[^\s].*/:
+				return true
+			default: 
+				return false
 		}
 	}
 	
 	@Override
 	String toString() {
-		return "{file: ${file.name}, sections: ${sections}"
+		def sb = new StringBuilder()
+		sb.append("File: ${file}").append(System.properties['line.separator'])
+		sb.append("Sections:").append(System.properties['line.separator'])
+		sections.each {
+			sb.append('\t* ').append(it.title).append(System.properties['line.separator'])
+		}
+		return sb.toString()
 	}
 }

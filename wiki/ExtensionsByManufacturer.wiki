@@ -12,7 +12,7 @@ List of OpenGL Extensions by manufacturer
 
 == Architecture Review Board ==
 
-  * [GL_ARB_color_buffer_float]
+  * GL_ARB_color_buffer_float
   * [GL_ARB_depth_texture]
   * [GL_ARB_draw_buffers]
   * [GL_ARB_fragment_program]
